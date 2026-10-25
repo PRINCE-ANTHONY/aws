@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>AWS Student Builder Group — Build beyond the classroom</title>
-  <meta name="description" content="A vibrant student-led cloud community exploring AWS through hands-on architectures, serverless computing, and real impact.">
-  <meta name="theme-color" content="#060a12">
+  <meta name="description" content="A student-led cloud community exploring AWS through learning, hands-on building, and real architectures.">
+  <meta name="theme-color" content="#f5f2e9">
   
   <!-- OpenGraph & Twitter Cards -->
   <meta property="og:title" content="AWS Student Builder Group — Build beyond the classroom">
-  <meta property="og:description" content="A vibrant student-led community exploring cloud technology through learning, building, and sharing.">
+  <meta property="og:description" content="A student-led community exploring cloud technology through learning, building, and sharing.">
   <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:card" content="summary">
   
   <!-- Custom SVG Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23060a12'/%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23ff9900' stroke-width='2'/%3E%3Ctext x='16' y='21' font-family='sans-serif' font-weight='800' font-size='15' fill='%23ff9900' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23101820'/%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23ff9900' stroke-width='2'/%3E%3Ctext x='16' y='21' font-family='sans-serif' font-weight='800' font-size='15' fill='%23ff9900' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
   <!-- Three.js for 3D Cinematic Tech Workbench -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
-<body class="dark-vibrant">
+<body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <!-- Interactive 3D Cloud Architecture Intro -->
@@ -48,72 +48,40 @@
     <!-- HUD Overlay -->
     <div class="intro-overlay-hud">
       <div class="hud-top">
-        <div class="hud-live-tag">
-          <span class="beacon-pulse"></span> LIVE DIGITAL WORKSPACE
-        </div>
-        <span class="hud-eyebrow">Architecting the Cloud</span>
+        <span class="hud-eyebrow">Building the Cloud</span>
         <h2 class="hud-headline">AWS Student<br>Builder Group</h2>
-        <p class="hud-subtitle">Connect &middot; Build &middot; Deploy</p>
+        <p class="hud-subtitle">Connect. Build. Deploy.</p>
       </div>
 
       <div class="intro-controls">
         <div class="hud-progress-box">
-          <div class="hud-status">
-            <span class="hud-dot"></span>
-            <span id="hud-status-text" class="hud-status-text">Booting cloud environment...</span>
-            <span id="hud-percent" class="hud-percent">0%</span>
-          </div>
+          <span id="hud-status-text" class="hud-status-text">Setting up workspace...</span>
           <div class="hud-bar">
             <div class="hud-bar-fill" id="hud-bar-fill"></div>
           </div>
         </div>
-        <button class="enter-btn" type="button" id="enter-btn">
-          Enter Builder Lab &darr;
-        </button>
+        <button class="enter-btn" type="button" id="enter-btn">Enter Site &darr;</button>
       </div>
     </div>
   </div>
 
-  <!-- Ambient Glow Backdrop -->
-  <div class="ambient-glow glow-top" aria-hidden="true"></div>
-  <div class="ambient-glow glow-middle" aria-hidden="true"></div>
 
   <!-- Sticky Topbar Navigation -->
   <header class="topbar">
     <div class="wrap nav">
       <a class="brand" href="#home" aria-label="AWS Student Builder Group Home">
-        <div class="brand-badge">
-          <span class="brand-mark">A</span>
-        </div>
-        <div class="brand-text">
-          <span>AWS<span>@</span>BUILDERS</span>
-          <span class="brand-sub">CAMPUS CHAPTER</span>
-        </div>
+        <span class="brand-mark">A</span>
+        <span>AWS<span>@</span>BUILDERS</span>
       </a>
-
-      <!-- Real-time Cloud Telemetry Beacon in Nav -->
-      <div class="nav-telemetry" title="AWS Region Status">
-        <span class="telemetry-beacon"></span>
-        <span class="telemetry-text">us-east-1 <span class="telemetry-ping">14ms</span></span>
-      </div>
-
       <nav class="navlinks" id="navlinks" aria-label="Main navigation">
         <a href="#about">About</a>
-        <a href="#workbench" class="nav-highlight">
-          <span class="live-dot"></span>Live Workbench
-        </a>
-        <a href="#explore">Our Mindset</a>
-        <a href="#approach">Learning Path</a>
+        <a href="#explore">Our mindset</a>
+        <a href="#approach">Learning path</a>
         <a href="#rsvp">RSVP</a>
         <a href="#faq">FAQ</a>
       </nav>
-
       <div class="nav-actions">
-        <!-- Interactive Sound Synthesizer Toggle -->
-        <button class="sound-toggle-btn" id="sound-toggle" type="button" aria-label="Toggle sound effects" title="Synthesizer Sound (Web Audio)">
-          <span id="sound-icon">🔊</span>
-        </button>
-        <button class="button ghost replay-nav-btn" type="button" id="replay" aria-label="Replay 3D tech intro">Replay 3D</button>
+        <button class="button ghost replay-nav-btn" type="button" id="replay" aria-label="Replay AWS blocks intro">Replay intro</button>
         <a class="nav-cta" href="#rsvp">Join the build <span class="arrow">&rarr;</span></a>
         <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navlinks">&#9776;</button>
       </div>
@@ -121,73 +89,45 @@
   </header>
 
   <main id="main">
-    <!-- Hero Section with Glowing Server Rack Artwork & Floating Cloud Tags -->
+    <!-- Hero Section with Glowing Server Rack Artwork -->
     <section class="wrap hero" id="home">
       <div class="hero-copy">
-        <div class="eyebrow">
-          <span class="badge-pill">NEXT-GEN BUILDERS</span>
-          <span>Cloud &middot; Serverless &middot; AI Impact</span>
-        </div>
-        <h1>Students.<br>Cloud.<br><em class="gradient-text">Real impact.</em></h1>
-        <p>A vibrant student-led community deploying serverless architectures, fine-tuning Bedrock AI models, and building production-ready systems together.</p>
-        
+        <div class="eyebrow">People &nbsp;/&nbsp; Technology &nbsp;/&nbsp; A brighter tomorrow</div>
+        <h1>Students.<br>Cloud.<br><em>Real impact.</em></h1>
+        <p>A student-led community exploring cloud technology, deploying serverless systems, and building useful things together.</p>
         <div class="hero-actions">
-          <a class="button primary-glow" href="#workbench">
-            <span>Launch Live Workbench</span> <span class="arrow">&rarr;</span>
-          </a>
-          <a class="button ghost" href="#rsvp">Claim Builder Seat</a>
+          <a class="button" href="#rsvp">Explore the community <span class="arrow">&rarr;</span></a>
+          <a class="button ghost" href="#approach">See our learning path <span class="arrow">&rarr;</span></a>
         </div>
-
         <div class="hero-proof" aria-label="Community pillars">
-          <span><i class="glow-orange"></i>Student-led</span>
-          <span><i class="glow-cyan"></i>100% Free-Tier Safe</span>
-          <span><i class="glow-green"></i>Live Workshops</span>
+          <span><i></i>Student-led</span>
+          <span><i></i>Learn by doing</span>
+          <span><i></i>Share openly</span>
         </div>
       </div>
 
       <!-- Architectural Server Rack Illustration with Animated Glowing Pathways -->
-      <div class="visual server-visual" role="img" aria-label="Illustration of cloud server racks connected by glowing orange and cyan data pathways">
-        <!-- Floating Interactive Cloud Badges -->
-        <div class="floating-chip chip-lambda" title="AWS Lambda Serverless Compute">
-          <span class="chip-icon">λ</span>
-          <span class="chip-text">AWS Lambda <strong class="chip-metric">14ms avg</strong></span>
-        </div>
-        <div class="floating-chip chip-bedrock" title="Amazon Bedrock Generative AI">
-          <span class="chip-icon">🤖</span>
-          <span class="chip-text">Amazon Bedrock <strong class="chip-metric">Claude 3.5</strong></span>
-        </div>
-        <div class="floating-chip chip-dynamo" title="Amazon DynamoDB Real-time NoSQL">
-          <span class="chip-icon">⚡</span>
-          <span class="chip-text">DynamoDB <strong class="chip-metric">Single-digit ms</strong></span>
-        </div>
-
+      <div class="visual server-visual" role="img" aria-label="Illustration of cloud server racks connected by glowing orange data pathways">
         <svg class="server-art" viewBox="0 0 760 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <linearGradient id="rack-face" x1="0" x2="1" y1="0" y2="1">
-              <stop stop-color="#1e2c3d"/>
-              <stop offset=".42" stop-color="#111c2a"/>
-              <stop offset="1" stop-color="#080e18"/>
+              <stop stop-color="#394143"/>
+              <stop offset=".42" stop-color="#202629"/>
+              <stop offset="1" stop-color="#111619"/>
             </linearGradient>
             <linearGradient id="rack-side" x1="0" x2="1">
-              <stop stop-color="#070d17"/>
-              <stop offset="1" stop-color="#162335"/>
+              <stop stop-color="#0c1114"/>
+              <stop offset="1" stop-color="#262d30"/>
             </linearGradient>
             <filter id="led-glow" x="-300%" y="-300%" width="700%" height="700%">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <filter id="path-glow" x="-50%" y="-500%" width="200%" height="1100%">
               <feGaussianBlur stdDeviation="3" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-            <filter id="path-glow-orange" x="-50%" y="-500%" width="200%" height="1100%">
-              <feGaussianBlur stdDeviation="3.5" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-            <filter id="path-glow-cyan" x="-50%" y="-500%" width="200%" height="1100%">
-              <feGaussianBlur stdDeviation="3.5" result="blur"/>
               <feMerge>
                 <feMergeNode in="blur"/>
                 <feMergeNode in="SourceGraphic"/>
@@ -196,400 +136,170 @@
             <g id="rack">
               <path class="rack-side" d="M0 15 18 6v316l-18 10z"/>
               <path class="rack-top" d="m0 15 18-9 126 0-18 9z"/>
-              <rect class="rack-shell" x="0" y="15" width="126" height="316" rx="4"/>
-              <rect class="rack-panel" x="8" y="25" width="110" height="292" rx="3"/>
+              <rect class="rack-shell" x="0" y="15" width="126" height="316" rx="3"/>
+              <rect class="rack-panel" x="8" y="25" width="110" height="292" rx="2"/>
               <g class="rack-slot">
-                <rect x="14" y="36" width="98" height="34" rx="3"/>
-                <rect x="14" y="78" width="98" height="34" rx="3"/>
-                <rect x="14" y="120" width="98" height="34" rx="3"/>
-                <rect x="14" y="162" width="98" height="34" rx="3"/>
-                <rect x="14" y="204" width="98" height="34" rx="3"/>
-                <rect x="14" y="246" width="98" height="34" rx="3"/>
-                <rect x="14" y="288" width="98" height="20" rx="3"/>
+                <rect x="14" y="36" width="98" height="34" rx="2"/>
+                <rect x="14" y="78" width="98" height="34" rx="2"/>
+                <rect x="14" y="120" width="98" height="34" rx="2"/>
+                <rect x="14" y="162" width="98" height="34" rx="2"/>
+                <rect x="14" y="204" width="98" height="34" rx="2"/>
+                <rect x="14" y="246" width="98" height="34" rx="2"/>
+                <rect x="14" y="288" width="98" height="20" rx="2"/>
               </g>
               <g class="rack-muted">
-                <circle cx="27" cy="51" r="2.2"/>
-                <circle cx="27" cy="93" r="2.2"/>
-                <circle cx="27" cy="135" r="2.2"/>
-                <circle cx="27" cy="177" r="2.2"/>
-                <circle cx="27" cy="219" r="2.2"/>
-                <circle cx="27" cy="261" r="2.2"/>
-                <circle cx="27" cy="298" r="2.2"/>
+                <circle cx="27" cy="51" r="2"/>
+                <circle cx="27" cy="93" r="2"/>
+                <circle cx="27" cy="135" r="2"/>
+                <circle cx="27" cy="177" r="2"/>
+                <circle cx="27" cy="219" r="2"/>
+                <circle cx="27" cy="261" r="2"/>
+                <circle cx="27" cy="298" r="2"/>
               </g>
-              <!-- Multi-colored pulsating LEDs for realistic hardware appearance -->
-              <g class="rack-lights-orange">
-                <circle cx="97" cy="51" r="2.4"/>
-                <circle cx="97" cy="135" r="2.4"/>
-                <circle cx="97" cy="219" r="2.4"/>
-              </g>
-              <g class="rack-lights-cyan">
-                <circle cx="105" cy="51" r="2.4"/>
-                <circle cx="105" cy="93" r="2.4"/>
-                <circle cx="105" cy="177" r="2.4"/>
-                <circle cx="105" cy="261" r="2.4"/>
-              </g>
-              <g class="rack-lights-green">
-                <circle cx="97" cy="93" r="2.4"/>
-                <circle cx="97" cy="177" r="2.4"/>
-                <circle cx="97" cy="261" r="2.4"/>
+              <g class="rack-lights">
+                <circle cx="99" cy="51" r="2"/>
+                <circle cx="106" cy="51" r="2"/>
+                <circle cx="99" cy="93" r="2"/>
+                <circle cx="106" cy="93" r="2"/>
+                <circle cx="99" cy="135" r="2"/>
+                <circle cx="106" cy="135" r="2"/>
+                <circle cx="99" cy="177" r="2"/>
+                <circle cx="106" cy="177" r="2"/>
+                <circle cx="99" cy="219" r="2"/>
+                <circle cx="106" cy="219" r="2"/>
+                <circle cx="99" cy="261" r="2"/>
+                <circle cx="106" cy="261" r="2"/>
               </g>
             </g>
           </defs>
-
-          <!-- Floor grid and isometric structure -->
           <path class="rack-floor" d="M0 427 355 389 760 434M83 500 355 389 645 500M355 389v111M0 463l355-74 405 76"/>
-          
-          <!-- Animated Dual Data Circuits: Orange & Cyan -->
           <path class="pathway-soft" d="M0 380h245v-42h160v-55h125v-50h132M74 422h188v-37h91v-46h120v-64h111v-52h90"/>
-          <path class="pathway pathway-orange pathway-flow-fast" d="M0 380h245v-42h160v-55h125v-50h132"/>
-          <path class="pathway pathway-cyan pathway-flow-rev" d="M74 422h188v-37h91v-46h120v-64h111v-52h90"/>
-
-          <!-- Rendered 3D Server Bays -->
-          <g opacity=".8" transform="translate(62 142) scale(.68)"><use href="#rack"/></g>
-          <g opacity=".88" transform="translate(158 118) scale(.78)"><use href="#rack"/></g>
-          <g opacity=".94" transform="translate(266 87) scale(.9)"><use href="#rack"/></g>
+          <path class="pathway pathway-flow" d="M0 380h245v-42h160v-55h125v-50h132M74 422h188v-37h91v-46h120v-64h111v-52h90"/>
+          <g opacity=".72" transform="translate(62 142) scale(.68)"><use href="#rack"/></g>
+          <g opacity=".8" transform="translate(158 118) scale(.78)"><use href="#rack"/></g>
+          <g opacity=".88" transform="translate(266 87) scale(.9)"><use href="#rack"/></g>
           <g transform="translate(390 55) scale(1.08)"><use href="#rack"/></g>
-          <g opacity=".94" transform="translate(526 91) scale(.91)"><use href="#rack"/></g>
-          <g opacity=".85" transform="translate(634 127) scale(.78)"><use href="#rack"/></g>
-
-          <path class="pathway pathway-orange pathway-flow-fast" d="M394 391v-94h62v-54h66"/>
+          <g opacity=".88" transform="translate(526 91) scale(.91)"><use href="#rack"/></g>
+          <g opacity=".78" transform="translate(634 127) scale(.78)"><use href="#rack"/></g>
+          <path class="pathway pathway-flow" d="M394 391v-94h62v-54h66"/>
         </svg>
-
-        <div class="visual-caption">
-          <i class="live-pulse"></i><span>Telemetry: 100% Operational &middot; Multi-AZ Cluster</span>
-        </div>
+        <div class="visual-caption"><i></i>Learn &middot; build &middot; share</div>
       </div>
     </section>
 
-    <!-- Vibrant Animated Real-Time Cloud Telemetry Marquee -->
+    <!-- Warm Editorial Ticker Bar -->
     <div class="ticker">
-      <div class="ticker-track">
-        <div class="ticker-content">
-          <span class="ticker-pill live"><i class="beacon-mini"></i> US-EAST-1 LIVE</span>
-          <span>16ms latency</span>
-          <span class="spark">&diams;</span>
-          <strong>18,450+ Invocations Today</strong>
-          <span class="spark">&diams;</span>
-          <span>180+ Active Campus Builders</span>
-          <span class="spark">&diams;</span>
-          <span class="ticker-pill green">100% FREE TIER SAFEGUARDED</span>
-          <span class="spark">&diams;</span>
-          <strong>Claude 3.5 &amp; Bedrock GenAI Labs</strong>
-          <span class="spark">&diams;</span>
-          <span>Next Session: Nov 12 @ 6:30 PM &middot; SEH 304</span>
-          <span class="spark">&diams;</span>
-        </div>
-        <div class="ticker-content" aria-hidden="true">
-          <span class="ticker-pill live"><i class="beacon-mini"></i> US-EAST-1 LIVE</span>
-          <span>16ms latency</span>
-          <span class="spark">&diams;</span>
-          <strong>18,450+ Invocations Today</strong>
-          <span class="spark">&diams;</span>
-          <span>180+ Active Campus Builders</span>
-          <span class="spark">&diams;</span>
-          <span class="ticker-pill green">100% FREE TIER SAFEGUARDED</span>
-          <span class="spark">&diams;</span>
-          <strong>Claude 3.5 &amp; Bedrock GenAI Labs</strong>
-          <span class="spark">&diams;</span>
-          <span>Next Session: Nov 12 @ 6:30 PM &middot; SEH 304</span>
-          <span class="spark">&diams;</span>
-        </div>
+      <div class="wrap ticker-in">
+        <strong>Curiosity &rarr; capability</strong>
+        <span class="spark">&#10003;</span>
+        <span>Cloud fundamentals</span>
+        <span class="spark">&#10003;</span>
+        <span>Hands-on practice</span>
+        <span class="spark">&#10003;</span>
+        <span>Community built</span>
       </div>
     </div>
 
-    <!-- Section 1: What Brings Us Together (Vibrant Frosted Tech Cards) -->
-    <section class="section vibrant-dark" id="about">
+    <!-- Section 1: What Brings Us Together (Light Paper Section) -->
+    <section class="section light" id="about">
       <div class="wrap">
         <div class="section-head reveal">
           <div>
             <div class="section-kicker"><span>01</span> / What brings us together</div>
-            <h2>Make the cloud<br>feel <em class="gradient-text">within reach.</em></h2>
+            <h2>Make the cloud<br>feel <em>within reach.</em></h2>
           </div>
-          <p>A welcoming space for students to demystify cloud engineering. Move past textbook theory, deploy real systems, and learn side-by-side with passionate peers.</p>
+          <p>A place for students to explore cloud computing with openness and intent. Start with the basics, follow your questions, and learn alongside people who are building too.</p>
         </div>
 
         <div class="pillars reveal">
-          <article class="pillar" data-tilt>
-            <div class="pillar-glare"></div>
+          <article class="pillar">
             <div class="num">01 &mdash; UNDERSTAND</div>
-            <div class="pillar-icon icon-cyan">&#9680;</div>
+            <div class="pillar-icon">&#9680;</div>
             <h3>Start with the why</h3>
-            <p>Master the architectural mental models behind cloud computing, high availability, edge networking, and cost-performance trade-offs.</p>
-            <div class="pillar-tags">
-              <span>Well-Architected</span>
-              <span>Resilience</span>
-            </div>
+            <p>Build a clear mental model of cloud concepts, the problems they solve, and the architectural trade-offs behind the tools.</p>
           </article>
-          <article class="pillar" data-tilt>
-            <div class="pillar-glare"></div>
+          <article class="pillar">
             <div class="num">02 &mdash; EXPERIMENT</div>
-            <div class="pillar-icon icon-orange">&#8993;</div>
+            <div class="pillar-icon">&#8993;</div>
             <h3>Make it tangible</h3>
-            <p>From zero to production: deploy AWS CDK stacks, configure serverless Lambda triggers, observe CloudWatch metrics, and iterate safely.</p>
-            <div class="pillar-tags">
-              <span>AWS CDK</span>
-              <span>Serverless</span>
-            </div>
+            <p>Move from reading to doing: sketch an architecture, deploy an AWS service, observe what happens, and iterate.</p>
           </article>
-          <article class="pillar" data-tilt>
-            <div class="pillar-glare"></div>
+          <article class="pillar">
             <div class="num">03 &mdash; SHARE</div>
-            <div class="pillar-icon icon-purple">&rarr;</div>
+            <div class="pillar-icon">&rarr;</div>
             <h3>Grow in community</h3>
-            <p>Publish your code, showcase architecture diagrams at build nights, and guide incoming students on their cloud certification paths.</p>
-            <div class="pillar-tags">
-              <span>Open Source</span>
-              <span>Mentorship</span>
-            </div>
+            <p>Explain what you learned, ask for another perspective, and make the path easier for the next person.</p>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- NEW SECTION: Interactive Live Cloud Architecture Simulator & Terminal Workbench -->
-    <section class="section workbench-section" id="workbench">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <div>
-            <div class="section-kicker">
-              <span class="kicker-badge"><i class="beacon-pulse"></i> LIVE SIMULATOR</span> 
-              / Interactive Architecture Lab
-            </div>
-            <h2>Test real serverless<br><em class="gradient-text">in your browser.</em></h2>
-          </div>
-          <p>Click below to dispatch real simulated requests through live AWS architecture pipelines. Watch data packets route, inspect microsecond latencies, and stream CloudWatch logs in real-time.</p>
-        </div>
-
-        <!-- The Interactive Workbench Card -->
-        <div class="workbench-card reveal">
-          <!-- Workbench Header Controls -->
-          <div class="wb-header">
-            <div class="wb-presets" role="tablist" aria-label="Architecture Presets">
-              <button class="wb-preset-btn active" data-preset="api" type="button" role="tab" aria-selected="true">
-                <span class="preset-icon">⚡</span>
-                <span class="preset-name">Serverless REST API</span>
-                <span class="preset-badge">API Gateway + Lambda</span>
-              </button>
-              <button class="wb-preset-btn" data-preset="bedrock" type="button" role="tab" aria-selected="false">
-                <span class="preset-icon">🤖</span>
-                <span class="preset-name">Bedrock GenAI Agent</span>
-                <span class="preset-badge badge-ai">Claude 3.5 Sonnet</span>
-              </button>
-              <button class="wb-preset-btn" data-preset="pipeline" type="button" role="tab" aria-selected="false">
-                <span class="preset-icon">📦</span>
-                <span class="preset-name">Event Image Pipeline</span>
-                <span class="preset-badge">S3 + EventBridge</span>
-              </button>
-            </div>
-
-            <div class="wb-action-bar">
-              <button class="button wb-trigger-btn" id="wb-trigger-btn" type="button">
-                <span class="btn-sparkle">⚡</span> Dispatch Request
-              </button>
-              <button class="button ghost wb-auto-btn" id="wb-auto-btn" type="button">
-                <span class="auto-indicator"></span> Auto-Traffic: <strong id="auto-state">OFF</strong>
-              </button>
-            </div>
-          </div>
-
-          <!-- Architecture Canvas with Animated Nodes & Data Packets -->
-          <div class="wb-canvas">
-            <div class="wb-topology" id="wb-topology">
-              <!-- Node 1: Client -->
-              <div class="wb-node" id="node-1">
-                <div class="node-glow"></div>
-                <div class="node-icon">📱</div>
-                <div class="node-info">
-                  <span class="node-category" id="n1-cat">CLIENT</span>
-                  <strong class="node-title" id="n1-title">Campus Mobile App</strong>
-                </div>
-                <div class="node-badge" id="n1-badge">HTTP/2</div>
-              </div>
-
-              <!-- Animated Connector 1 -->
-              <div class="wb-connector" id="conn-1">
-                <div class="connector-line"></div>
-                <div class="packet" id="packet-1"></div>
-              </div>
-
-              <!-- Node 2: Entrypoint Gateway / S3 -->
-              <div class="wb-node" id="node-2">
-                <div class="node-glow"></div>
-                <div class="node-icon" id="n2-icon">⛩️</div>
-                <div class="node-info">
-                  <span class="node-category" id="n2-cat">GATEWAY</span>
-                  <strong class="node-title" id="n2-title">API Gateway (REST)</strong>
-                </div>
-                <div class="node-badge" id="n2-badge">v2.1 Managed</div>
-              </div>
-
-              <!-- Animated Connector 2 -->
-              <div class="wb-connector" id="conn-2">
-                <div class="connector-line"></div>
-                <div class="packet" id="packet-2"></div>
-              </div>
-
-              <!-- Node 3: Compute (Lambda) -->
-              <div class="wb-node hot" id="node-3">
-                <div class="node-glow"></div>
-                <div class="node-icon">λ</div>
-                <div class="node-info">
-                  <span class="node-category" id="n3-cat">SERVERLESS COMPUTE</span>
-                  <strong class="node-title" id="n3-title">AWS Lambda</strong>
-                </div>
-                <div class="node-badge hot" id="n3-badge">Node.js 20.x</div>
-              </div>
-
-              <!-- Animated Connector 3 -->
-              <div class="wb-connector" id="conn-3">
-                <div class="connector-line"></div>
-                <div class="packet" id="packet-3"></div>
-              </div>
-
-              <!-- Node 4: Backend / Model (DynamoDB / Bedrock / S3) -->
-              <div class="wb-node" id="node-4">
-                <div class="node-glow"></div>
-                <div class="node-icon" id="n4-icon">⚡</div>
-                <div class="node-info">
-                  <span class="node-category" id="n4-cat">DATABASE</span>
-                  <strong class="node-title" id="n4-title">Amazon DynamoDB</strong>
-                </div>
-                <div class="node-badge" id="n4-badge">Single-digit ms</div>
-              </div>
-            </div>
-
-            <!-- Real-Time Workbench Metrics Strip -->
-            <div class="wb-metrics-strip">
-              <div class="wb-stat">
-                <span class="stat-label">TOTAL INVOCATIONS</span>
-                <span class="stat-value" id="stat-invocations">0</span>
-              </div>
-              <div class="wb-stat">
-                <span class="stat-label">EXECUTION TIME</span>
-                <span class="stat-value font-mono" id="stat-latency">-- ms</span>
-              </div>
-              <div class="wb-stat">
-                <span class="stat-label">MEMORY CONSUMED</span>
-                <span class="stat-value" id="stat-memory">64 MB / 128 MB</span>
-              </div>
-              <div class="wb-stat">
-                <span class="stat-label">HTTP STATUS</span>
-                <span class="stat-value status-ready" id="stat-status">STANDBY</span>
-              </div>
-              <div class="wb-stat">
-                <span class="stat-label">ESTIMATED AWS COST</span>
-                <span class="stat-value stat-cost" id="stat-cost">$0.000000</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- CloudWatch Live Streaming Terminal Console -->
-          <div class="wb-terminal">
-            <div class="terminal-bar">
-              <div class="terminal-dots">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
-              </div>
-              <div class="terminal-title">
-                <span class="term-prompt">aws:cloudwatch &gt;</span> 
-                <span id="term-cmd">stream-tail --log-group /aws/lambda/campus-builder-service</span>
-              </div>
-              <div class="term-tools">
-                <span class="term-status"><i class="beacon-mini"></i> CONNECTED</span>
-                <button class="terminal-clear" id="terminal-clear" type="button">Clear</button>
-              </div>
-            </div>
-            <div class="terminal-logs" id="terminal-logs" role="log" aria-live="polite">
-              <div class="log-line info"><span class="log-tag">[INIT]</span> CloudWatch subscriber initialized on region us-east-1. Click "Dispatch Request" above to test live pipeline.</div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
     <!-- Section 2: A Builder's Mindset (Dark Architectural Section) -->
-    <section class="section dark-manifesto" id="explore">
+    <section class="section dark" id="explore">
       <div class="wrap">
         <div class="manifesto">
           <div class="section-head reveal">
             <div>
               <div class="section-kicker"><span>02</span> / A builder&rsquo;s mindset</div>
-              <h2>From first<br>question to<br><em class="gradient-text">real confidence.</em></h2>
+              <h2>From first<br>question to<br><em>real confidence.</em></h2>
             </div>
           </div>
           <div class="manifesto-copy reveal">
-            <p><strong>You don&rsquo;t need years of systems experience to begin.</strong> You need a good question, sandbox cloud credits, and fellow builders who will share what they know.</p>
-            <p>That&rsquo;s the spirit behind our student builder group: make ambitious cloud infrastructure approachable, and make building something we do together in the open.</p>
-            <div class="manifesto-stamp">
-              <span class="stamp-pill">Learn Openly</span>
-              <span class="stamp-pill">Build Real</span>
-              <span class="stamp-pill">Leave a Trail</span>
-            </div>
+            <p><strong>You don&rsquo;t need to know everything to begin.</strong> You need a good question, a safe place to experiment, and people who will share what they know.</p>
+            <p>That&rsquo;s the spirit behind our student builder group: make ambitious technology approachable, and make learning something we do together.</p>
+            <div class="manifesto-stamp">Learn openly &middot; Build thoughtfully &middot; Leave a trail</div>
           </div>
         </div>
 
-        <!-- 4-Step Horizontal Learning Path with Glowing Milestones -->
+        <!-- 4-Step Horizontal Learning Path -->
         <div class="path reveal" id="approach">
-          <article class="path-card" data-tilt>
-            <div class="path-step">01</div>
+          <article>
             <span>01 / ORIENT</span>
             <h3>Find a starting point</h3>
-            <p>Explore core cloud paradigms: compute, object storage, serverless, and VPC networking.</p>
-            <div class="path-milestone">Milestone: AWS Cloud Practitioner</div>
+            <p>Explore the core ideas and choose a question worth following.</p>
           </article>
-          <article class="path-card" data-tilt>
-            <div class="path-step">02</div>
+          <article>
             <span>02 / LEARN</span>
             <h3>Build your foundation</h3>
-            <p>Hands-on workshops deploying CDK stacks, DynamoDB schemas, and REST APIs.</p>
-            <div class="path-milestone">Milestone: Solutions Architect Associate</div>
+            <p>Use guided workshops to connect concepts to real AWS services.</p>
           </article>
-          <article class="path-card" data-tilt>
-            <div class="path-step">03</div>
+          <article>
             <span>03 / MAKE</span>
-            <h3>Ship real systems</h3>
-            <p>Build campus utilities, event-driven pipelines, and generative AI agents on Bedrock.</p>
-            <div class="path-milestone">Milestone: Production GitHub Project</div>
+            <h3>Try something small</h3>
+            <p>Turn a concept into a simple working deploy you can explain.</p>
           </article>
-          <article class="path-card" data-tilt>
-            <div class="path-step">04</div>
+          <article>
             <span>04 / SHARE</span>
             <h3>Bring others along</h3>
-            <p>Demo your architecture at build nights, publish guides, and mentor the next cohort.</p>
-            <div class="path-milestone">Milestone: Student Community Leader</div>
+            <p>Document the learning and make room for a new perspective.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Section 3: RSVP & Interactive 3D Holographic Builder Pass -->
-    <section class="section vibrant-dark" id="rsvp">
+    <!-- Section 3: RSVP & Interactive Builder Pass -->
+    <section class="section light" id="rsvp">
       <div class="wrap rsvp-wrap">
         <div class="section-head reveal">
           <div>
             <div class="section-kicker"><span>03</span> / Build night registration</div>
-            <h2>Claim your seat for<br><em class="gradient-text">the next build.</em></h2>
+            <h2>Claim your seat for<br><em>the next build.</em></h2>
           </div>
-          <p>Next build session: <strong>Thursday, Nov 12 at 6:30 PM</strong> in Science &amp; Engineering Hall, Room 304. We provide cloud credits, pizza, power, and workshop guides.</p>
+          <p>Next build session: <strong>Thursday, Nov 12 at 6:30 PM</strong> in Science &amp; Engineering Hall, Room 304. We provide cloud credits, power, and workshop guides.</p>
         </div>
 
         <div class="rsvp-grid reveal">
           <!-- Form View -->
           <form id="rsvp-form" class="rsvp-card" novalidate>
-            <div class="form-header">
-              <h3 class="card-title">Attendee Registration</h3>
-              <span class="seats-left"><i class="beacon-pulse"></i> Limited Seats Available</span>
-            </div>
-            
+            <h3 class="card-title">Attendee Registration</h3>
             <div class="form-item">
-              <label for="rsvp-name">Full Name <span aria-hidden="true" class="req">*</span></label>
+              <label for="rsvp-name">Full Name <span aria-hidden="true">*</span></label>
               <input type="text" id="rsvp-name" name="name" required placeholder="e.g. Alex Chen" autocomplete="name">
               <span class="form-error" id="name-error" aria-live="polite"></span>
             </div>
 
             <div class="form-item">
-              <label for="rsvp-email">Email Address <span aria-hidden="true" class="req">*</span></label>
+              <label for="rsvp-email">Email Address <span aria-hidden="true">*</span></label>
               <input type="email" id="rsvp-email" name="email" required placeholder="name@university.edu" autocomplete="email">
               <span class="form-error" id="email-error" aria-live="polite"></span>
             </div>
@@ -617,103 +327,67 @@
               </div>
             </div>
 
-            <button class="button full primary-glow" type="submit" id="submit-btn">
-              <span>Confirm RSVP &amp; Generate Pass</span> <span class="arrow">&rarr;</span>
-            </button>
+            <button class="button full" type="submit" id="submit-btn">Confirm RSVP &rarr;</button>
           </form>
 
-          <!-- Confirmed Attendee Pass (Holographic 3D Interactive Badge) -->
+          <!-- Confirmed Attendee Pass (Persists in LocalStorage) -->
           <div id="rsvp-pass" class="pass-card" hidden>
-            <div class="pass-lanyard-cutout" aria-hidden="true"></div>
-            <div class="pass-hologram-glare" id="pass-glare"></div>
-
             <div class="pass-top">
-              <div class="pass-brand">
-                <span class="pass-logo">A</span>
-                <span>AWS<span>@</span>BUILDERS</span>
-              </div>
-              <div class="pass-status-badge">
-                <span class="beacon-pulse"></span> CONFIRMED SEAT
-              </div>
+              <span class="pass-status">Confirmed Seat</span>
+              <span class="pass-code" id="pass-id">SBG-2026-0000</span>
             </div>
-
             <div class="pass-middle">
-              <div class="pass-eyebrow">OFFICIAL STUDENT BUILDER PASS</div>
               <h3 id="pass-name">Attendee Name</h3>
               <p class="pass-sub" id="pass-track">Serverless &amp; APIs Track</p>
-              
               <div class="pass-specs">
-                <div class="spec-cell">
-                  <span class="spec-label">SESSION</span>
+                <div>
+                  <span class="spec-label">Session</span>
                   <span class="spec-val">Serverless Image Pipeline</span>
                 </div>
-                <div class="spec-cell">
-                  <span class="spec-label">DATE &amp; TIME</span>
-                  <span class="spec-val">Thu, Nov 12 &middot; 6:30 PM</span>
+                <div>
+                  <span class="spec-label">When</span>
+                  <span class="spec-val">Thursday, Nov 12 &middot; 6:30 PM</span>
                 </div>
-                <div class="spec-cell">
-                  <span class="spec-label">CAMPUS LOCATION</span>
+                <div>
+                  <span class="spec-label">Where</span>
                   <span class="spec-val">SEH Room 304</span>
                 </div>
-                <div class="spec-cell">
-                  <span class="spec-label">REGISTRATION ID</span>
-                  <span class="spec-val font-mono" id="pass-id">SBG-2026-9042</span>
-                </div>
-              </div>
-
-              <!-- Barcode & QR Code Graphic Elements for Tangible Realism -->
-              <div class="pass-security-strip">
-                <div class="pass-barcode">
-                  <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
-                  <span class="bar b1"></span><span class="bar b4"></span><span class="bar b2"></span>
-                  <span class="bar b3"></span><span class="bar b1"></span><span class="bar b2"></span>
-                  <span class="bar b4"></span><span class="bar b1"></span><span class="bar b3"></span>
-                  <span class="bar b2"></span><span class="bar b1"></span><span class="bar b4"></span>
-                </div>
-                <div class="pass-stamp">VERIFIED PASS &middot; 2026</div>
               </div>
             </div>
-
             <div class="pass-bottom">
-              <button class="button primary-glow" type="button" id="download-ics-btn">
-                <span>Add to Calendar (.ics)</span> &rarr;
-              </button>
-              <button class="button ghost" type="button" id="edit-rsvp-btn">Modify Details</button>
+              <button class="button" type="button" id="download-ics-btn">Add to Calendar (.ics) &rarr;</button>
+              <button class="button ghost" type="button" id="edit-rsvp-btn">Modify RSVP</button>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 4: Practical FAQ (Vibrant Accordion) -->
+    <!-- Section 4: Practical FAQ -->
     <section class="faq" id="faq">
       <div class="wrap faq-layout">
         <div class="faq-intro reveal">
           <div class="section-kicker"><span>04</span> / A few good questions</div>
-          <h2>Start where<br><em class="gradient-text">you are.</em></h2>
-          <p>No prior cloud experience required. Bring curiosity, a laptop, and an appetite for building real solutions.</p>
+          <h2>Start where<br><em>you are.</em></h2>
+          <p>No cloud background required. Bring curiosity, follow a question, and take the next step at your pace.</p>
         </div>
 
         <div class="faq-list reveal">
           <details>
             <summary>What is the AWS Student Builder Group?</summary>
-            <div class="faq-answer">An officially recognized, student-led campus cloud community. We focus on hands-on infrastructure, AWS cloud workshops, hackathons, and preparing students for in-demand cloud engineering roles.</div>
+            <div class="faq-answer">A student-led community focused on exploring cloud technology through learning, hands-on building, and peer sharing.</div>
           </details>
           <details>
-            <summary>Do I need previous AWS or cloud experience to join?</summary>
-            <div class="faq-answer">None at all! We start with foundational principles (Compute, Storage, Networking, Identity) and build up to multi-service event-driven serverless architectures step-by-step.</div>
+            <summary>Do I need cloud experience before I start?</summary>
+            <div class="faq-answer">No. We begin with the fundamentals, ask questions as we go, and build understanding one concept and service at a time.</div>
           </details>
           <details>
             <summary>Will attending cost me any money on AWS?</summary>
-            <div class="faq-answer">Zero dollars. All workshops are carefully architected to operate 100% inside the AWS Free Tier (Lambda, S3, DynamoDB, API Gateway). For deeper architectures and Bedrock LLM labs, we supply free AWS Educate / sandbox credits.</div>
+            <div class="faq-answer">All projects are designed to stay within AWS Free Tier limits (Lambda, S3, DynamoDB). We also supply sandbox credits for deeper builds.</div>
           </details>
           <details>
-            <summary>What should I bring to build nights?</summary>
-            <div class="faq-answer">Bring your laptop, a charger, and your curiosity! We recommend installing Node.js, the AWS CLI, and VS Code beforehand, but mentors will be on-site to help you get everything configured in minutes.</div>
-          </details>
-          <details>
-            <summary>Can this help me earn AWS Certifications?</summary>
-            <div class="faq-answer">Yes! We provide structured study groups, practice exam vouchers, and architecture deep dives for both AWS Certified Cloud Practitioner (CCP) and Solutions Architect Associate (SAA).</div>
+            <summary>What does &ldquo;building together&rdquo; mean?</summary>
+            <div class="faq-answer">Learn in the open: deploy code, share what worked, document the trade-offs, and make it easier for someone else to build from there.</div>
           </details>
         </div>
       </div>
@@ -723,33 +397,26 @@
     <section class="join" id="connect">
       <div class="wrap">
         <div class="join-panel reveal">
-          <div class="join-glow" aria-hidden="true"></div>
           <div class="join-copy">
-            <div class="eyebrow"><i class="beacon-pulse"></i> Your cloud journey starts here</div>
+            <div class="eyebrow">Your next step starts here</div>
             <h2>Stay curious.<br>Make something real.</h2>
-            <p>Join hundreds of student builders taking their skills beyond the lecture hall this semester.</p>
+            <p>Bring a laptop, follow your questions, and build with us this semester.</p>
           </div>
-          <a class="button primary-glow" href="#rsvp">RSVP for Next Session <span class="arrow">&rarr;</span></a>
+          <a class="button" href="#rsvp">RSVP for Next Session <span class="arrow">&rarr;</span></a>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Clean Minimal Futuristic Footer -->
+  <!-- Clean Minimal Footer -->
   <footer class="footer">
     <div class="wrap footer-in">
       <a class="brand" href="#home">
-        <div class="brand-badge small">
-          <span class="brand-mark">A</span>
-        </div>
+        <span class="brand-mark">A</span>
         <span>AWS<span>@</span>BUILDERS</span>
       </a>
-      <div class="footer-status">
-        <span class="telemetry-beacon"></span> All Systems Operational &middot; Student Cloud Community
-      </div>
-      <a class="footer-git" href="https://github.com/PRINCE-ANTHONY/aws" target="_blank" rel="noopener noreferrer">
-        View on GitHub <span class="arrow">&rarr;</span>
-      </a>
+      <span>Student Cloud Community &middot; Campus Chapter</span>
+      <a href="https://github.com/PRINCE-ANTHONY/aws" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
     </div>
   </footer>
 
