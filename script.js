@@ -2,11 +2,114 @@
   'use strict';
 
   // =========================================================================
-  // Futuristic Interactive 3D Cloud Workspace Intro (Three.js)
-  // Inspired by Bruno Simon's 3D interactive experience, reimagined for
-  // AWS Student Builder Group with EC2, S3, Lambda & Cloud Architecture.
+  // AUDIO ENGINE (Web Audio API Synthesizer)
+  // Provides tactile sound feedback for cloud interactions with mute toggle
   // =========================================================================
+  var audioCtx = null;
+  var soundEnabled = true;
 
+  try {
+    var storedSound = sessionStorage.getItem('sbg_sound_enabled');
+    if (storedSound !== null) {
+      soundEnabled = storedSound === '1';
+    }
+  } catch (e) {}
+
+  var soundToggleBtn = document.getElementById('sound-toggle');
+  var soundIcon = document.getElementById('sound-icon');
+
+  function updateSoundUI() {
+    if (soundIcon) {
+      soundIcon.textContent = soundEnabled ? '🔊' : '🔇';
+    }
+    if (soundToggleBtn) {
+      soundToggleBtn.setAttribute('title', soundEnabled ? 'Sound Effects: ON (Click to mute)' : 'Sound Effects: MUTED (Click to unmute)');
+      soundToggleBtn.style.opacity = soundEnabled ? '1' : '0.6';
+    }
+  }
+
+  if (soundToggleBtn) {
+    soundToggleBtn.addEventListener('click', function () {
+      soundEnabled = !soundEnabled;
+      try {
+        sessionStorage.setItem('sbg_sound_enabled', soundEnabled ? '1' : '0');
+      } catch (e) {}
+      updateSoundUI();
+      if (soundEnabled) playPop(640);
+    });
+    updateSoundUI();
+  }
+
+  function getAudioContext() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+
+  function playPop(freq) {
+    if (!soundEnabled) return;
+    try {
+      var ctx = getAudioContext();
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = 'sine';
+      var f = freq || 540;
+      osc.frequency.setValueAtTime(f, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(f * 1.35, ctx.currentTime + 0.07);
+      gain.gain.setValueAtTime(0.045, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.085);
+    } catch (e) {}
+  }
+
+  function playPacketChirp() {
+    if (!soundEnabled) return;
+    try {
+      var ctx = getAudioContext();
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(820, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1420, ctx.currentTime + 0.06);
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.07);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.075);
+    } catch (e) {}
+  }
+
+  function playSuccessChord() {
+    if (!soundEnabled) return;
+    try {
+      var ctx = getAudioContext();
+      var freqs = [440, 554.37, 659.25, 880]; // A Major Chord
+      freqs.forEach(function (f, i) {
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.04);
+        gain.gain.setValueAtTime(0.035, ctx.currentTime + i * 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35 + i * 0.04);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.04);
+        osc.stop(ctx.currentTime + 0.36 + i * 0.04);
+      });
+    } catch (e) {}
+  }
+
+  // =========================================================================
+  // 3D INTERACTIVE WORKBENCH INTRO (Three.js)
+  // =========================================================================
   var intro = document.getElementById('intro');
   var canvasContainer = document.getElementById('intro-canvas-container');
   var enterBtn = document.getElementById('enter-btn');
@@ -27,31 +130,9 @@
   var timers = [];
   var reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Web Audio for subtle, tactile feedback
-  var audioCtx = null;
-  function playPop(freq) {
-    try {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      var osc = audioCtx.createOscillator();
-      var gain = audioCtx.createGain();
-      osc.type = 'sine';
-      var f = freq || 540;
-      osc.frequency.setValueAtTime(f, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(f * 1.35, audioCtx.currentTime + 0.07);
-      gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.085);
-    } catch (e) {}
-  }
-
-  // Three.js State
   var scene, camera, renderer, animationFrameId;
   var builderGroup, deskGroup;
-  var interactiveNodes = []; // EC2, S3, Lambda, Architecture
+  var interactiveNodes = [];
   var circuitLines = [];
   var dataPackets = [];
   var ambientParticles = null;
@@ -62,7 +143,6 @@
   var isInteracting = false;
   var assemblyProgress = 0;
 
-  // Component Data Specs
   var COMPONENT_INFO = {
     'EC2': {
       badge: 'AWS COMPUTE',
@@ -90,18 +170,17 @@
     }
   };
 
-  // Dynamic Canvas Texture for IDE Screens
   function createCodeTexture(isTerminal) {
     var canvas = document.createElement('canvas');
     canvas.width = 512;
     canvas.height = 320;
     var ctx = canvas.getContext('2d');
-    ctx.fillStyle = isTerminal ? '#091019' : '#080d14';
+    ctx.fillStyle = isTerminal ? '#060a12' : '#09111c';
     ctx.fillRect(0, 0, 512, 320);
 
     ctx.fillStyle = '#ff9900';
     ctx.font = 'bold 15px monospace';
-    var title = isTerminal ? '~/aws-builder-group $ cdk deploy --all' : 'import { Stack, aws_s3, aws_lambda } from "aws-cdk-lib";';
+    var title = isTerminal ? '~/aws-builders $ cdk deploy --all' : 'import { Stack, aws_s3, aws_lambda } from "aws-cdk-lib";';
     ctx.fillText(title, 20, 32);
 
     var colors = ['#00d4ff', '#ff9900', '#34d399', '#f472b6', '#a78bfa', '#fbbf24', '#94a3b8'];
@@ -113,16 +192,13 @@
       ctx.fillRect(20 + indent, y, width, 9);
 
       if (i % 2 === 0) {
-        ctx.fillStyle = '#475569';
+        ctx.fillStyle = '#334155';
         ctx.fillRect(20 + indent + width + 14, y, 55, 9);
       }
     }
     return new THREE.CanvasTexture(canvas);
   }
 
-  // -------------------------------------------------------------------------
-  // 3D Scene Initialization
-  // -------------------------------------------------------------------------
   function initThreeScene() {
     if (!window.THREE || !canvasContainer) return false;
     canvasContainer.innerHTML = '';
@@ -131,7 +207,7 @@
     var height = canvasContainer.clientHeight || window.innerHeight;
 
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x080d14, 0.045);
+    scene.fog = new THREE.FogExp2(0x04070d, 0.045);
 
     camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 50);
     camera.position.set(0, 2.8, 6.2);
@@ -144,47 +220,47 @@
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     canvasContainer.appendChild(renderer.domElement);
 
-    // Studio & Neon Lights
-    var ambientLight = new THREE.AmbientLight(0x182433, 1.2);
+    // Dynamic Vibrant Studio Lights
+    var ambientLight = new THREE.AmbientLight(0x182433, 1.4);
     scene.add(ambientLight);
 
-    var keyLight = new THREE.DirectionalLight(0xfff5e6, 1.6);
+    var keyLight = new THREE.DirectionalLight(0xfff5e6, 1.8);
     keyLight.position.set(4, 7, 5);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 1024;
     keyLight.shadow.mapSize.height = 1024;
     scene.add(keyLight);
 
-    var orangeGlow = new THREE.PointLight(0xff9900, 2.8, 7);
+    var orangeGlow = new THREE.PointLight(0xff9900, 3.2, 8);
     orangeGlow.position.set(0, 1.7, 0.2);
     scene.add(orangeGlow);
 
-    var cyanRim = new THREE.DirectionalLight(0x00d4ff, 1.4);
+    var cyanRim = new THREE.DirectionalLight(0x00d4ff, 1.6);
     cyanRim.position.set(-5, 4, -4);
     scene.add(cyanRim);
 
-    // Glowing Neon Grid Floor
-    var floorGeo = new THREE.PlaneGeometry(26, 26);
-    var floorMat = new THREE.MeshStandardMaterial({ color: 0x070c13, roughness: 0.35, metalness: 0.7 });
+    // Glowing Grid Floor
+    var floorGeo = new THREE.PlaneGeometry(28, 28);
+    var floorMat = new THREE.MeshStandardMaterial({ color: 0x050a12, roughness: 0.3, metalness: 0.8 });
     var floor = new THREE.Mesh(floorGeo, floorMat);
     floor.rotation.x = -Math.PI / 2;
     floor.receiveShadow = true;
     scene.add(floor);
 
-    var grid = new THREE.GridHelper(26, 30, 0x1d3348, 0x0f1c29);
+    var grid = new THREE.GridHelper(28, 32, 0x00d4ff, 0x132337);
     grid.position.y = 0.01;
     scene.add(grid);
 
-    // Ambient Floating Data Particles (Cyan & Orange)
-    var particleCount = 70;
+    // Floating Ambient Data Particles
+    var particleCount = 80;
     var pGeo = new THREE.BufferGeometry();
     var pPos = new Float32Array(particleCount * 3);
     var pColors = new Float32Array(particleCount * 3);
 
     for (var p = 0; p < particleCount; p++) {
-      pPos[p * 3] = (Math.random() - 0.5) * 8;
-      pPos[p * 3 + 1] = 0.5 + Math.random() * 3.5;
-      pPos[p * 3 + 2] = (Math.random() - 0.5) * 5;
+      pPos[p * 3] = (Math.random() - 0.5) * 9;
+      pPos[p * 3 + 1] = 0.5 + Math.random() * 3.8;
+      pPos[p * 3 + 2] = (Math.random() - 0.5) * 6;
 
       var isOrange = Math.random() > 0.45;
       pColors[p * 3] = isOrange ? 1.0 : 0.0;
@@ -195,51 +271,46 @@
     pGeo.setAttribute('color', new THREE.BufferAttribute(pColors, 3));
 
     var pMat = new THREE.PointsMaterial({
-      size: 0.05,
+      size: 0.06,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85
+      opacity: 0.9
     });
     ambientParticles = new THREE.Points(pGeo, pMat);
     scene.add(ambientParticles);
 
-    // -----------------------------------------------------------------------
     // Tech Workbench Construction
-    // -----------------------------------------------------------------------
     deskGroup = new THREE.Group();
     var topGeo = new THREE.BoxGeometry(3.6, 0.08, 1.6);
-    var topMat = new THREE.MeshStandardMaterial({ color: 0x141e2a, roughness: 0.25, metalness: 0.7 });
+    var topMat = new THREE.MeshStandardMaterial({ color: 0x0e1724, roughness: 0.25, metalness: 0.7 });
     var deskTop = new THREE.Mesh(topGeo, topMat);
     deskTop.position.set(0, 0.95, 0);
     deskTop.castShadow = true;
     deskTop.receiveShadow = true;
     deskGroup.add(deskTop);
 
-    // Ambient Orange LED Edge on Desk Back
+    // Orange LED Desk Back
     var ledGeo = new THREE.BoxGeometry(3.6, 0.03, 0.02);
     var ledMat = new THREE.MeshBasicMaterial({ color: 0xff9900 });
     var ledStrip = new THREE.Mesh(ledGeo, ledMat);
     ledStrip.position.set(0, 0.99, -0.79);
     deskGroup.add(ledStrip);
 
-    // Sturdy Steel Legs
+    // Legs
     var legGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.95, 12);
-    var legMat = new THREE.MeshStandardMaterial({ color: 0x0c1219, metalness: 0.9, roughness: 0.2 });
+    var legMat = new THREE.MeshStandardMaterial({ color: 0x070c13, metalness: 0.9, roughness: 0.2 });
     [[-1.65, 0.475, -0.65], [1.65, 0.475, -0.65], [-1.65, 0.475, 0.65], [1.65, 0.475, 0.65]].forEach(function (pos) {
       var leg = new THREE.Mesh(legGeo, legMat);
       leg.position.set(pos[0], pos[1], pos[2]);
-      leg.castShadow = true;
       deskGroup.add(leg);
     });
 
     // Dual Curved Ultrawide Monitors
-    var codeTex1 = createCodeTexture(false);
-    var codeTex2 = createCodeTexture(true);
     var monGeo = new THREE.BoxGeometry(1.2, 0.68, 0.03);
-    var bezelMat = new THREE.MeshStandardMaterial({ color: 0x090f16, metalness: 0.8 });
+    var bezelMat = new THREE.MeshStandardMaterial({ color: 0x080e16, metalness: 0.8 });
 
     var leftMon = new THREE.Group();
-    leftMon.add(new THREE.Mesh(monGeo, new THREE.MeshBasicMaterial({ map: codeTex1 })));
+    leftMon.add(new THREE.Mesh(monGeo, new THREE.MeshBasicMaterial({ map: createCodeTexture(false) })));
     var lBezel = new THREE.Mesh(new THREE.BoxGeometry(1.24, 0.72, 0.04), bezelMat);
     lBezel.position.z = -0.01;
     leftMon.add(lBezel);
@@ -248,7 +319,7 @@
     deskGroup.add(leftMon);
 
     var rightMon = new THREE.Group();
-    rightMon.add(new THREE.Mesh(monGeo, new THREE.MeshBasicMaterial({ map: codeTex2 })));
+    rightMon.add(new THREE.Mesh(monGeo, new THREE.MeshBasicMaterial({ map: createCodeTexture(true) })));
     var rBezel = new THREE.Mesh(new THREE.BoxGeometry(1.24, 0.72, 0.04), bezelMat);
     rBezel.position.z = -0.01;
     rightMon.add(rBezel);
@@ -256,17 +327,9 @@
     rightMon.rotation.y = -0.22;
     deskGroup.add(rightMon);
 
-    // Keyboard & Deskpad
-    var kbGeo = new THREE.BoxGeometry(0.68, 0.02, 0.24);
-    var kbMat = new THREE.MeshStandardMaterial({ color: 0x111a24, metalness: 0.5 });
-    var keyboard = new THREE.Mesh(kbGeo, kbMat);
-    keyboard.position.set(0, 1.0, 0.2);
-    deskGroup.add(keyboard);
-
-    // Mini Server Blade Chassis on Desk with Activity LEDs
-    var bladeRack = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.65, 0.48), new THREE.MeshStandardMaterial({ color: 0x101721, metalness: 0.8 }));
+    // Mini Server Blade Chassis
+    var bladeRack = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.65, 0.48), new THREE.MeshStandardMaterial({ color: 0x0d1420, metalness: 0.85 }));
     bladeRack.position.set(1.45, 1.32, -0.3);
-    bladeRack.castShadow = true;
     deskGroup.add(bladeRack);
 
     for (var l = 0; l < 4; l++) {
@@ -275,9 +338,9 @@
       deskGroup.add(led);
     }
 
-    // Holographic Pedestal Projector
+    // Hologram Pedestal Projector & Light Cone
     var pedGeo = new THREE.CylinderGeometry(0.4, 0.45, 0.05, 24);
-    var pedMat = new THREE.MeshStandardMaterial({ color: 0x111c28, metalness: 0.8, roughness: 0.2 });
+    var pedMat = new THREE.MeshStandardMaterial({ color: 0x0e1724, metalness: 0.8, roughness: 0.2 });
     var pedestal = new THREE.Mesh(pedGeo, pedMat);
     pedestal.position.set(0, 0.98, -0.1);
     deskGroup.add(pedestal);
@@ -287,9 +350,8 @@
     pedRing.position.set(0, 1.01, -0.1);
     deskGroup.add(pedRing);
 
-    // Hologram Light Cone
     var beamGeo = new THREE.ConeGeometry(1.3, 1.6, 24, 1, true);
-    var beamMat = new THREE.MeshBasicMaterial({ color: 0xff9900, transparent: true, opacity: 0.1, side: THREE.DoubleSide });
+    var beamMat = new THREE.MeshBasicMaterial({ color: 0xff9900, transparent: true, opacity: 0.12, side: THREE.DoubleSide });
     var beam = new THREE.Mesh(beamGeo, beamMat);
     beam.position.set(0, 1.78, -0.1);
     beam.rotation.x = Math.PI;
@@ -297,48 +359,28 @@
 
     scene.add(deskGroup);
 
-    // -----------------------------------------------------------------------
-    // The Stylized 3D Student Builder
-    // -----------------------------------------------------------------------
+    // Stylized Student Builder
     builderGroup = new THREE.Group();
     builderGroup.position.set(0, 0, 0.85);
 
-    // Ergonomic Chair Back
-    var chairBack = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.8, 0.08), new THREE.MeshStandardMaterial({ color: 0x0b1017, roughness: 0.6 }));
+    var chairBack = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.8, 0.08), new THREE.MeshStandardMaterial({ color: 0x080d14, roughness: 0.6 }));
     chairBack.position.set(0, 1.15, 0.3);
     builderGroup.add(chairBack);
 
-    // Character Torso (Charcoal Tech Hoodie)
-    var torsoGeo = new THREE.BoxGeometry(0.58, 0.65, 0.36);
-    var hoodieMat = new THREE.MeshStandardMaterial({ color: 0x141c26, roughness: 0.7 });
-    var torso = new THREE.Mesh(torsoGeo, hoodieMat);
+    var hoodieMat = new THREE.MeshStandardMaterial({ color: 0x111926, roughness: 0.7 });
+    var torso = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.65, 0.36), hoodieMat);
     torso.position.set(0, 1.15, 0.05);
     torso.rotation.x = 0.06;
-    torso.castShadow = true;
     builderGroup.add(torso);
 
-    // Stylized Head
-    var headGeo = new THREE.BoxGeometry(0.32, 0.35, 0.32);
-    var headMat = new THREE.MeshStandardMaterial({ color: 0xf5cfb3, roughness: 0.5 });
-    var head = new THREE.Mesh(headGeo, headMat);
+    var head = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.35, 0.32), new THREE.MeshStandardMaterial({ color: 0xf5cfb3, roughness: 0.5 }));
     head.position.set(0, 1.62, 0.06);
     builderGroup.add(head);
 
-    // Dark Hair
-    var hairGeo = new THREE.BoxGeometry(0.35, 0.14, 0.34);
-    var hairMat = new THREE.MeshStandardMaterial({ color: 0x1a232f, roughness: 0.9 });
-    var hair = new THREE.Mesh(hairGeo, hairMat);
-    hair.position.set(0, 1.77, 0.06);
-    builderGroup.add(hair);
-
-    // Glowing Orange Cyber Visor
-    var visorGeo = new THREE.BoxGeometry(0.36, 0.08, 0.16);
-    var visorMat = new THREE.MeshBasicMaterial({ color: 0xff9900 });
-    var visor = new THREE.Mesh(visorGeo, visorMat);
+    var visor = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.08, 0.16), new THREE.MeshBasicMaterial({ color: 0xff9900 }));
     visor.position.set(0, 1.65, 0.16);
     builderGroup.add(visor);
 
-    // Arms Typing at Keyboard
     var lArm = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.45, 0.12), hoodieMat);
     lArm.position.set(-0.28, 1.12, -0.15);
     lArm.rotation.x = 0.75;
@@ -351,12 +393,9 @@
 
     scene.add(builderGroup);
 
-    // -----------------------------------------------------------------------
-    // The 4 Core AWS Cloud Nodes (EC2, S3, Lambda, Cloud Architecture)
-    // -----------------------------------------------------------------------
+    // Interactive Floating AWS Nodes
     interactiveNodes = [];
 
-    // Helper: Build a floating node
     function makeInteractiveNode(name, group, posX, posY, posZ) {
       group.position.set(posX, posY, posZ);
       group.scale.set(0.001, 0.001, 0.001);
@@ -374,123 +413,62 @@
       return group;
     }
 
-    // 1. EC2: Rack-mount Blade Compute Chassis with glowing core and activity LEDs
+    // 1. EC2
     var ec2Group = new THREE.Group();
-    var ec2Body = new THREE.Mesh(
-      new THREE.BoxGeometry(0.5, 0.32, 0.4),
-      new THREE.MeshStandardMaterial({ color: 0x121a24, metalness: 0.85, roughness: 0.25 })
-    );
-    var ec2Core = new THREE.Mesh(
-      new THREE.BoxGeometry(0.28, 0.18, 0.42),
-      new THREE.MeshStandardMaterial({ color: 0xff9900, emissive: 0x884400, roughness: 0.2 })
-    );
-    var ec2Bracket = new THREE.Mesh(
-      new THREE.BoxGeometry(0.54, 0.36, 0.44),
-      new THREE.MeshBasicMaterial({ color: 0x00d4ff, wireframe: true })
-    );
-    ec2Group.add(ec2Body);
-    ec2Group.add(ec2Core);
-    ec2Group.add(ec2Bracket);
+    ec2Group.add(new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.32, 0.4), new THREE.MeshStandardMaterial({ color: 0x0f1826, metalness: 0.85, roughness: 0.25 })));
+    ec2Group.add(new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.18, 0.42), new THREE.MeshStandardMaterial({ color: 0xff9900, emissive: 0x884400, roughness: 0.2 })));
+    ec2Group.add(new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.36, 0.44), new THREE.MeshBasicMaterial({ color: 0x00d4ff, wireframe: true })));
     makeInteractiveNode('EC2', ec2Group, -1.25, 2.05, -0.15);
 
-    // 2. S3: Tiered Cylindrical Storage Bucket with Dual Orbital Data Rings
+    // 2. S3
     var s3Group = new THREE.Group();
     for (var s = 0; s < 3; s++) {
-      var s3Disc = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.24, 0.24, 0.07, 24),
-        new THREE.MeshStandardMaterial({ color: 0xff9900, emissive: 0x663300, roughness: 0.3, metalness: 0.6 })
-      );
+      var s3Disc = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 0.07, 24), new THREE.MeshStandardMaterial({ color: 0xff9900, emissive: 0x663300, roughness: 0.3, metalness: 0.6 }));
       s3Disc.position.y = (s - 1) * 0.11;
       s3Group.add(s3Disc);
     }
-    var s3Ring1 = new THREE.Mesh(
-      new THREE.TorusGeometry(0.34, 0.014, 12, 32),
-      new THREE.MeshBasicMaterial({ color: 0xffb84d })
-    );
-    s3Ring1.rotation.x = 0.55;
-    var s3Ring2 = new THREE.Mesh(
-      new THREE.TorusGeometry(0.38, 0.012, 12, 32),
-      new THREE.MeshBasicMaterial({ color: 0x00d4ff })
-    );
-    s3Ring2.rotation.y = 0.7;
-    s3Group.add(s3Ring1);
-    s3Group.add(s3Ring2);
+    var s3Ring = new THREE.Mesh(new THREE.TorusGeometry(0.38, 0.014, 12, 32), new THREE.MeshBasicMaterial({ color: 0x00d4ff }));
+    s3Ring.rotation.x = 0.55;
+    s3Group.add(s3Ring);
     makeInteractiveNode('S3', s3Group, 1.25, 2.05, -0.15);
 
-    // 3. Lambda: Vibrant AWS Orange Serverless Energy Octahedron with pulsing cage
+    // 3. Lambda
     var lambdaGroup = new THREE.Group();
-    var lamCore = new THREE.Mesh(
-      new THREE.OctahedronGeometry(0.28, 0),
-      new THREE.MeshStandardMaterial({ color: 0xff9900, emissive: 0xcc6600, roughness: 0.2, metalness: 0.5 })
-    );
-    var lamCage = new THREE.Mesh(
-      new THREE.OctahedronGeometry(0.35, 0),
-      new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true })
-    );
-    lambdaGroup.add(lamCore);
-    lambdaGroup.add(lamCage);
+    lambdaGroup.add(new THREE.Mesh(new THREE.OctahedronGeometry(0.28, 0), new THREE.MeshStandardMaterial({ color: 0xff9900, emissive: 0xcc6600, roughness: 0.2, metalness: 0.5 })));
+    lambdaGroup.add(new THREE.Mesh(new THREE.OctahedronGeometry(0.36, 0), new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true })));
     makeInteractiveNode('Lambda', lambdaGroup, 0.0, 2.55, -0.1);
 
-    // 4. Cloud Architecture: Central Connected Mesh Hub
+    // 4. Cloud Architecture
     var archGroup = new THREE.Group();
-    var archCore = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.25, 0),
-      new THREE.MeshStandardMaterial({ color: 0x00d4ff, emissive: 0x004466, roughness: 0.2, metalness: 0.8 })
-    );
-    var archWire = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.32, 1),
-      new THREE.MeshBasicMaterial({ color: 0xff9900, wireframe: true, transparent: true, opacity: 0.85 })
-    );
-    var archOrbital = new THREE.Mesh(
-      new THREE.TorusGeometry(0.42, 0.012, 12, 32),
-      new THREE.MeshBasicMaterial({ color: 0x00d4ff })
-    );
-    archOrbital.rotation.x = Math.PI / 2;
-    archGroup.add(archCore);
-    archGroup.add(archWire);
-    archGroup.add(archOrbital);
+    archGroup.add(new THREE.Mesh(new THREE.IcosahedronGeometry(0.25, 0), new THREE.MeshStandardMaterial({ color: 0x00d4ff, emissive: 0x004466, roughness: 0.2, metalness: 0.8 })));
+    archGroup.add(new THREE.Mesh(new THREE.IcosahedronGeometry(0.33, 1), new THREE.MeshBasicMaterial({ color: 0xff9900, wireframe: true, transparent: true, opacity: 0.85 })));
     makeInteractiveNode('Cloud Architecture', archGroup, 0.0, 1.7, -0.1);
 
-    // -----------------------------------------------------------------------
-    // Glowing Fiber-Optic Circuit Tubes Connecting Hub to Services
-    // -----------------------------------------------------------------------
+    // Circuit lines and flowing data packets
     circuitLines = [];
     dataPackets = [];
-
     var hubPos = new THREE.Vector3(0.0, 1.7, -0.1);
     var connections = [
-      { to: new THREE.Vector3(-1.25, 2.05, -0.15), color: 0x00d4ff }, // To EC2
-      { to: new THREE.Vector3(0.0, 2.55, -0.1), color: 0xff9900 },    // To Lambda
-      { to: new THREE.Vector3(1.25, 2.05, -0.15), color: 0x00d4ff }   // To S3
+      { to: new THREE.Vector3(-1.25, 2.05, -0.15), color: 0x00d4ff },
+      { to: new THREE.Vector3(0.0, 2.55, -0.1), color: 0xff9900 },
+      { to: new THREE.Vector3(1.25, 2.05, -0.15), color: 0x00d4ff }
     ];
 
     connections.forEach(function (conn) {
-      var midY = (hubPos.y + conn.to.y) * 0.5 + 0.15;
-      var midX = (hubPos.x + conn.to.x) * 0.5;
-      var midZ = (hubPos.z + conn.to.z) * 0.5 + 0.08;
-      var curve = new THREE.CatmullRomCurve3([
-        hubPos.clone(),
-        new THREE.Vector3(midX, midY, midZ),
-        conn.to.clone()
-      ]);
-
+      var mid = hubPos.clone().lerp(conn.to, 0.5);
+      mid.y += 0.15;
+      var curve = new THREE.CatmullRomCurve3([hubPos.clone(), mid, conn.to.clone()]);
       var tubeGeo = new THREE.TubeGeometry(curve, 24, 0.012, 8, false);
-      var tubeMat = new THREE.MeshBasicMaterial({ color: conn.color, transparent: true, opacity: 0.0 });
-      var tube = new THREE.Mesh(tubeGeo, tubeMat);
+      var tube = new THREE.Mesh(tubeGeo, new THREE.MeshBasicMaterial({ color: conn.color, transparent: true, opacity: 0.0 }));
       scene.add(tube);
       circuitLines.push(tube);
 
-      // Flowing Data Packet along the line
-      var packetMesh = new THREE.Mesh(
-        new THREE.SphereGeometry(0.035, 12, 12),
-        new THREE.MeshBasicMaterial({ color: 0xffffff })
-      );
-      packetMesh.visible = false;
-      scene.add(packetMesh);
-      dataPackets.push({ mesh: packetMesh, curve: curve, progress: Math.random() });
+      var pMesh = new THREE.Mesh(new THREE.SphereGeometry(0.035, 12, 12), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      pMesh.visible = false;
+      scene.add(pMesh);
+      dataPackets.push({ mesh: pMesh, curve: curve, progress: Math.random() });
     });
 
-    // Event Listeners
     window.addEventListener('resize', onThreeResize);
     window.addEventListener('mousemove', onThreeMouseMove);
     canvasContainer.addEventListener('click', onCanvasClick);
@@ -505,9 +483,6 @@
     return true;
   }
 
-  // -------------------------------------------------------------------------
-  // Interaction & Raycasting (Bruno Simon Style)
-  // -------------------------------------------------------------------------
   function onThreeResize() {
     if (!renderer || !camera || !canvasContainer) return;
     var width = canvasContainer.clientWidth || window.innerWidth;
@@ -555,14 +530,12 @@
       autoTimer = null;
     }
 
-    // Raycast hover check
     var node = getRaycastNode(e.clientX, e.clientY);
     if (node) {
       hoveredNode = node;
       document.body.style.cursor = 'pointer';
       if (hoverTag) {
-        var name = node.userData.name;
-        hoverTag.textContent = name + ' · Click to inspect';
+        hoverTag.textContent = node.userData.name + ' · Click to inspect';
         hoverTag.style.left = e.clientX + 'px';
         hoverTag.style.top = (e.clientY - 18) + 'px';
         hoverTag.classList.add('visible');
@@ -581,7 +554,6 @@
       node.rotation.y += Math.PI * 0.75;
       playPop(780);
     } else {
-      // Clicked empty space: hide card if open
       if (componentCard && !componentCard.hidden && !componentCard.contains(e.target)) {
         hideComponentCard();
       }
@@ -609,21 +581,16 @@
     }
   }
 
-  // -------------------------------------------------------------------------
-  // Render & Animation Loop
-  // -------------------------------------------------------------------------
   function animateThree(time) {
     animationFrameId = requestAnimationFrame(animateThree);
     var t = time * 0.001;
 
-    // Smooth Camera Drift / Mouse Parallax
     if (!isTransitioning) {
       camera.position.x += (targetCamX - camera.position.x) * 0.055;
       camera.position.y += (targetCamY - camera.position.y) * 0.055;
       camera.lookAt(0, 1.35, 0);
     }
 
-    // Builder Typing & Breathing Dynamics
     if (builderGroup) {
       builderGroup.position.y = Math.sin(t * 3.6) * 0.012;
       var arms = builderGroup.children;
@@ -631,7 +598,6 @@
       if (arms[5]) arms[5].rotation.x = 0.72 + Math.cos(t * 11) * 0.07;
     }
 
-    // Drift Ambient Data Particles
     if (ambientParticles) {
       var positions = ambientParticles.geometry.attributes.position.array;
       for (var p = 0; p < positions.length / 3; p++) {
@@ -643,13 +609,11 @@
       ambientParticles.geometry.attributes.position.needsUpdate = true;
     }
 
-    // Interactive Nodes Animation & Scaling
     interactiveNodes.forEach(function (node) {
       node.rotation.y += node.userData.rotSpeedY;
       node.rotation.x += node.userData.rotSpeedX;
       node.position.y = node.userData.basePos.y + Math.sin(t * 2.2 + node.userData.floatOffset) * 0.04;
 
-      // Scale up based on assembly target, with hover boost
       var target = node.userData.targetScale;
       if (hoveredNode === node) target *= 1.16;
 
@@ -658,7 +622,6 @@
       node.scale.z += (target - node.scale.z) * 0.085;
     });
 
-    // Flowing Light Packets along Splines
     dataPackets.forEach(function (dp) {
       if (dp.mesh.visible) {
         dp.progress = (dp.progress + 0.008) % 1.0;
@@ -670,9 +633,6 @@
     renderer.render(scene, camera);
   }
 
-  // -------------------------------------------------------------------------
-  // Opening Choreography (3-4 Seconds Assembly Timeline)
-  // -------------------------------------------------------------------------
   function setProgress(percent, status) {
     assemblyProgress = percent;
     if (hudPercent) hudPercent.textContent = percent + '%';
@@ -681,15 +641,13 @@
   }
 
   function runChoreography() {
-    setProgress(0, 'Initializing digital workspace...');
+    setProgress(0, 'Initializing digital cloud workspace...');
 
-    // 0.8s: Grid & Workstation
     timers.push(setTimeout(function () {
       setProgress(28, 'Booting developer environment & workstation...');
       playPop(480);
     }, 800));
 
-    // 1.8s: EC2 & S3 Materialize
     timers.push(setTimeout(function () {
       setProgress(62, 'Deploying AWS EC2 & S3 infrastructure...');
       interactiveNodes.forEach(function (n) {
@@ -700,9 +658,8 @@
       playPop(620);
     }, 1800));
 
-    // 2.7s: Lambda & Cloud Architecture Hub Materialize + Circuits
     timers.push(setTimeout(function () {
-      setProgress(88, 'Compiling AWS Lambda & routing Cloud Architecture...');
+      setProgress(88, 'Compiling AWS Lambda & routing Cloud Mesh...');
       interactiveNodes.forEach(function (n) {
         n.userData.targetScale = 1.0;
       });
@@ -715,13 +672,11 @@
       playPop(740);
     }, 2700));
 
-    // 3.4s: Assembly Complete!
     timers.push(setTimeout(function () {
-      setProgress(100, 'Cloud Environment Online · All Systems Healthy');
+      setProgress(100, 'Cloud Lab Online · All Systems Operational');
       playPop(920);
     }, 3400));
 
-    // 6.5s: Auto-advance only if user is idle and not inspecting
     autoTimer = setTimeout(function () {
       if (!isInteracting && (!componentCard || componentCard.hidden)) {
         finishIntro(false);
@@ -735,9 +690,6 @@
     timers = [];
   }
 
-  // -------------------------------------------------------------------------
-  // Smooth Camera Fly-In Transition to Homepage
-  // -------------------------------------------------------------------------
   function finishIntro(fast) {
     clearAllTimers();
     hideComponentCard();
@@ -758,7 +710,6 @@
       return;
     }
 
-    // Cinematic Camera Fly-In through Cloud Architecture Hub
     isTransitioning = true;
     var startZ = camera ? camera.position.z : 6.2;
     var startY = camera ? camera.position.y : 2.8;
@@ -769,7 +720,7 @@
 
     function stepTransition(now) {
       var progress = Math.min((now - startTime) / duration, 1.0);
-      var ease = progress * progress * (3 - 2 * progress); // smoothstep
+      var ease = progress * progress * (3 - 2 * progress);
       if (camera) {
         camera.position.z = startZ - ease * 4.8;
         camera.position.y = startY - ease * 1.1;
@@ -817,7 +768,6 @@
     }
   }
 
-  // Button and Keyboard Handlers
   if (skipBtn) {
     skipBtn.addEventListener('click', function (e) {
       e.stopPropagation();
@@ -849,7 +799,6 @@
     }
   });
 
-  // Session storage check: auto-play once per session, or replay button
   var introSeen = false;
   try {
     introSeen = sessionStorage.getItem('sbg_3d_intro_seen') === '1';
@@ -864,7 +813,290 @@
     playIntro();
   }
 
-  // ---------- Mobile Navigation Drawer ----------
+  // =========================================================================
+  // INTERACTIVE LIVE CLOUD WORKBENCH & TERMINAL SIMULATOR
+  // =========================================================================
+  var currentPreset = 'api';
+  var totalInvocations = 0;
+  var autoTrafficTimer = null;
+
+  var PRESET_CONFIGS = {
+    'api': {
+      cmd: 'stream-tail --log-group /aws/lambda/campus-builder-service',
+      n1: { cat: 'CLIENT', title: 'Campus Mobile App', badge: 'HTTP/2' },
+      n2: { cat: 'GATEWAY', title: 'API Gateway (REST)', badge: 'v2.1 Managed', icon: '⛩️' },
+      n3: { cat: 'SERVERLESS COMPUTE', title: 'AWS Lambda', badge: 'Node.js 20.x' },
+      n4: { cat: 'DATABASE', title: 'Amazon DynamoDB', badge: 'Single-digit ms', icon: '⚡' },
+      generateLogs: function (reqId, latency) {
+        return [
+          { type: 'info', text: '[INFO] ' + new Date().toISOString() + ' - START RequestId: ' + reqId + ' Version: $LATEST' },
+          { type: 'event', text: '[EVENT] POST /v1/students/check-in HTTP/2 200 OK | Authenticated via IAM / Cognito' },
+          { type: 'info', text: '[QUERY] DynamoDB putItem tableName="builders-roster" duration=' + (latency * 0.22).toFixed(1) + 'ms' },
+          { type: 'success', text: '[REPORT] RequestId: ' + reqId + ' Duration: ' + latency + ' ms Billed: ' + Math.ceil(latency) + ' ms Memory: 64 MB / 128 MB' }
+        ];
+      }
+    },
+    'bedrock': {
+      cmd: 'stream-tail --log-group /aws/bedrock/claude-campus-tutor',
+      n1: { cat: 'CLIENT', title: 'Web AI Chat UI', badge: 'WebSocket' },
+      n2: { cat: 'GATEWAY', title: 'API Gateway (WS)', badge: 'Bidirectional', icon: '⛩️' },
+      n3: { cat: 'ORCHESTRATOR', title: 'AWS Lambda (Agent)', badge: 'Python 3.12' },
+      n4: { cat: 'FOUNDATION MODEL', title: 'Amazon Bedrock', badge: 'Claude 3.5 Sonnet', icon: '🤖' },
+      generateLogs: function (reqId, latency) {
+        return [
+          { type: 'info', text: '[INFO] ' + new Date().toISOString() + ' - START RequestId: ' + reqId + ' Session: sess_' + Math.floor(Math.random() * 90000) },
+          { type: 'event', text: '[BEDROCK] InvokeModelWithResponseStream model="anthropic.claude-3-5-sonnet-20241022-v2:0"' },
+          { type: 'info', text: '[STREAM] First token latency: ' + (latency * 0.35).toFixed(1) + 'ms | Prompt tokens: 128 | Output: 245' },
+          { type: 'success', text: '[REPORT] RequestId: ' + reqId + ' Duration: ' + latency + ' ms Guardrails: 0 infractions | Cost: $0.00076' }
+        ];
+      }
+    },
+    'pipeline': {
+      cmd: 'stream-tail --log-group /aws/s3-events/image-processor',
+      n1: { cat: 'CLIENT', title: 'Media Uploader', badge: 'Multipart' },
+      n2: { cat: 'OBJECT STORE', title: 'Amazon S3 (Ingest)', badge: 'EventBridge En', icon: '📦' },
+      n3: { cat: 'IMAGE PROCESSOR', title: 'AWS Lambda (Sharp)', badge: 'ARM64 Graviton' },
+      n4: { cat: 'OPTIMIZED S3', title: 'Amazon S3 (CDN)', badge: 'Multi-AZ WebP', icon: '🗄️' },
+      generateLogs: function (reqId, latency) {
+        return [
+          { type: 'info', text: '[INFO] ' + new Date().toISOString() + ' - EventBridge trigger s3:ObjectCreated:Put on s3://campus-drop/' },
+          { type: 'event', text: '[PROCESS] Resizing 3.4MB raw banner -> WebP thumbnail 140KB via libvips' },
+          { type: 'info', text: '[S3-PUT] Generated s3://campus-cdn/thumbs/' + reqId.substring(0, 8) + '.webp' },
+          { type: 'success', text: '[REPORT] RequestId: ' + reqId + ' Duration: ' + latency + ' ms Billed: ' + Math.ceil(latency) + ' ms Memory: 88 MB / 256 MB' }
+        ];
+      }
+    }
+  };
+
+  // Elements
+  var wbTriggerBtn = document.getElementById('wb-trigger-btn');
+  var wbAutoBtn = document.getElementById('wb-auto-btn');
+  var autoState = document.getElementById('auto-state');
+  var presetBtns = document.querySelectorAll('.wb-preset-btn');
+  var statInvocations = document.getElementById('stat-invocations');
+  var statLatency = document.getElementById('stat-latency');
+  var statMemory = document.getElementById('stat-memory');
+  var statStatus = document.getElementById('stat-status');
+  var statCost = document.getElementById('stat-cost');
+  var terminalLogs = document.getElementById('terminal-logs');
+  var terminalClear = document.getElementById('terminal-clear');
+  var termCmd = document.getElementById('term-cmd');
+
+  // Nodes & Connectors
+  var n1Cat = document.getElementById('n1-cat');
+  var n1Title = document.getElementById('n1-title');
+  var n1Badge = document.getElementById('n1-badge');
+  var n2Cat = document.getElementById('n2-cat');
+  var n2Title = document.getElementById('n2-title');
+  var n2Badge = document.getElementById('n2-badge');
+  var n2Icon = document.getElementById('n2-icon');
+  var n3Cat = document.getElementById('n3-cat');
+  var n3Title = document.getElementById('n3-title');
+  var n3Badge = document.getElementById('n3-badge');
+  var n4Cat = document.getElementById('n4-cat');
+  var n4Title = document.getElementById('n4-title');
+  var n4Badge = document.getElementById('n4-badge');
+  var n4Icon = document.getElementById('n4-icon');
+
+  var node1 = document.getElementById('node-1');
+  var node2 = document.getElementById('node-2');
+  var node3 = document.getElementById('node-3');
+  var node4 = document.getElementById('node-4');
+  var packet1 = document.getElementById('packet-1');
+  var packet2 = document.getElementById('packet-2');
+  var packet3 = document.getElementById('packet-3');
+
+  function applyPreset(presetName) {
+    currentPreset = presetName;
+    var cfg = PRESET_CONFIGS[presetName];
+    if (!cfg) return;
+
+    if (termCmd) termCmd.textContent = cfg.cmd;
+    if (n1Cat) n1Cat.textContent = cfg.n1.cat;
+    if (n1Title) n1Title.textContent = cfg.n1.title;
+    if (n1Badge) n1Badge.textContent = cfg.n1.badge;
+
+    if (n2Cat) n2Cat.textContent = cfg.n2.cat;
+    if (n2Title) n2Title.textContent = cfg.n2.title;
+    if (n2Badge) n2Badge.textContent = cfg.n2.badge;
+    if (n2Icon) n2Icon.textContent = cfg.n2.icon;
+
+    if (n3Cat) n3Cat.textContent = cfg.n3.cat;
+    if (n3Title) n3Title.textContent = cfg.n3.title;
+    if (n3Badge) n3Badge.textContent = cfg.n3.badge;
+
+    if (n4Cat) n4Cat.textContent = cfg.n4.cat;
+    if (n4Title) n4Title.textContent = cfg.n4.title;
+    if (n4Badge) n4Badge.textContent = cfg.n4.badge;
+    if (n4Icon) n4Icon.textContent = cfg.n4.icon;
+
+    presetBtns.forEach(function (btn) {
+      var isTarget = btn.getAttribute('data-preset') === presetName;
+      btn.classList.toggle('active', isTarget);
+      btn.setAttribute('aria-selected', String(isTarget));
+    });
+
+    playPop(620);
+    appendTerminalLine({ type: 'info', text: '[SWITCH] Switched active architecture topology to: ' + presetName.toUpperCase() });
+  }
+
+  presetBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      applyPreset(btn.getAttribute('data-preset'));
+    });
+  });
+
+  function appendTerminalLine(logObj) {
+    if (!terminalLogs) return;
+    var line = document.createElement('div');
+    line.className = 'log-line ' + (logObj.type || 'info');
+    line.textContent = logObj.text;
+    terminalLogs.appendChild(line);
+
+    // Keep log buffer bounded
+    while (terminalLogs.children.length > 40) {
+      terminalLogs.removeChild(terminalLogs.children[0]);
+    }
+    terminalLogs.scrollTop = terminalLogs.scrollHeight;
+  }
+
+  if (terminalClear) {
+    terminalClear.addEventListener('click', function () {
+      if (terminalLogs) terminalLogs.innerHTML = '';
+      playPop(420);
+    });
+  }
+
+  function dispatchSimulatedRequest() {
+    totalInvocations++;
+    if (statInvocations) statInvocations.textContent = totalInvocations.toLocaleString();
+    if (statStatus) {
+      statStatus.textContent = 'IN-FLIGHT';
+      statStatus.className = 'stat-value status-executing';
+    }
+
+    var baseLatency = currentPreset === 'bedrock' ? (120 + Math.random() * 80) : (12 + Math.random() * 15);
+    var latency = parseFloat(baseLatency.toFixed(1));
+
+    // Sound effect
+    playPacketChirp();
+
+    // Sequence node flashes & packets
+    if (node1) node1.classList.add('executing');
+    if (packet1) {
+      packet1.classList.remove('firing');
+      void packet1.offsetWidth;
+      packet1.classList.add('firing');
+    }
+
+    setTimeout(function () {
+      if (node1) node1.classList.remove('executing');
+      if (node2) node2.classList.add('executing');
+      if (packet2) {
+        packet2.classList.remove('firing');
+        void packet2.offsetWidth;
+        packet2.classList.add('firing');
+      }
+    }, 180);
+
+    setTimeout(function () {
+      if (node2) node2.classList.remove('executing');
+      if (node3) node3.classList.add('executing');
+      if (packet3) {
+        packet3.classList.remove('firing');
+        void packet3.offsetWidth;
+        packet3.classList.add('firing');
+      }
+    }, 360);
+
+    setTimeout(function () {
+      if (node3) node3.classList.remove('executing');
+      if (node4) node4.classList.add('executing');
+
+      // Update metrics
+      if (statLatency) statLatency.textContent = latency + ' ms';
+      if (statMemory) statMemory.textContent = (currentPreset === 'bedrock' ? '128 MB / 256 MB' : '64 MB / 128 MB');
+      if (statStatus) {
+        statStatus.textContent = '200 OK';
+        statStatus.className = 'stat-value status-ready';
+      }
+      var estCost = (totalInvocations * 0.0000002).toFixed(6);
+      if (statCost) statCost.textContent = '$' + estCost;
+
+      // Stream generated logs
+      var reqId = 'c' + Math.random().toString(36).substring(2, 10) + '-' + Math.random().toString(36).substring(2, 6);
+      var logs = PRESET_CONFIGS[currentPreset].generateLogs(reqId, latency);
+      logs.forEach(function (log) {
+        appendTerminalLine(log);
+      });
+
+      setTimeout(function () {
+        if (node4) node4.classList.remove('executing');
+      }, 250);
+    }, 540);
+  }
+
+  if (wbTriggerBtn) {
+    wbTriggerBtn.addEventListener('click', function () {
+      dispatchSimulatedRequest();
+    });
+  }
+
+  if (wbAutoBtn) {
+    wbAutoBtn.addEventListener('click', function () {
+      if (autoTrafficTimer) {
+        clearInterval(autoTrafficTimer);
+        autoTrafficTimer = null;
+        wbAutoBtn.classList.remove('auto-active');
+        if (autoState) autoState.textContent = 'OFF';
+        playPop(440);
+      } else {
+        wbAutoBtn.classList.add('auto-active');
+        if (autoState) autoState.textContent = 'ON';
+        dispatchSimulatedRequest();
+        autoTrafficTimer = setInterval(dispatchSimulatedRequest, 2400);
+        playPop(880);
+      }
+    });
+  }
+
+  // =========================================================================
+  // 3D HOLOGRAPHIC ATTENDEE PASS PARALLAX TILT
+  // =========================================================================
+  var rsvpPass = document.getElementById('rsvp-pass');
+  var passGlare = document.getElementById('pass-glare');
+
+  if (rsvpPass) {
+    rsvpPass.addEventListener('mousemove', function (e) {
+      var rect = rsvpPass.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var midX = rect.width / 2;
+      var midY = rect.height / 2;
+
+      var rotY = ((x - midX) / midX) * 16;
+      var rotX = -((y - midY) / midY) * 16;
+
+      rsvpPass.style.transform = 'perspective(900px) rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg) scale3d(1.02, 1.02, 1.02)';
+
+      if (passGlare) {
+        var glareX = (x / rect.width) * 100;
+        var glareY = (y / rect.height) * 100;
+        passGlare.style.background = 'radial-gradient(circle at ' + glareX + '% ' + glareY + '%, rgba(255, 153, 0, 0.25) 0%, rgba(0, 212, 255, 0.25) 35%, rgba(168, 85, 247, 0.2) 65%, transparent 85%)';
+      }
+    });
+
+    rsvpPass.addEventListener('mouseleave', function () {
+      rsvpPass.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      if (passGlare) {
+        passGlare.style.background = 'linear-gradient(115deg, transparent 20%, rgba(255, 153, 0, 0.12) 40%, rgba(0, 212, 255, 0.18) 55%, rgba(168, 85, 247, 0.12) 70%, transparent 90%)';
+      }
+    });
+  }
+
+  // =========================================================================
+  // MOBILE NAVIGATION DRAWER
+  // =========================================================================
   var menuToggle = document.querySelector('.menu-toggle');
   var navLinks = document.getElementById('navlinks');
 
@@ -886,7 +1118,9 @@
     });
   }
 
-  // ---------- Intersection Observer for Scroll Reveals ----------
+  // =========================================================================
+  // SCROLL REVEALS (Intersection Observer)
+  // =========================================================================
   var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var observer = new IntersectionObserver(function (entries) {
@@ -896,15 +1130,16 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
     reveals.forEach(function (el) { observer.observe(el); });
   } else {
     reveals.forEach(function (el) { el.classList.add('visible'); });
   }
 
-  // ---------- RSVP State & Calendar Export (.ics) ----------
+  // =========================================================================
+  // RSVP STATE & ICALENDAR EXPORT (.ics)
+  // =========================================================================
   var rsvpForm = document.getElementById('rsvp-form');
-  var rsvpPass = document.getElementById('rsvp-pass');
   var passName = document.getElementById('pass-name');
   var passTrack = document.getElementById('pass-track');
   var passId = document.getElementById('pass-id');
@@ -974,6 +1209,7 @@
         localStorage.setItem('sbg_membership', JSON.stringify(attendee));
       } catch (e) {}
 
+      playSuccessChord();
       renderPass();
     });
   }
@@ -991,12 +1227,12 @@
         }
         localStorage.removeItem('sbg_membership');
       } catch (e) {}
+      playPop(520);
       renderPass();
       if (nameInput) nameInput.focus();
     });
   }
 
-  // Calendar .ics generator
   if (downloadIcsBtn) {
     downloadIcsBtn.addEventListener('click', function () {
       var ics = [
@@ -1027,6 +1263,7 @@
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
+      playSuccessChord();
     });
   }
 
