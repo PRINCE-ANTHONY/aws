@@ -19,48 +19,57 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=restore">
-  <!-- Three.js for 3D Cinematic Tech Workbench -->
+  <link rel="stylesheet" href="style.css?v=isometric">
+  <!-- Three.js for 3D Isometric Architecture Construction -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <!-- Interactive 3D Cloud Architecture Intro -->
-  <div id="intro" role="dialog" aria-modal="true" aria-label="AWS Student Builder Group intro">
-    <button class="skip-btn" type="button" id="skip" aria-label="Skip intro">Skip &rarr;</button>
+  <!-- Playful, Purposeful 3D Tech Intro: "A Team Building the Cloud" -->
+  <div id="intro" role="dialog" aria-modal="true" aria-label="AWS Student Builder Group 3D Introduction">
+    <!-- Top Utility Controls -->
+    <div class="intro-topbar">
+      <div class="intro-badge">
+        <span class="intro-pulse-dot" aria-hidden="true"></span>
+        <span class="intro-badge-text">AWS STUDENT BUILDER GROUP &middot; MINIATURE CLOUD LAB</span>
+      </div>
+        <button class="intro-ctrl-btn" type="button" id="sound-toggle" aria-label="Enable sound effects (currently muted)" title="Toggle audio feedback">
+          <span id="sound-icon" aria-hidden="true">&#9834;</span> <span id="sound-state">Sound Off</span>
+        </button>
+        <button class="skip-btn" type="button" id="skip" aria-label="Skip intro to homepage content">
+          Skip Intro <kbd aria-hidden="true">Esc</kbd>
+        </button>
+      </div>
 
-    <!-- WebGL Canvas -->
-    <div class="intro-canvas-wrapper" id="intro-canvas-container"></div>
+    <!-- WebGL Canvas Container for 3D Tabletop Workbench -->
+    <div class="intro-canvas-wrapper" id="intro-canvas-container" tabindex="0" role="region" aria-label="Interactive 3D Workbench: Click builders or drag to rotate"></div>
 
-    <!-- Service Inspection Card (revealed on click) -->
+    <!-- Service & Builder Inspection Detail Card (Accessible Drawer) -->
     <div class="component-card" id="component-card" aria-hidden="true" hidden>
-      <div class="card-badge" id="card-badge">AWS SERVICE</div>
+      <div class="card-badge" id="card-badge">AWS BUILDER ROLE</div>
       <h3 class="card-name" id="card-name"></h3>
       <p class="card-desc" id="card-desc"></p>
       <div class="card-meta" id="card-meta"></div>
-      <button class="card-close" type="button" id="card-close" aria-label="Dismiss">&times;</button>
+      <button class="card-close" type="button" id="card-close" aria-label="Close details">&times;</button>
     </div>
 
-    <!-- Hover tooltip -->
-    <div class="hover-tag" id="hover-tag"></div>
+    <!-- Dynamic 3D Cursor Hover Tooltip -->
+    <div class="hover-tag" id="hover-tag" aria-hidden="true"></div>
 
-    <!-- HUD Overlay -->
-    <div class="intro-overlay-hud">
-      <div class="hud-top">
-        <span class="hud-eyebrow">Building the Cloud</span>
-        <h2 class="hud-headline">AWS Student<br>Builder Group</h2>
-        <p class="hud-subtitle">Connect. Build. Deploy.</p>
-      </div>
-
-      <div class="intro-controls">
-        <div class="hud-progress-box">
-          <span id="hud-status-text" class="hud-status-text">Setting up workspace...</span>
-          <div class="hud-bar">
-            <div class="hud-bar-fill" id="hud-bar-fill"></div>
-          </div>
+    <!-- Narrative Hero Presentation (Reveals during Pull-back) -->
+    <div class="intro-hero" id="intro-hero">
+      <div class="intro-hero-copy">
+        <div class="intro-eyebrow">AWS Student Builder Group</div>
+        <h1 class="intro-title">A Team Building <em>The Cloud.</em></h1>
+        <p class="intro-desc">Where students assemble real infrastructure, connect distributed services, and explore AWS through hands-on collaboration.</p>
+        <div class="intro-cta-wrap">
+          <button class="enter-btn" type="button" id="enter-btn" aria-label="Explore AWS Student Builder Group website">
+            <span>Explore AWS SBG</span>
+            <span class="enter-arrow" aria-hidden="true">&darr;</span>
+          </button>
+          <span class="intro-hint" aria-hidden="true">Click any robotic builder or module to inspect &middot; Drag to rotate</span>
         </div>
-        <button class="enter-btn" type="button" id="enter-btn">Enter Site &darr;</button>
       </div>
     </div>
   </div>
