@@ -1,89 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AWS Student Builder Group</title>
-<meta name="description" content="AWS Student Builder Group: students learning cloud by building real projects on AWS.">
-<meta name="theme-color" content="#0F1722">
-<script>document.documentElement.classList.add('js')</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AWS Student Builder Group — Build beyond the classroom</title>
+  <meta name="description" content="A student-led cloud community exploring AWS through learning, hands-on building, and real architectures.">
+  <meta name="theme-color" content="#f5f2e9">
+  
+  <!-- OpenGraph & Twitter Cards -->
+  <meta property="og:title" content="AWS Student Builder Group — Build beyond the classroom">
+  <meta property="og:description" content="A student-led community exploring cloud technology through learning, building, and sharing.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  
+  <!-- Custom SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23101820'/%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23ff9900' stroke-width='2'/%3E%3Ctext x='16' y='21' font-family='sans-serif' font-weight='800' font-size='15' fill='%23ff9900' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Three.js for 3D Cinematic Tech Workbench -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
-<body class="lock">
-<a class="sr" href="#main">Skip to content</a>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-<div id="intro">
-  <button class="skip" type="button" id="skip">Skip intro</button>
-<<<<<<< HEAD
-  <div class="wall">
-    <svg id="stage" role="img" aria-label="Interactive AWS 3D blocks" viewBox="0 -50 800 450"></svg>
-    <div class="intro-controls">
-      <span class="intro-tip">Hover or tap blocks to bounce</span>
-      <button class="enter-btn" type="button" id="enter-btn">Enter site &darr;</button>
+  <!-- Interactive 3D Cloud Architecture Intro -->
+  <div id="intro" role="dialog" aria-modal="true" aria-label="AWS Student Builder Group intro">
+    <button class="skip-btn" type="button" id="skip" aria-label="Skip intro">Skip &rarr;</button>
+
+    <!-- WebGL Canvas -->
+    <div class="intro-canvas-wrapper" id="intro-canvas-container"></div>
+
+    <!-- Service Inspection Card (revealed on click) -->
+    <div class="component-card" id="component-card" aria-hidden="true" hidden>
+      <div class="card-badge" id="card-badge">AWS SERVICE</div>
+      <h3 class="card-name" id="card-name"></h3>
+      <p class="card-desc" id="card-desc"></p>
+      <div class="card-meta" id="card-meta"></div>
+      <button class="card-close" type="button" id="card-close" aria-label="Dismiss">&times;</button>
     </div>
-  </div>
-=======
-  <div class="wall"><svg id="stage" aria-hidden="true" viewBox="0 -50 800 450"></svg></div>
->>>>>>> ed148cd7d2fa63406dfeec74f61a3bc448a390ce
-</div>
 
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="#top"><i></i><span class="long">AWS Student Builder Group</span><span class="short">AWS SBG</span></a>
-    <nav class="nav" aria-label="Primary">
-      <a class="tl" href="#what">What we run</a>
-      <button class="btn ghost" type="button" id="replay">Replay intro</button>
-      <a class="btn" href="#join">Join</a>
-    </nav>
-  </div>
-</header>
+    <!-- Hover tooltip -->
+    <div class="hover-tag" id="hover-tag"></div>
 
-<main id="main">
-  <div class="hero" id="top"><div class="wrap">
-    <div>
-      <p class="eyebrow rise" style="--i:0">AWS Student Builder Group · [College name]</p>
-      <h1 class="rise" style="--i:1">Learn cloud <em>by building on it.</em></h1>
-      <p class="lede rise" style="--i:2">We are students who meet to ship real projects on AWS, from a first deploy to a demo day. Bring a laptop and a half-formed idea.</p>
-      <div class="row rise" style="--i:3">
-        <a class="btn" href="#join">Join the next build night</a>
-        <a class="tlink" href="#what">See what we run</a>
+    <!-- HUD Overlay -->
+    <div class="intro-overlay-hud">
+      <div class="hud-top">
+        <span class="hud-eyebrow">Building the Cloud</span>
+        <h2 class="hud-headline">AWS Student<br>Builder Group</h2>
+        <p class="hud-subtitle">Connect. Build. Deploy.</p>
+      </div>
+
+      <div class="intro-controls">
+        <div class="hud-progress-box">
+          <span id="hud-status-text" class="hud-status-text">Setting up workspace...</span>
+          <div class="hud-bar">
+            <div class="hud-bar-fill" id="hud-bar-fill"></div>
+          </div>
+        </div>
+        <button class="enter-btn" type="button" id="enter-btn">Enter Site &darr;</button>
       </div>
     </div>
-    <dl class="facts rise" style="--i:4">
-      <div><dt>When</dt><dd>[Day, date, time]</dd></div>
-      <div><dt>Where</dt><dd>[Room, building]</dd></div>
-      <div><dt>Who</dt><dd>[Who can join]</dd></div>
-      <div><dt>How</dt><dd>[What to bring, how to sign up]</dd></div>
-    </dl>
-  </div></div>
+  </div>
 
-  <section id="what"><div class="wrap">
-    <h2 class="reveal">Four ways to <em>build with us.</em></h2>
-    <p class="sub reveal">Pick the format that fits where you are. Edit the lines below to match what the group really runs.</p>
-    <ol class="prog reveal">
-      <li><span class="num">I</span><div class="pt">Build nights</div><p class="pd">[Bring a project or start one. Deploy something by the end of the evening.]</p></li>
-      <li><span class="num">II</span><div class="pt">Workshops</div><p class="pd">[One AWS service at a time, taught hands-on.]</p></li>
-      <li><span class="num">III</span><div class="pt">Hackathons</div><p class="pd">[Teams, a deadline, and a working demo at the end.]</p></li>
-      <li><span class="num">IV</span><div class="pt">Study circles</div><p class="pd">[Small groups preparing for AWS certifications together.]</p></li>
-    </ol>
-  </div></section>
 
-  <section id="join" class="band"><div class="wrap">
-    <div class="reveal"><h2>The next build <em>starts soon.</em></h2>
-      <p class="sub">Free to join. [Add the sign-up detail here.]</p></div>
-    <div class="reveal"><a class="btn" href="mailto:?subject=Join%20AWS%20Student%20Builder%20Group">Join the group</a></div>
-  </div></section>
-</main>
+  <!-- Sticky Topbar Navigation -->
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#home" aria-label="AWS Student Builder Group Home">
+        <span class="brand-mark">A</span>
+        <span>AWS<span>@</span>BUILDERS</span>
+      </a>
+      <nav class="navlinks" id="navlinks" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#explore">Our mindset</a>
+        <a href="#approach">Learning path</a>
+        <a href="#rsvp">RSVP</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="button ghost replay-nav-btn" type="button" id="replay" aria-label="Replay AWS blocks intro">Replay intro</button>
+        <a class="nav-cta" href="#rsvp">Join the build <span class="arrow">&rarr;</span></a>
+        <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navlinks">&#9776;</button>
+      </div>
+    </div>
+  </header>
 
-<footer><div class="wrap">
-  <div><p class="serif">AWS Student Builder Group</p><p>[College name], [City]</p></div>
-  <div><p>[Meeting day, time and venue]</p><p>[Contact email]</p></div>
-  <p class="legal">© [Year] AWS Student Builder Group. Details collected are used only to run group events.</p>
-</div></footer>
+  <main id="main">
+    <!-- Hero Section with Glowing Server Rack Artwork -->
+    <section class="wrap hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow">People &nbsp;/&nbsp; Technology &nbsp;/&nbsp; A brighter tomorrow</div>
+        <h1>Students.<br>Cloud.<br><em>Real impact.</em></h1>
+        <p>A student-led community exploring cloud technology, deploying serverless systems, and building useful things together.</p>
+        <div class="hero-actions">
+          <a class="button" href="#rsvp">Explore the community <span class="arrow">&rarr;</span></a>
+          <a class="button ghost" href="#approach">See our learning path <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="hero-proof" aria-label="Community pillars">
+          <span><i></i>Student-led</span>
+          <span><i></i>Learn by doing</span>
+          <span><i></i>Share openly</span>
+        </div>
+      </div>
 
-<script src="script.js"></script>
+      <!-- Architectural Server Rack Illustration with Animated Glowing Pathways -->
+      <div class="visual server-visual" role="img" aria-label="Illustration of cloud server racks connected by glowing orange data pathways">
+        <svg class="server-art" viewBox="0 0 760 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="rack-face" x1="0" x2="1" y1="0" y2="1">
+              <stop stop-color="#394143"/>
+              <stop offset=".42" stop-color="#202629"/>
+              <stop offset="1" stop-color="#111619"/>
+            </linearGradient>
+            <linearGradient id="rack-side" x1="0" x2="1">
+              <stop stop-color="#0c1114"/>
+              <stop offset="1" stop-color="#262d30"/>
+            </linearGradient>
+            <filter id="led-glow" x="-300%" y="-300%" width="700%" height="700%">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <filter id="path-glow" x="-50%" y="-500%" width="200%" height="1100%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <g id="rack">
+              <path class="rack-side" d="M0 15 18 6v316l-18 10z"/>
+              <path class="rack-top" d="m0 15 18-9 126 0-18 9z"/>
+              <rect class="rack-shell" x="0" y="15" width="126" height="316" rx="3"/>
+              <rect class="rack-panel" x="8" y="25" width="110" height="292" rx="2"/>
+              <g class="rack-slot">
+                <rect x="14" y="36" width="98" height="34" rx="2"/>
+                <rect x="14" y="78" width="98" height="34" rx="2"/>
+                <rect x="14" y="120" width="98" height="34" rx="2"/>
+                <rect x="14" y="162" width="98" height="34" rx="2"/>
+                <rect x="14" y="204" width="98" height="34" rx="2"/>
+                <rect x="14" y="246" width="98" height="34" rx="2"/>
+                <rect x="14" y="288" width="98" height="20" rx="2"/>
+              </g>
+              <g class="rack-muted">
+                <circle cx="27" cy="51" r="2"/>
+                <circle cx="27" cy="93" r="2"/>
+                <circle cx="27" cy="135" r="2"/>
+                <circle cx="27" cy="177" r="2"/>
+                <circle cx="27" cy="219" r="2"/>
+                <circle cx="27" cy="261" r="2"/>
+                <circle cx="27" cy="298" r="2"/>
+              </g>
+              <g class="rack-lights">
+                <circle cx="99" cy="51" r="2"/>
+                <circle cx="106" cy="51" r="2"/>
+                <circle cx="99" cy="93" r="2"/>
+                <circle cx="106" cy="93" r="2"/>
+                <circle cx="99" cy="135" r="2"/>
+                <circle cx="106" cy="135" r="2"/>
+                <circle cx="99" cy="177" r="2"/>
+                <circle cx="106" cy="177" r="2"/>
+                <circle cx="99" cy="219" r="2"/>
+                <circle cx="106" cy="219" r="2"/>
+                <circle cx="99" cy="261" r="2"/>
+                <circle cx="106" cy="261" r="2"/>
+              </g>
+            </g>
+          </defs>
+          <path class="rack-floor" d="M0 427 355 389 760 434M83 500 355 389 645 500M355 389v111M0 463l355-74 405 76"/>
+          <path class="pathway-soft" d="M0 380h245v-42h160v-55h125v-50h132M74 422h188v-37h91v-46h120v-64h111v-52h90"/>
+          <path class="pathway pathway-flow" d="M0 380h245v-42h160v-55h125v-50h132M74 422h188v-37h91v-46h120v-64h111v-52h90"/>
+          <g opacity=".72" transform="translate(62 142) scale(.68)"><use href="#rack"/></g>
+          <g opacity=".8" transform="translate(158 118) scale(.78)"><use href="#rack"/></g>
+          <g opacity=".88" transform="translate(266 87) scale(.9)"><use href="#rack"/></g>
+          <g transform="translate(390 55) scale(1.08)"><use href="#rack"/></g>
+          <g opacity=".88" transform="translate(526 91) scale(.91)"><use href="#rack"/></g>
+          <g opacity=".78" transform="translate(634 127) scale(.78)"><use href="#rack"/></g>
+          <path class="pathway pathway-flow" d="M394 391v-94h62v-54h66"/>
+        </svg>
+        <div class="visual-caption"><i></i>Learn &middot; build &middot; share</div>
+      </div>
+    </section>
+
+    <!-- Warm Editorial Ticker Bar -->
+    <div class="ticker">
+      <div class="wrap ticker-in">
+        <strong>Curiosity &rarr; capability</strong>
+        <span class="spark">&#10003;</span>
+        <span>Cloud fundamentals</span>
+        <span class="spark">&#10003;</span>
+        <span>Hands-on practice</span>
+        <span class="spark">&#10003;</span>
+        <span>Community built</span>
+      </div>
+    </div>
+
+    <!-- Section 1: What Brings Us Together (Light Paper Section) -->
+    <section class="section light" id="about">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker"><span>01</span> / What brings us together</div>
+            <h2>Make the cloud<br>feel <em>within reach.</em></h2>
+          </div>
+          <p>A place for students to explore cloud computing with openness and intent. Start with the basics, follow your questions, and learn alongside people who are building too.</p>
+        </div>
+
+        <div class="pillars reveal">
+          <article class="pillar">
+            <div class="num">01 &mdash; UNDERSTAND</div>
+            <div class="pillar-icon">&#9680;</div>
+            <h3>Start with the why</h3>
+            <p>Build a clear mental model of cloud concepts, the problems they solve, and the architectural trade-offs behind the tools.</p>
+          </article>
+          <article class="pillar">
+            <div class="num">02 &mdash; EXPERIMENT</div>
+            <div class="pillar-icon">&#8993;</div>
+            <h3>Make it tangible</h3>
+            <p>Move from reading to doing: sketch an architecture, deploy an AWS service, observe what happens, and iterate.</p>
+          </article>
+          <article class="pillar">
+            <div class="num">03 &mdash; SHARE</div>
+            <div class="pillar-icon">&rarr;</div>
+            <h3>Grow in community</h3>
+            <p>Explain what you learned, ask for another perspective, and make the path easier for the next person.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: A Builder's Mindset (Dark Architectural Section) -->
+    <section class="section dark" id="explore">
+      <div class="wrap">
+        <div class="manifesto">
+          <div class="section-head reveal">
+            <div>
+              <div class="section-kicker"><span>02</span> / A builder&rsquo;s mindset</div>
+              <h2>From first<br>question to<br><em>real confidence.</em></h2>
+            </div>
+          </div>
+          <div class="manifesto-copy reveal">
+            <p><strong>You don&rsquo;t need to know everything to begin.</strong> You need a good question, a safe place to experiment, and people who will share what they know.</p>
+            <p>That&rsquo;s the spirit behind our student builder group: make ambitious technology approachable, and make learning something we do together.</p>
+            <div class="manifesto-stamp">Learn openly &middot; Build thoughtfully &middot; Leave a trail</div>
+          </div>
+        </div>
+
+        <!-- 4-Step Horizontal Learning Path -->
+        <div class="path reveal" id="approach">
+          <article>
+            <span>01 / ORIENT</span>
+            <h3>Find a starting point</h3>
+            <p>Explore the core ideas and choose a question worth following.</p>
+          </article>
+          <article>
+            <span>02 / LEARN</span>
+            <h3>Build your foundation</h3>
+            <p>Use guided workshops to connect concepts to real AWS services.</p>
+          </article>
+          <article>
+            <span>03 / MAKE</span>
+            <h3>Try something small</h3>
+            <p>Turn a concept into a simple working deploy you can explain.</p>
+          </article>
+          <article>
+            <span>04 / SHARE</span>
+            <h3>Bring others along</h3>
+            <p>Document the learning and make room for a new perspective.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: RSVP & Interactive Builder Pass -->
+    <section class="section light" id="rsvp">
+      <div class="wrap rsvp-wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker"><span>03</span> / Build night registration</div>
+            <h2>Claim your seat for<br><em>the next build.</em></h2>
+          </div>
+          <p>Next build session: <strong>Thursday, Nov 12 at 6:30 PM</strong> in Science &amp; Engineering Hall, Room 304. We provide cloud credits, power, and workshop guides.</p>
+        </div>
+
+        <div class="rsvp-grid reveal">
+          <!-- Form View -->
+          <form id="rsvp-form" class="rsvp-card" novalidate>
+            <h3 class="card-title">Attendee Registration</h3>
+            <div class="form-item">
+              <label for="rsvp-name">Full Name <span aria-hidden="true">*</span></label>
+              <input type="text" id="rsvp-name" name="name" required placeholder="e.g. Alex Chen" autocomplete="name">
+              <span class="form-error" id="name-error" aria-live="polite"></span>
+            </div>
+
+            <div class="form-item">
+              <label for="rsvp-email">Email Address <span aria-hidden="true">*</span></label>
+              <input type="email" id="rsvp-email" name="email" required placeholder="name@university.edu" autocomplete="email">
+              <span class="form-error" id="email-error" aria-live="polite"></span>
+            </div>
+
+            <div class="form-cols">
+              <div class="form-item">
+                <label for="rsvp-year">Academic Year</label>
+                <select id="rsvp-year" name="year">
+                  <option value="First Year">First Year</option>
+                  <option value="Sophomore">Sophomore</option>
+                  <option value="Junior" selected>Junior</option>
+                  <option value="Senior">Senior</option>
+                  <option value="Graduate Student">Graduate Student</option>
+                </select>
+              </div>
+
+              <div class="form-item">
+                <label for="rsvp-track">Primary Focus Track</label>
+                <select id="rsvp-track" name="track">
+                  <option value="Serverless &amp; APIs">Serverless &amp; APIs</option>
+                  <option value="DevOps &amp; Infrastructure">DevOps &amp; Infrastructure</option>
+                  <option value="Generative AI &amp; Bedrock">Generative AI &amp; Bedrock</option>
+                  <option value="Certifications">Certifications (CCP/SAA)</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="button full" type="submit" id="submit-btn">Confirm RSVP &rarr;</button>
+          </form>
+
+          <!-- Confirmed Attendee Pass (Persists in LocalStorage) -->
+          <div id="rsvp-pass" class="pass-card" hidden>
+            <div class="pass-top">
+              <span class="pass-status">Confirmed Seat</span>
+              <span class="pass-code" id="pass-id">SBG-2026-0000</span>
+            </div>
+            <div class="pass-middle">
+              <h3 id="pass-name">Attendee Name</h3>
+              <p class="pass-sub" id="pass-track">Serverless &amp; APIs Track</p>
+              <div class="pass-specs">
+                <div>
+                  <span class="spec-label">Session</span>
+                  <span class="spec-val">Serverless Image Pipeline</span>
+                </div>
+                <div>
+                  <span class="spec-label">When</span>
+                  <span class="spec-val">Thursday, Nov 12 &middot; 6:30 PM</span>
+                </div>
+                <div>
+                  <span class="spec-label">Where</span>
+                  <span class="spec-val">SEH Room 304</span>
+                </div>
+              </div>
+            </div>
+            <div class="pass-bottom">
+              <button class="button" type="button" id="download-ics-btn">Add to Calendar (.ics) &rarr;</button>
+              <button class="button ghost" type="button" id="edit-rsvp-btn">Modify RSVP</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Practical FAQ -->
+    <section class="faq" id="faq">
+      <div class="wrap faq-layout">
+        <div class="faq-intro reveal">
+          <div class="section-kicker"><span>04</span> / A few good questions</div>
+          <h2>Start where<br><em>you are.</em></h2>
+          <p>No cloud background required. Bring curiosity, follow a question, and take the next step at your pace.</p>
+        </div>
+
+        <div class="faq-list reveal">
+          <details>
+            <summary>What is the AWS Student Builder Group?</summary>
+            <div class="faq-answer">A student-led community focused on exploring cloud technology through learning, hands-on building, and peer sharing.</div>
+          </details>
+          <details>
+            <summary>Do I need cloud experience before I start?</summary>
+            <div class="faq-answer">No. We begin with the fundamentals, ask questions as we go, and build understanding one concept and service at a time.</div>
+          </details>
+          <details>
+            <summary>Will attending cost me any money on AWS?</summary>
+            <div class="faq-answer">All projects are designed to stay within AWS Free Tier limits (Lambda, S3, DynamoDB). We also supply sandbox credits for deeper builds.</div>
+          </details>
+          <details>
+            <summary>What does &ldquo;building together&rdquo; mean?</summary>
+            <div class="faq-answer">Learn in the open: deploy code, share what worked, document the trade-offs, and make it easier for someone else to build from there.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Join Panel Banner -->
+    <section class="join" id="connect">
+      <div class="wrap">
+        <div class="join-panel reveal">
+          <div class="join-copy">
+            <div class="eyebrow">Your next step starts here</div>
+            <h2>Stay curious.<br>Make something real.</h2>
+            <p>Bring a laptop, follow your questions, and build with us this semester.</p>
+          </div>
+          <a class="button" href="#rsvp">RSVP for Next Session <span class="arrow">&rarr;</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Clean Minimal Footer -->
+  <footer class="footer">
+    <div class="wrap footer-in">
+      <a class="brand" href="#home">
+        <span class="brand-mark">A</span>
+        <span>AWS<span>@</span>BUILDERS</span>
+      </a>
+      <span>Student Cloud Community &middot; Campus Chapter</span>
+      <a href="https://github.com/PRINCE-ANTHONY/aws" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
