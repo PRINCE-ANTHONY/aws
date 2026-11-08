@@ -52,32 +52,50 @@ export default function HeroVisual() {
       >
         <defs>
           <linearGradient id="traceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#ff9900" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#ff9900" stopOpacity="0.05" />
+            <stop offset="0%" stopColor="#ff9900" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#ff9900" stopOpacity="0.2" />
           </linearGradient>
         </defs>
 
-        {/* Lines connecting outer discipline nodes (at radius ~155) to inner core (at radius ~95) */}
-        {/* Top: Cloud */}
-        <line x1="200" y1="36" x2="200" y2="108" stroke="url(#traceGrad)" strokeWidth="1" strokeDasharray="3 3" />
-        {/* Top-Right: AI */}
-        <line x1="332" y1="102" x2="268" y2="148" stroke="url(#traceGrad)" strokeWidth="1" strokeDasharray="3 3" />
-        {/* Bottom-Right: ECE */}
-        <line x1="344" y1="268" x2="272" y2="248" stroke="url(#traceGrad)" strokeWidth="1" strokeDasharray="3 3" />
-        {/* Bottom: VLSI */}
-        <line x1="200" y1="364" x2="200" y2="292" stroke="url(#traceGrad)" strokeWidth="1" strokeDasharray="3 3" />
-        {/* Bottom-Left: Aerospace */}
-        <line x1="56" y1="268" x2="128" y2="248" stroke="url(#traceGrad)" strokeWidth="1" strokeDasharray="3 3" />
-        {/* Top-Left: Web */}
-        <line x1="68" y1="102" x2="132" y2="148" stroke="url(#traceGrad)" strokeWidth="1" strokeDasharray="3 3" />
+        {/* Base Structural Traces (Dim) */}
+        <g stroke="#ffffff" strokeOpacity="0.05" strokeWidth="1.5">
+          <line x1="200" y1="36" x2="200" y2="108" />
+          <line x1="332" y1="102" x2="268" y2="148" />
+          <line x1="344" y1="268" x2="272" y2="248" />
+          <line x1="200" y1="364" x2="200" y2="292" />
+          <line x1="56" y1="268" x2="128" y2="248" />
+          <line x1="68" y1="102" x2="132" y2="148" />
+        </g>
+
+        {/* Active Flowing Orange Power Current Paths */}
+        <g
+          stroke="url(#traceGrad)"
+          strokeWidth="1.5"
+          strokeDasharray="6 8"
+          strokeLinecap="round"
+          className="motion-safe:animate-[flowInward_1.6s_linear_infinite]"
+        >
+          {/* Top: Cloud */}
+          <line x1="200" y1="36" x2="200" y2="108" />
+          {/* Top-Right: AI */}
+          <line x1="332" y1="102" x2="268" y2="148" />
+          {/* Bottom-Right: ECE */}
+          <line x1="344" y1="268" x2="272" y2="248" />
+          {/* Bottom: VLSI */}
+          <line x1="200" y1="364" x2="200" y2="292" />
+          {/* Bottom-Left: Aerospace */}
+          <line x1="56" y1="268" x2="128" y2="248" />
+          {/* Top-Left: Web */}
+          <line x1="68" y1="102" x2="132" y2="148" />
+        </g>
 
         {/* Small target dots on core boundary */}
-        <circle cx="200" cy="108" r="2" fill="#ff9900" opacity="0.6" />
-        <circle cx="268" cy="148" r="2" fill="#ff9900" opacity="0.6" />
-        <circle cx="272" cy="248" r="2" fill="#ff9900" opacity="0.6" />
-        <circle cx="200" cy="292" r="2" fill="#ff9900" opacity="0.6" />
-        <circle cx="128" cy="248" r="2" fill="#ff9900" opacity="0.6" />
-        <circle cx="132" cy="148" r="2" fill="#ff9900" opacity="0.6" />
+        <circle cx="200" cy="108" r="2.5" fill="#ff9900" className="animate-pulse" />
+        <circle cx="268" cy="148" r="2.5" fill="#ff9900" className="animate-pulse" />
+        <circle cx="272" cy="248" r="2.5" fill="#ff9900" className="animate-pulse" />
+        <circle cx="200" cy="292" r="2.5" fill="#ff9900" className="animate-pulse" />
+        <circle cx="128" cy="248" r="2.5" fill="#ff9900" className="animate-pulse" />
+        <circle cx="132" cy="148" r="2.5" fill="#ff9900" className="animate-pulse" />
       </svg>
 
       {/* Central Glass Pedestal with Microchip Identity */}

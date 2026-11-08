@@ -23,6 +23,79 @@ export default function Hero() {
         aria-hidden="true"
       />
 
+      {/* Ambient Silicon Circuit Substrate & Flowing Power Pulses */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none select-none z-0 opacity-35 sm:opacity-45"
+        viewBox="0 0 1200 700"
+        preserveAspectRatio="xMidYMid slice"
+        fill="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <filter id="circuitGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Base Static Silicon Substrate Tracks (Very Dim White) */}
+        <g stroke="#ffffff" strokeOpacity="0.04" strokeWidth="1.5">
+          {/* Top Left Track */}
+          <path d="M -40,100 L 180,100 L 260,180 L 440,180" />
+          <path d="M -40,140 L 160,140 L 220,200 L 380,200" />
+          
+          {/* Bottom Left Track */}
+          <path d="M 60,660 L 200,520 L 400,520" />
+          <path d="M -20,580 L 120,580 L 180,520" />
+
+          {/* Top Center-Right Bus */}
+          <path d="M 1240,120 L 1020,120 L 920,220 L 780,220" />
+          <path d="M 1240,160 L 1040,160 L 960,240 L 820,240" />
+
+          {/* Bottom Right Track */}
+          <path d="M 1240,500 L 1060,500 L 980,420 L 800,420" />
+          <path d="M 1240,540 L 1100,540 L 1020,460 L 860,460" />
+        </g>
+
+        {/* Circuit Via Junction Nodes */}
+        <g fill="#ff9900" fillOpacity="0.2">
+          <circle cx="180" cy="100" r="3" />
+          <circle cx="260" cy="180" r="3" />
+          <circle cx="200" cy="520" r="3" />
+          <circle cx="1020" cy="120" r="3" />
+          <circle cx="920" cy="220" r="3" />
+          <circle cx="1060" cy="500" r="3" />
+          <circle cx="980" cy="420" r="3" />
+        </g>
+
+        {/* Dynamic Gliding Orange Power Packets */}
+        <g stroke="#ff9900" strokeWidth="2" strokeLinecap="round" filter="url(#circuitGlow)">
+          <path
+            d="M -40,100 L 180,100 L 260,180 L 440,180"
+            strokeDasharray="60 180"
+            className="motion-safe:animate-[bgCircuitPulse_5s_ease-in-out_infinite]"
+          />
+          <path
+            d="M 1240,500 L 1060,500 L 980,420 L 800,420"
+            strokeDasharray="70 190"
+            className="motion-safe:animate-[bgCircuitPulse_6s_ease-in-out_infinite_2s]"
+          />
+          <path
+            d="M 60,660 L 200,520 L 400,520"
+            strokeDasharray="50 170"
+            className="motion-safe:animate-[bgCircuitPulse_5.5s_ease-in-out_infinite_1s]"
+          />
+          <path
+            d="M 1240,120 L 1020,120 L 920,220 L 780,220"
+            strokeDasharray="65 185"
+            className="motion-safe:animate-[bgCircuitPulse_6.5s_ease-in-out_infinite_3s]"
+          />
+        </g>
+      </svg>
+
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           

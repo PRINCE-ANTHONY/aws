@@ -54,3 +54,29 @@ body {
   background: #ff9900;
   color: #07080a;
 }
+
+@keyframes flowInward {
+  from {
+    stroke-dashoffset: 28;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes bgCircuitPulse {
+  0% {
+    stroke-dashoffset: 260;
+    opacity: 0.08;
+  }
+  35% {
+    opacity: 0.75;
+  }
+  65% {
+    opacity: 0.75;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.08;
+  }
+}
