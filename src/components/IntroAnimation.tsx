@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
+const basePath = process.env.NODE_ENV === 'production' ? '/aws' : '';
+
 interface IntroProps {
   onComplete: () => void;
 }
@@ -77,7 +79,7 @@ export default function IntroAnimation({ onComplete }: IntroProps) {
           }`}
         >
           <Image
-            src="/images/sbg-microchip-logo.png"
+            src={`${basePath}/images/sbg-microchip-logo.png`}
             alt="AWS SBG MVJCE Emblem"
             width={112}
             height={112}
