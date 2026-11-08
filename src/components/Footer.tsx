@@ -1,7 +1,10 @@
 'use client';
 
+import Image from 'next/image';
 import { MapPin } from 'lucide-react';
 import { DiscordIcon, LinkedinIcon, GithubIcon } from '@/components/Icons';
+
+const basePath = process.env.NODE_ENV === 'production' ? '/aws' : '';
 
 const FOOTER_LINKS = [
   { label: 'About', href: '#about' },
@@ -28,8 +31,14 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#ff9900] flex items-center justify-center text-black font-extrabold text-sm">
-                ⚡
+              <div className="w-8 h-8 rounded-lg bg-[#11151e] border border-white/[0.1] p-1 flex items-center justify-center shrink-0">
+                <Image
+                  src={`${basePath}/images/sbg-microchip-logo.png`}
+                  alt="AWS SBG MVJCE Logo"
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <span className="text-base font-bold text-white tracking-tight">
                 AWS Student Builders Group • MVJCE

@@ -1,7 +1,10 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
+
+const basePath = process.env.NODE_ENV === 'production' ? '/aws' : '';
 
 interface NavItem {
   label: string;
@@ -106,8 +109,15 @@ export default function Navbar() {
               className="flex items-center gap-2.5 group text-left cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] rounded-lg p-1 min-h-[44px] min-w-[44px]"
               aria-label="AWS Student Builders Group MVJCE - Return to Top"
             >
-              <div className="w-8 h-8 rounded-lg bg-[#ff9900] flex items-center justify-center text-black font-extrabold text-sm shadow-sm group-hover:scale-105 transition-transform shrink-0">
-                ⚡
+              <div className="w-8 h-8 rounded-lg bg-[#11151e] border border-white/[0.1] p-1 flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:border-[#ff9900]/40 transition-all shrink-0">
+                <Image
+                  src={`${basePath}/images/sbg-microchip-logo.png`}
+                  alt="AWS SBG MVJCE Logo"
+                  width={32}
+                  height={32}
+                  priority
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-white tracking-tight leading-none">
