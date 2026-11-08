@@ -89,98 +89,100 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 w-full ${
-        scrolled
-          ? 'bg-[#07080a]/95 backdrop-blur-md border-b border-white/[0.06] py-2.5 sm:py-3'
-          : 'bg-[#07080a]/85 backdrop-blur-md sm:bg-transparent sm:backdrop-blur-none border-b border-white/[0.04] sm:border-transparent py-3 sm:py-5'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex items-center justify-between h-11">
-          
-          {/* Logo Brand Identifier */}
-          <button
-            onClick={() => handleNavClick('#hero')}
-            className="flex items-center gap-2.5 group text-left cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] rounded-lg p-1 min-h-[44px] min-w-[44px]"
-            aria-label="AWS Student Builders Group MVJCE - Return to Top"
-          >
-            <div className="w-8 h-8 rounded-lg bg-[#ff9900] flex items-center justify-center text-black font-extrabold text-sm shadow-sm group-hover:scale-105 transition-transform shrink-0">
-              ⚡
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-bold text-white tracking-tight leading-none">
-                AWS SBG
-              </span>
-              <span className="text-[10px] font-mono text-[#ff9900] font-semibold leading-none mt-1">
-                MVJCE
-              </span>
-            </div>
-          </button>
-
-          {/* Desktop Navigation Links */}
-          <nav
-            className="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08]"
-            aria-label="Primary Desktop Navigation"
-          >
-            {NAV_ITEMS.map((item) => {
-              const isActive = activeHash === item.sectionId;
-              return (
-                <button
-                  key={item.href}
-                  onClick={() => handleNavClick(item.href)}
-                  className={`px-3.5 py-1.5 text-xs font-mono tracking-wide rounded-full transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] min-h-[36px] ${
-                    isActive
-                      ? 'bg-[#ff9900] text-black font-bold shadow-sm'
-                      : 'text-[#9ca3af] hover:text-white hover:bg-white/[0.05]'
-                  }`}
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  {item.label}
-                </button>
-              );
-            })}
-          </nav>
-
-          {/* Right Action CTA & Mobile Trigger */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Prominent Discord CTA Button */}
-            <a
-              href="https://discord.gg/gVPMHvDaX"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-[#ff9900] hover:bg-[#e68900] text-black font-bold text-xs sm:text-sm tracking-wide shadow-md shadow-[#ff9900]/20 min-h-[40px] sm:min-h-[44px] transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0"
-              aria-label="Join AWS SBG MVJCE Discord Server"
-            >
-              <span>Join Discord</span>
-              <ArrowUpRight size={14} className="shrink-0" />
-            </a>
-
-            {/* Mobile Hamburger Menu Toggle Button (Touch Target >= 44px) */}
+    <>
+      <header
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 w-full ${
+          scrolled
+            ? 'bg-[#07080a]/95 backdrop-blur-md border-b border-white/[0.06] py-2.5 sm:py-3'
+            : 'bg-[#07080a]/85 backdrop-blur-md sm:bg-transparent sm:backdrop-blur-none border-b border-white/[0.04] sm:border-transparent py-3 sm:py-5'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex items-center justify-between h-11">
+            
+            {/* Logo Brand Identifier */}
             <button
-              onClick={() => setMobileMenuOpen((open) => !open)}
-              className="md:hidden w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#9ca3af] hover:text-white hover:border-white/[0.16] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] shrink-0"
-              aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
-              aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-navigation"
+              onClick={() => handleNavClick('#hero')}
+              className="flex items-center gap-2.5 group text-left cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] rounded-lg p-1 min-h-[44px] min-w-[44px]"
+              aria-label="AWS Student Builders Group MVJCE - Return to Top"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              <div className="w-8 h-8 rounded-lg bg-[#ff9900] flex items-center justify-center text-black font-extrabold text-sm shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                ⚡
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold text-white tracking-tight leading-none">
+                  AWS SBG
+                </span>
+                <span className="text-[10px] font-mono text-[#ff9900] font-semibold leading-none mt-1">
+                  MVJCE
+                </span>
+              </div>
             </button>
+
+            {/* Desktop Navigation Links */}
+            <nav
+              className="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08]"
+              aria-label="Primary Desktop Navigation"
+            >
+              {NAV_ITEMS.map((item) => {
+                const isActive = activeHash === item.sectionId;
+                return (
+                  <button
+                    key={item.href}
+                    onClick={() => handleNavClick(item.href)}
+                    className={`px-3.5 py-1.5 text-xs font-mono tracking-wide rounded-full transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] min-h-[36px] ${
+                      isActive
+                        ? 'bg-[#ff9900] text-black font-bold shadow-sm'
+                        : 'text-[#9ca3af] hover:text-white hover:bg-white/[0.05]'
+                    }`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </nav>
+
+            {/* Right Action CTA & Mobile Trigger */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Prominent Discord CTA Button */}
+              <a
+                href="https://discord.gg/gVPMHvDaX"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-[#ff9900] hover:bg-[#e68900] text-black font-bold text-xs sm:text-sm tracking-wide shadow-md shadow-[#ff9900]/20 min-h-[40px] sm:min-h-[44px] transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0"
+                aria-label="Join AWS SBG MVJCE Discord Server"
+              >
+                <span>Join Discord</span>
+                <ArrowUpRight size={14} className="shrink-0" />
+              </a>
+
+              {/* Mobile Hamburger Menu Toggle Button (Touch Target >= 44px) */}
+              <button
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                className="md:hidden w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#9ca3af] hover:text-white hover:border-white/[0.16] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] shrink-0"
+                aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-navigation"
+              >
+                {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
+
           </div>
-
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Drawer Navigation Overlay */}
+      {/* Mobile Drawer Navigation Overlay - rendered outside <header> so backdrop-filter does not clip fixed positioning */}
       {mobileMenuOpen && (
         <div
           id="mobile-navigation"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile Navigation Drawer"
-          className="md:hidden fixed inset-x-0 top-[60px] sm:top-[68px] bottom-0 bg-[#07080a]/98 backdrop-blur-2xl border-t border-white/[0.08] px-6 py-6 flex flex-col justify-between overflow-y-auto max-w-full"
+          className="md:hidden fixed inset-0 z-40 bg-[#07080a]/98 backdrop-blur-2xl pt-24 pb-8 px-6 flex flex-col justify-between overflow-y-auto max-w-full"
         >
-          <nav className="flex flex-col gap-2 w-full" aria-label="Mobile Nav Items">
+          <nav className="flex flex-col gap-2.5 w-full max-w-md mx-auto" aria-label="Mobile Nav Items">
             {NAV_ITEMS.map((item) => {
               const isActive = activeHash === item.sectionId;
               return (
@@ -204,7 +206,7 @@ export default function Navbar() {
           </nav>
 
           {/* Mobile Drawer Bottom CTA */}
-          <div className="pt-6 border-t border-white/[0.08] mt-6 w-full">
+          <div className="pt-6 border-t border-white/[0.08] mt-6 w-full max-w-md mx-auto">
             <a
               href="https://discord.gg/gVPMHvDaX"
               target="_blank"
@@ -222,6 +224,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
