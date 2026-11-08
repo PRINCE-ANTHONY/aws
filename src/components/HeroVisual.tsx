@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 
+const basePath = process.env.NODE_ENV === 'production' ? '/aws' : '';
+
 const DISCIPLINES = [
   { label: 'CLOUD', x: '50%', y: '4%', lineEnd: { x: '50%', y: '24%' } },
   { label: 'AI', x: '88%', y: '22%', lineEnd: { x: '75%', y: '34%' } },
@@ -93,7 +95,7 @@ export default function HeroVisual() {
         {/* Club Microchip Emblem */}
         <div className="relative w-full h-full flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
           <Image
-            src="/images/sbg-microchip-logo.png"
+            src={`${basePath}/images/sbg-microchip-logo.png`}
             alt="AWS Student Builders Group Central Microchip"
             width={240}
             height={240}
