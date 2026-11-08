@@ -25,7 +25,7 @@ export default function Navbar() {
   // Handle scroll state for navbar background blur
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 10);
     };
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -92,8 +92,8 @@ export default function Navbar() {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 w-full ${
         scrolled
-          ? 'bg-[#07080a]/92 backdrop-blur-md border-b border-white/[0.06] py-3'
-          : 'bg-transparent py-4 sm:py-5'
+          ? 'bg-[#07080a]/95 backdrop-blur-md border-b border-white/[0.06] py-2.5 sm:py-3'
+          : 'bg-[#07080a]/85 backdrop-blur-md sm:bg-transparent sm:backdrop-blur-none border-b border-white/[0.04] sm:border-transparent py-3 sm:py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -143,23 +143,23 @@ export default function Navbar() {
           </nav>
 
           {/* Right Action CTA & Mobile Trigger */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Prominent Discord CTA Button */}
             <a
               href="https://discord.gg/gVPMHvDaX"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-xl bg-[#ff9900] hover:bg-[#e68900] text-black font-bold text-xs sm:text-sm tracking-wide shadow-md shadow-[#ff9900]/20 min-h-[44px] transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-[#ff9900] hover:bg-[#e68900] text-black font-bold text-xs sm:text-sm tracking-wide shadow-md shadow-[#ff9900]/20 min-h-[40px] sm:min-h-[44px] transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0"
               aria-label="Join AWS SBG MVJCE Discord Server"
             >
               <span>Join Discord</span>
-              <ArrowUpRight size={15} />
+              <ArrowUpRight size={14} className="shrink-0" />
             </a>
 
             {/* Mobile Hamburger Menu Toggle Button (Touch Target >= 44px) */}
             <button
               onClick={() => setMobileMenuOpen((open) => !open)}
-              className="md:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#9ca3af] hover:text-white hover:border-white/[0.16] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900]"
+              className="md:hidden w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#9ca3af] hover:text-white hover:border-white/[0.16] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] shrink-0"
               aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-navigation"
