@@ -1,7 +1,7 @@
 'use client';
 
 import { MapPin } from 'lucide-react';
-import { LinkedinIcon, GithubIcon } from '@/components/Icons';
+import { DiscordIcon, LinkedinIcon, GithubIcon } from '@/components/Icons';
 
 const FOOTER_LINKS = [
   { label: 'About', href: '#about' },
@@ -42,6 +42,16 @@ export default function Footer() {
             </p>
 
             <div className="flex items-center gap-3 pt-1">
+              <a
+                href="https://discord.gg/gVPMHvDaX"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-[#ff9900] text-[#a1a1aa] hover:text-[#ff9900] transition-colors flex items-center justify-center min-h-[44px] min-w-[44px]"
+                aria-label="Discord"
+              >
+                <DiscordIcon size={16} />
+              </a>
+
               <a
                 href="https://www.linkedin.com/company/aws-student-builder-group-mvjce"
                 target="_blank"

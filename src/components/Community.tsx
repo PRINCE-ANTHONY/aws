@@ -1,7 +1,7 @@
 'use client';
 
-import { ArrowRight, Users, Sparkles } from 'lucide-react';
-import { LinkedinIcon, GithubIcon } from '@/components/Icons';
+import { ArrowRight } from 'lucide-react';
+import { DiscordIcon, LinkedinIcon, GithubIcon } from '@/components/Icons';
 
 const SPOTLIGHTS = [
   {
@@ -65,29 +65,42 @@ export default function Community() {
 
           <p className="text-sm sm:text-base text-[#9ca3af] max-w-xl mx-auto leading-relaxed mb-8">
             Whether you are just getting started with code or already deploying complex architectures, 
-            there is a place for you in AWS SBG MVJCE. Join our LinkedIn group and attend our next session.
+            there is a place for you in AWS SBG MVJCE. Join our Discord community and attend our next session.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://www.linkedin.com/company/aws-student-builder-group-mvjce"
+              href="https://discord.gg/gVPMHvDaX"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl bg-[#ff9900] hover:bg-[#e68900] text-black font-bold text-sm tracking-wide shadow-lg shadow-[#ff9900]/20 min-h-[48px] active:scale-[0.98] transition-all"
+              aria-label="Join AWS SBG MVJCE on Discord"
+            >
+              <DiscordIcon size={18} />
+              <span>Join on Discord</span>
+              <ArrowRight size={15} />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/company/aws-student-builder-group-mvjce"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-white font-semibold text-sm min-h-[48px] active:scale-[0.98] transition-all"
+              aria-label="Follow AWS SBG MVJCE on LinkedIn"
             >
               <LinkedinIcon size={16} />
-              <span>Join on LinkedIn</span>
-              <ArrowRight size={15} />
+              <span>LinkedIn</span>
             </a>
 
             <a
               href="https://github.com/PRINCE-ANTHONY/aws"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-white font-semibold text-sm min-h-[48px] active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-white font-semibold text-sm min-h-[48px] active:scale-[0.98] transition-all"
+              aria-label="View AWS SBG MVJCE on GitHub"
             >
               <GithubIcon size={16} />
-              <span>View GitHub</span>
+              <span>GitHub</span>
             </a>
           </div>
 
