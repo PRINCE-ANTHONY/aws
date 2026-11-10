@@ -26,9 +26,13 @@ const PILLARS_DATA = [
   },
 ];
 
-export default function Pillars() {
+interface PillarsProps {
+  className?: string;
+}
+
+export default function Pillars({ className = '' }: PillarsProps = {}) {
   return (
-    <section id="pillars" className="py-20 sm:py-28 bg-[#07080a] border-t border-white/[0.06] px-4 sm:px-6 lg:px-8">
+    <section id="pillars" className={`py-20 sm:py-28 bg-[#07080a] border-t border-white/[0.06] px-4 sm:px-6 lg:px-8 ${className}`}>
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}

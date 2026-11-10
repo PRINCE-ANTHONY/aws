@@ -37,9 +37,21 @@ const DOMAINS = [
   },
 ];
 
-export default function Domains() {
+interface DomainsProps {
+  className?: string;
+  isStandalone?: boolean;
+}
+
+export default function Domains({ className = '', isStandalone = false }: DomainsProps = {}) {
   return (
-    <section id="domains" className="py-20 sm:py-28 bg-[#090b0e] border-t border-white/[0.06] px-4 sm:px-6 lg:px-8">
+    <section
+      id="domains"
+      className={`${
+        isStandalone
+          ? 'pt-28 sm:pt-36 pb-20 sm:pb-28'
+          : 'py-20 sm:py-28 border-t border-white/[0.06]'
+      } bg-[#090b0e] px-4 sm:px-6 lg:px-8 ${className}`}
+    >
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}

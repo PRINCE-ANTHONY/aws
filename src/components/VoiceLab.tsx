@@ -25,9 +25,21 @@ const ACTIVITIES = [
   },
 ];
 
-export default function VoiceLab() {
+interface VoiceLabProps {
+  className?: string;
+  isStandalone?: boolean;
+}
+
+export default function VoiceLab({ className = '', isStandalone = false }: VoiceLabProps = {}) {
   return (
-    <section id="voicelab" className="py-20 sm:py-28 bg-[#07080a] border-t border-white/[0.06] px-4 sm:px-6 lg:px-8">
+    <section
+      id="voicelab"
+      className={`${
+        isStandalone
+          ? 'pt-28 sm:pt-36 pb-20 sm:pb-28'
+          : 'py-20 sm:py-28 border-t border-white/[0.06]'
+      } bg-[#07080a] px-4 sm:px-6 lg:px-8 ${className}`}
+    >
       <div className="max-w-7xl mx-auto">
         
         {/* Main Card */}

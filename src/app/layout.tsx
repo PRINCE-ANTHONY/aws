@@ -1,32 +1,34 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import './globals.css';
 
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
-  title: "AWS Student Builders Group — MVJCE",
+  title: 'AWS Student Builders Group — MVJCE',
   description:
-    "A community of learners, creators and builders at MVJ College of Engineering, Bengaluru. Think Big. Build Together.",
+    'A multidisciplinary student community at MVJ College of Engineering, Bengaluru. Sharing ideas, learning together and helping one another grow.',
   keywords: [
-    "AWS",
-    "Student Builders Group",
-    "MVJCE",
-    "MVJ College of Engineering",
-    "cloud computing",
-    "web development",
-    "AI",
-    "VLSI",
-    "Bengaluru",
+    'AWS',
+    'Student Builders Group',
+    'MVJCE',
+    'MVJ College of Engineering',
+    'cloud computing',
+    'web development',
+    'AI',
+    'VLSI',
+    'Bengaluru',
   ],
   openGraph: {
-    title: "AWS Student Builders Group — MVJCE",
-    description: "Think Big. Build Together.",
-    type: "website",
+    title: 'AWS Student Builders Group — MVJCE',
+    description: 'Think Big. Build Together.',
+    type: 'website',
   },
 };
 
@@ -37,7 +39,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="bg-[#0b0b0b] text-white antialiased">{children}</body>
+      <body className="bg-[#08090b] text-white antialiased selection:bg-[#ff9900] selection:text-black min-h-screen flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex flex-col">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -32,9 +32,21 @@ const EVENTS = [
   },
 ];
 
-export default function Events() {
+interface EventsProps {
+  className?: string;
+  isStandalone?: boolean;
+}
+
+export default function Events({ className = '', isStandalone = false }: EventsProps = {}) {
   return (
-    <section id="events" className="py-20 sm:py-28 bg-[#090b0e] border-t border-white/[0.06] px-4 sm:px-6 lg:px-8">
+    <section
+      id="events"
+      className={`${
+        isStandalone
+          ? 'pt-28 sm:pt-36 pb-20 sm:pb-28'
+          : 'py-20 sm:py-28 border-t border-white/[0.06]'
+      } bg-[#090b0e] px-4 sm:px-6 lg:px-8 ${className}`}
+    >
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
@@ -59,8 +71,9 @@ export default function Events() {
             >
               <div>
                 <div className="flex items-center justify-between mb-5">
-                  <span className="text-xs font-mono font-bold text-[#ff9900] px-2.5 py-1 rounded bg-[#ff9900]/10 border border-[#ff9900]/25">
-                    {event.date}
+                  <span className="text-xs font-mono font-bold text-[#ff9900] px-2.5 py-1 rounded bg-[#ff9900]/10 border border-[#ff9900]/25 inline-flex items-center gap-1.5">
+                    <Calendar size={12} className="shrink-0" />
+                    <span>{event.date}</span>
                   </span>
                   <span
                     className={`text-[11px] font-mono px-2 py-0.5 rounded ${

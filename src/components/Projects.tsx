@@ -1,6 +1,6 @@
 'use client';
 
-import { ExternalLink, ArrowRight } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { GithubIcon } from '@/components/Icons';
 
 const FEATURED_PROJECTS = [
@@ -42,9 +42,21 @@ const FEATURED_PROJECTS = [
   },
 ];
 
-export default function Projects() {
+interface ProjectsProps {
+  className?: string;
+  isStandalone?: boolean;
+}
+
+export default function Projects({ className = '', isStandalone = false }: ProjectsProps = {}) {
   return (
-    <section id="projects" className="py-20 sm:py-28 bg-[#07080a] border-t border-white/[0.06] px-4 sm:px-6 lg:px-8">
+    <section
+      id="projects"
+      className={`${
+        isStandalone
+          ? 'pt-28 sm:pt-36 pb-20 sm:pb-28'
+          : 'py-20 sm:py-28 border-t border-white/[0.06]'
+      } bg-[#07080a] px-4 sm:px-6 lg:px-8 ${className}`}
+    >
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}

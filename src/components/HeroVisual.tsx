@@ -20,11 +20,11 @@ export default function HeroVisual() {
       aria-label="Multidisciplinary network converging into the AWS SBG MVJCE central microchip"
       role="img"
     >
-      {/* Soft Ambient Radial Back-glow (Restrained & Cinematic) */}
+      {/* Soft Ambient Radial Back-glow */}
       <div
-        className="absolute inset-4 rounded-full blur-[70px] sm:blur-[90px] opacity-20 pointer-events-none"
+        className="absolute inset-0 sm:inset-2 rounded-full blur-[75px] sm:blur-[95px] opacity-35 sm:opacity-45 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, #ff9900 0%, #ff8000 35%, transparent 70%)',
+          background: 'radial-gradient(circle, #ff9900 0%, #ff8000 40%, transparent 70%)',
         }}
         aria-hidden="true"
       />
@@ -99,13 +99,13 @@ export default function HeroVisual() {
       </svg>
 
       {/* Central Glass Pedestal with Microchip Identity */}
-      <div className="relative z-10 w-[54%] h-[54%] rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#141822]/95 via-[#0e1218]/95 to-[#080b0f]/98 border border-white/[0.08] shadow-[0_20px_45px_rgba(0,0,0,0.7)] flex items-center justify-center p-5 sm:p-7 backdrop-blur-xl group transition-transform duration-500 hover:scale-[1.02]">
+      <div className="relative z-10 w-[54%] h-[54%] rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#181d2a]/95 via-[#10141f]/95 to-[#0a0d14]/98 border border-white/[0.12] shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_40px_rgba(255,153,0,0.2)] flex items-center justify-center p-5 sm:p-7 backdrop-blur-xl group transition-transform duration-500 hover:scale-[1.02]">
         
         {/* Subtle internal shine */}
         <div
-          className="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-20 pointer-events-none"
+          className="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-35 pointer-events-none"
           style={{
-            background: 'radial-gradient(circle at 50% 30%, rgba(255, 153, 0, 0.25), transparent 70%)',
+            background: 'radial-gradient(circle at 50% 30%, rgba(255, 153, 0, 0.35), transparent 70%)',
           }}
           aria-hidden="true"
         />

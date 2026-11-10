@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 const basePath = process.env.NODE_ENV === 'production' ? '/aws' : '';
@@ -9,21 +11,23 @@ const basePath = process.env.NODE_ENV === 'production' ? '/aws' : '';
 interface NavItem {
   label: string;
   href: string;
-  sectionId: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Home', href: '#hero', sectionId: 'hero' },
-  { label: 'About', href: '#about', sectionId: 'about' },
-  { label: 'Domains', href: '#domains', sectionId: 'domains' },
-  { label: 'Our Work', href: '#projects', sectionId: 'projects' },
-  { label: 'Community', href: '#community', sectionId: 'community' },
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Domains', href: '/domains' },
+  { label: 'Voice Lab', href: '/voice-lab' },
+  { label: 'Team', href: '/team' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Events', href: '/events' },
+  { label: 'Community', href: '/community' },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-  const [activeHash, setActiveHash] = useState<string>('hero');
 
   // Handle scroll state for navbar background blur
   useEffect(() => {
@@ -58,38 +62,12 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [mobileMenuOpen]);
 
-  // Active section tracking via IntersectionObserver
-  useEffect(() => {
-    const sectionIds = NAV_ITEMS.map((item) => item.sectionId);
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveHash(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, {
-      rootMargin: '-20% 0px -65% 0px',
-      threshold: 0.1,
-    });
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const handleNavClick = useCallback((href: string) => {
-    setMobileMenuOpen(false);
-    const id = href.replace('#', '');
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const isCurrent = (href: string) => {
+    if (href === '/') {
+      return pathname === '/' || pathname === '';
     }
-  }, []);
+    return pathname === href || pathname?.startsWith(`${href}/`);
+  };
 
   return (
     <>
@@ -104,10 +82,11 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-11">
             
             {/* Logo Brand Identifier */}
-            <button
-              onClick={() => handleNavClick('#hero')}
-              className="flex items-center gap-2.5 group text-left cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] rounded-lg p-1 min-h-[44px] min-w-[44px]"
-              aria-label="AWS Student Builders Group MVJCE - Return to Top"
+            <Link
+              href="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2.5 group text-left select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] rounded-lg p-1 min-h-[44px] min-w-[44px]"
+              aria-label="AWS Student Builders Group MVJCE - Home"
             >
               <div className="w-8 h-8 rounded-lg bg-[#11151e] border border-white/[0.1] p-1 flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:border-[#ff9900]/40 transition-all shrink-0">
                 <Image
@@ -127,28 +106,28 @@ export default function Navbar() {
                   MVJCE
                 </span>
               </div>
-            </button>
+            </Link>
 
             {/* Desktop Navigation Links */}
             <nav
-              className="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08]"
-              aria-label="Primary Desktop Navigation"
+              className="hidden lg:flex items-center gap-0.5 xl:gap-1 px-2.5 xl:px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08]"
+              aria-label="Primary Navigation"
             >
               {NAV_ITEMS.map((item) => {
-                const isActive = activeHash === item.sectionId;
+                const active = isCurrent(item.href);
                 return (
-                  <button
+                  <Link
                     key={item.href}
-                    onClick={() => handleNavClick(item.href)}
-                    className={`px-3.5 py-1.5 text-xs font-mono tracking-wide rounded-full transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] min-h-[36px] ${
-                      isActive
+                    href={item.href}
+                    className={`px-2.5 xl:px-3 py-1.5 text-[11px] xl:text-xs font-mono tracking-wide rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] min-h-[32px] flex items-center whitespace-nowrap ${
+                      active
                         ? 'bg-[#ff9900] text-black font-bold shadow-sm'
                         : 'text-[#9ca3af] hover:text-white hover:bg-white/[0.05]'
                     }`}
-                    aria-current={isActive ? 'page' : undefined}
+                    aria-current={active ? 'page' : undefined}
                   >
                     {item.label}
-                  </button>
+                  </Link>
                 );
               })}
             </nav>
@@ -160,17 +139,17 @@ export default function Navbar() {
                 href="https://discord.gg/gVPMHvDaX"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-[#ff9900] hover:bg-[#e68900] text-black font-bold text-xs sm:text-sm tracking-wide shadow-md shadow-[#ff9900]/20 min-h-[40px] sm:min-h-[44px] transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0"
+                className="inline-flex items-center gap-1.5 px-3 sm:px-4 xl:px-5 py-2 sm:py-2.5 rounded-xl bg-[#ff9900] hover:bg-[#e68900] text-black font-bold text-xs sm:text-sm tracking-wide shadow-md shadow-[#ff9900]/20 min-h-[40px] sm:min-h-[44px] transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0"
                 aria-label="Join AWS SBG MVJCE Discord Server"
               >
                 <span>Join Discord</span>
                 <ArrowUpRight size={14} className="shrink-0" />
               </a>
 
-              {/* Mobile Hamburger Menu Toggle Button (Touch Target >= 44px) */}
+              {/* Mobile/Tablet Hamburger Menu Toggle Button (Touch Target >= 44px) */}
               <button
                 onClick={() => setMobileMenuOpen((open) => !open)}
-                className="md:hidden w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#9ca3af] hover:text-white hover:border-white/[0.16] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] shrink-0"
+                className="lg:hidden w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#9ca3af] hover:text-white hover:border-white/[0.16] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] shrink-0"
                 aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
                 aria-expanded={mobileMenuOpen}
                 aria-controls="mobile-navigation"
@@ -183,34 +162,35 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Drawer Navigation Overlay - rendered outside <header> so backdrop-filter does not clip fixed positioning */}
+      {/* Mobile Drawer Navigation Overlay */}
       {mobileMenuOpen && (
         <div
           id="mobile-navigation"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile Navigation Drawer"
-          className="md:hidden fixed inset-0 z-40 bg-[#07080a]/98 backdrop-blur-2xl pt-24 pb-8 px-6 flex flex-col justify-between overflow-y-auto max-w-full"
+          className="lg:hidden fixed inset-0 z-40 bg-[#07080a]/98 backdrop-blur-2xl pt-24 pb-8 px-6 flex flex-col justify-between overflow-y-auto max-w-full"
         >
-          <nav className="flex flex-col gap-2.5 w-full max-w-md mx-auto" aria-label="Mobile Nav Items">
+          <nav className="flex flex-col gap-2 w-full max-w-md mx-auto" aria-label="Mobile Nav Items">
             {NAV_ITEMS.map((item) => {
-              const isActive = activeHash === item.sectionId;
+              const active = isCurrent(item.href);
               return (
-                <button
+                <Link
                   key={item.href}
-                  onClick={() => handleNavClick(item.href)}
-                  className={`w-full text-left px-4 py-3.5 rounded-xl text-base font-medium tracking-wide transition-all min-h-[48px] flex items-center justify-between cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] ${
-                    isActive
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`w-full text-left px-4 py-3 rounded-xl text-base font-medium tracking-wide transition-all min-h-[48px] flex items-center justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] ${
+                    active
                       ? 'bg-[#ff9900] text-black font-bold'
                       : 'text-[#d1d5db] hover:bg-white/[0.04] hover:text-white'
                   }`}
-                  aria-current={isActive ? 'page' : undefined}
+                  aria-current={active ? 'page' : undefined}
                 >
                   <span>{item.label}</span>
-                  {isActive && (
+                  {active && (
                     <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0" />
                   )}
-                </button>
+                </Link>
               );
             })}
           </nav>

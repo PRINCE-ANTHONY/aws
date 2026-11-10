@@ -1,31 +1,43 @@
 'use client';
 
+import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import HeroVisual from '@/components/HeroVisual';
 import { DiscordIcon } from '@/components/Icons';
 
 export default function Hero() {
-  const handleExploreCommunity = () => {
-    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section
       id="hero"
-      className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center bg-[#07080a] pt-28 sm:pt-36 lg:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-b from-[#0e121a] via-[#090b10] to-[#07080a] pt-28 sm:pt-36 lg:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
-      {/* Subtle Ambient Background Lighting (Restrained & Cinematic) */}
+      {/* Primary Warm Ambient Orange Atmosphere */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[360px] rounded-full pointer-events-none blur-[140px] opacity-15"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] sm:w-[980px] h-[500px] rounded-full pointer-events-none blur-[140px] opacity-35"
         style={{
-          background: 'radial-gradient(circle, #ff9900 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(255, 153, 0, 0.32) 0%, rgba(255, 153, 0, 0.1) 45%, transparent 70%)',
         }}
+        aria-hidden="true"
+      />
+
+      {/* Secondary Radiant Energy Glow Behind the Visual Core */}
+      <div
+        className="absolute top-1/2 right-4 sm:right-1/4 -translate-y-1/2 w-[480px] h-[480px] rounded-full pointer-events-none blur-[120px] opacity-30"
+        style={{
+          background: 'radial-gradient(circle, rgba(255, 153, 0, 0.35) 0%, rgba(255, 120, 0, 0.12) 50%, transparent 70%)',
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Subtle Matrix Dot Grid Texture for Depth */}
+      <div
+        className="absolute inset-0 pointer-events-none bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_45%,black_40%,transparent_90%)] opacity-70"
         aria-hidden="true"
       />
 
       {/* Ambient Silicon Circuit Substrate & Flowing Power Pulses */}
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none select-none z-0 opacity-35 sm:opacity-45"
+        className="absolute inset-0 w-full h-full pointer-events-none select-none z-0 opacity-60 sm:opacity-75"
         viewBox="0 0 1200 700"
         preserveAspectRatio="xMidYMid slice"
         fill="none"
@@ -41,8 +53,8 @@ export default function Hero() {
           </filter>
         </defs>
 
-        {/* Base Static Silicon Substrate Tracks (Very Dim White) */}
-        <g stroke="#ffffff" strokeOpacity="0.04" strokeWidth="1.5">
+        {/* Base Static Silicon Substrate Tracks */}
+        <g stroke="#ffffff" strokeOpacity="0.08" strokeWidth="1.5">
           {/* Top Left Track */}
           <path d="M -40,100 L 180,100 L 260,180 L 440,180" />
           <path d="M -40,140 L 160,140 L 220,200 L 380,200" />
@@ -61,18 +73,18 @@ export default function Hero() {
         </g>
 
         {/* Circuit Via Junction Nodes */}
-        <g fill="#ff9900" fillOpacity="0.2">
-          <circle cx="180" cy="100" r="3" />
-          <circle cx="260" cy="180" r="3" />
-          <circle cx="200" cy="520" r="3" />
-          <circle cx="1020" cy="120" r="3" />
-          <circle cx="920" cy="220" r="3" />
-          <circle cx="1060" cy="500" r="3" />
-          <circle cx="980" cy="420" r="3" />
+        <g fill="#ff9900" fillOpacity="0.4">
+          <circle cx="180" cy="100" r="3.5" />
+          <circle cx="260" cy="180" r="3.5" />
+          <circle cx="200" cy="520" r="3.5" />
+          <circle cx="1020" cy="120" r="3.5" />
+          <circle cx="920" cy="220" r="3.5" />
+          <circle cx="1060" cy="500" r="3.5" />
+          <circle cx="980" cy="420" r="3.5" />
         </g>
 
         {/* Dynamic Gliding Orange Power Packets */}
-        <g stroke="#ff9900" strokeWidth="2" strokeLinecap="round" filter="url(#circuitGlow)">
+        <g stroke="#ff9900" strokeWidth="2.5" strokeLinecap="round" filter="url(#circuitGlow)">
           <path
             d="M -40,100 L 180,100 L 260,180 L 440,180"
             strokeDasharray="60 180"
@@ -136,14 +148,14 @@ export default function Hero() {
 
             {/* Touch-Friendly Action Buttons (>= 44px touch target) */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
-              {/* Button 1: Explore Our Community -> scrolls to #about */}
-              <button
-                onClick={handleExploreCommunity}
+              {/* Button 1: Explore Our Community -> links to /about */}
+              <Link
+                href="/about"
                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-[#ff9900] hover:bg-[#e68900] text-black font-bold text-sm tracking-wide shadow-lg shadow-[#ff9900]/20 active:scale-[0.98] transition-all min-h-[48px] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <span>Explore Our Community</span>
                 <ArrowRight size={16} />
-              </button>
+              </Link>
 
               {/* Button 2: Join Discord -> links to https://discord.gg/gVPMHvDaX */}
               <a

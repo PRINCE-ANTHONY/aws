@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin } from 'lucide-react';
 import { DiscordIcon, LinkedinIcon, GithubIcon } from '@/components/Icons';
@@ -7,22 +8,17 @@ import { DiscordIcon, LinkedinIcon, GithubIcon } from '@/components/Icons';
 const basePath = process.env.NODE_ENV === 'production' ? '/aws' : '';
 
 const FOOTER_LINKS = [
-  { label: 'About', href: '#about' },
-  { label: 'Pillars', href: '#pillars' },
-  { label: 'Domains', href: '#domains' },
-  { label: 'Voice Lab', href: '#voicelab' },
-  { label: 'Teams', href: '#teams' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Events', href: '#events' },
-  { label: 'Community', href: '#community' },
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Domains', href: '/domains' },
+  { label: 'Voice Lab', href: '/voice-lab' },
+  { label: 'Team', href: '/team' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Events', href: '/events' },
+  { label: 'Community', href: '/community' },
 ];
 
 export default function Footer() {
-  const scrollTo = (href: string) => {
-    const id = href.replace('#', '');
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <footer className="bg-[#050608] border-t border-white/[0.06] pt-16 pb-12 text-[#9ca3af] px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -30,8 +26,8 @@ export default function Footer() {
           
           {/* Brand */}
           <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#11151e] border border-white/[0.1] p-1 flex items-center justify-center shrink-0">
+            <Link href="/" className="inline-flex items-center gap-2.5 group">
+              <div className="w-8 h-8 rounded-lg bg-[#11151e] border border-white/[0.1] p-1 flex items-center justify-center shrink-0 group-hover:border-[#ff9900]/40 transition-colors">
                 <Image
                   src={`${basePath}/images/sbg-microchip-logo.png`}
                   alt="AWS SBG MVJCE Logo"
@@ -40,14 +36,14 @@ export default function Footer() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-base font-bold text-white tracking-tight">
+              <span className="text-base font-bold text-white tracking-tight group-hover:text-[#ff9900] transition-colors">
                 AWS Student Builders Group • MVJCE
               </span>
-            </div>
+            </Link>
 
             <p className="text-sm text-[#71717a] max-w-sm leading-relaxed">
-              A student-driven engineering community at MVJ College of Engineering, Bengaluru. 
-              Learning cloud, web, AI, and hardware by building real projects.
+              A multidisciplinary student community at MVJ College of Engineering, Bengaluru. 
+              Sharing ideas, learning across domains, and turning ideas into conversations.
             </p>
 
             <div className="flex items-center gap-3 pt-1">
@@ -90,13 +86,13 @@ export default function Footer() {
             </p>
             <div className="grid grid-cols-2 gap-2 text-xs font-mono">
               {FOOTER_LINKS.map((link) => (
-                <button
+                <Link
                   key={link.href}
-                  onClick={() => scrollTo(link.href)}
-                  className="text-left py-1 text-[#71717a] hover:text-[#ff9900] transition-colors cursor-pointer min-h-[36px] flex items-center"
+                  href={link.href}
+                  className="text-left py-1 text-[#71717a] hover:text-[#ff9900] transition-colors min-h-[36px] flex items-center"
                 >
                   {link.label}
-                </button>
+                </Link>
               ))}
             </div>
           </div>
