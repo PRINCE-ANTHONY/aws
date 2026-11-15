@@ -58,9 +58,9 @@ const CORE_LEADERSHIP: Member[] = [
 
 const TECH_TEAM: Member[] = [
   {
-    name: 'Anvitha',
+    name: 'Avnitha',
     role: 'Tech Team Member',
-    initials: 'AN',
+    initials: 'AV',
     linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
   },
   {
@@ -118,6 +118,18 @@ const TECH_TEAM: Member[] = [
     initials: 'RK',
     linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
   },
+  {
+    name: 'Abhiram Tapoonidhi',
+    role: 'Tech Team Member',
+    initials: 'AT',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Alvin',
+    role: 'Tech Team Member',
+    initials: 'AL',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
 ];
 
 const PR_TEAM: Member[] = [
@@ -143,6 +155,12 @@ const PR_TEAM: Member[] = [
     name: 'Meghan Teja Y',
     role: 'PR Team Member',
     initials: 'MY',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Swathi',
+    role: 'PR Team Member',
+    initials: 'SW',
     linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
   },
 ];
@@ -176,9 +194,8 @@ interface TeamsProps {
 export default function Teams({ className = '', isStandalone = false }: TeamsProps = {}) {
   return (
     <div
-      className={`min-h-screen bg-gradient-to-b from-[#0e121a] via-[#090b10] to-[#07080a] ${
-        isStandalone ? 'pt-28 sm:pt-36 lg:pt-36' : 'py-20 sm:py-28'
-      } pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden ${className}`}
+      className={`min-h-screen bg-gradient-to-b from-[#0e121a] via-[#090b10] to-[#07080a] ${isStandalone ? 'pt-28 sm:pt-36 lg:pt-36' : 'py-20 sm:py-28'
+        } pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden ${className}`}
     >
       {/* Subtle Ambient Background Lighting */}
       <div
@@ -196,7 +213,7 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
       />
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-20 sm:space-y-24">
-        
+
         {/* Section A: Page Introduction */}
         <header className="max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] mb-5">
@@ -305,7 +322,7 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
           </div>
         </section>
 
-        {/* Section C: Tech Team (10 Members) */}
+        {/* Section C: Tech Team */}
         <section aria-labelledby="tech-team-heading" className="space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 border-b border-white/[0.06]">
             <div>
@@ -315,7 +332,7 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
                   TECHNICAL WING
                 </span>
                 <span className="text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#ff9900]/10 border border-[#ff9900]/25 text-[#ff9900]">
-                  10 Members
+                  {TECH_TEAM.length} Members
                 </span>
               </div>
               <h2 id="tech-team-heading" className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
@@ -388,7 +405,7 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
           </div>
         </section>
 
-        {/* Section D: PR Team (4 Members) */}
+        {/* Section D: PR Team */}
         <section aria-labelledby="pr-team-heading" className="space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 border-b border-white/[0.06]">
             <div>
@@ -398,7 +415,7 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
                   COMMUNICATIONS & OUTREACH
                 </span>
                 <span className="text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#ff9900]/10 border border-[#ff9900]/25 text-[#ff9900]">
-                  4 Members
+                  {PR_TEAM.length} Members
                 </span>
               </div>
               <h2 id="pr-team-heading" className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
