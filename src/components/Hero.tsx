@@ -15,31 +15,94 @@ export default function Hero() {
     >
       {/* Primary Warm Ambient Orange Atmosphere */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] sm:w-[980px] h-[520px] rounded-full pointer-events-none blur-[130px] opacity-55"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] sm:w-[980px] h-[440px] sm:h-[520px] rounded-full pointer-events-none blur-[90px] sm:blur-[130px] opacity-50 sm:opacity-55"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(255, 153, 0, 0.42) 0%, rgba(255, 153, 0, 0.15) 45%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(255, 153, 0, 0.36) 0%, rgba(255, 153, 0, 0.12) 45%, transparent 70%)',
         }}
         aria-hidden="true"
       />
 
       {/* Secondary Radiant Energy Glow Behind the Visual Core */}
       <div
-        className="absolute top-1/2 right-4 sm:right-1/4 -translate-y-1/2 w-[520px] h-[520px] rounded-full pointer-events-none blur-[110px] opacity-45"
+        className="absolute top-[75%] lg:top-1/2 left-1/2 lg:left-auto lg:right-1/4 -translate-x-1/2 lg:translate-x-0 -translate-y-1/2 w-[380px] sm:w-[520px] h-[380px] sm:h-[520px] rounded-full pointer-events-none blur-[80px] sm:blur-[110px] opacity-45 sm:opacity-45"
         style={{
-          background: 'radial-gradient(circle, rgba(255, 153, 0, 0.42) 0%, rgba(255, 120, 0, 0.18) 50%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(255, 153, 0, 0.36) 0%, rgba(255, 120, 0, 0.14) 50%, transparent 70%)',
         }}
         aria-hidden="true"
       />
 
       {/* Subtle Matrix Dot Grid Texture for Depth */}
       <div
-        className="absolute inset-0 pointer-events-none bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_45%,black_40%,transparent_90%)] opacity-70"
+        className="absolute inset-0 pointer-events-none bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:24px_24px] sm:[background-size:28px_28px] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_45%,black_40%,transparent_85%)] opacity-55 sm:opacity-70"
         aria-hidden="true"
       />
 
-      {/* Ambient Silicon Circuit Substrate & Flowing Power Pulses */}
+      {/* Mobile Silicon Circuit Substrate (< md) - Clean, Minimalist Side Rail Architecture */}
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none select-none z-0 opacity-60 sm:opacity-75"
+        className="md:hidden absolute inset-0 w-full h-full pointer-events-none select-none z-0 opacity-60"
+        viewBox="0 0 390 950"
+        preserveAspectRatio="xMidYMid slice"
+        fill="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <filter id="circuitGlowMobile" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="1.5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Minimalist Structural Bus Rails (Left & Right Margins - Framed Cleanly Outside Text) */}
+        <g stroke="#ffffff" strokeOpacity="0.10" strokeWidth="1.2">
+          {/* Left Vertical Architectural Rail */}
+          <path d="M 18,70 L 18,190 L 32,218 L 32,380 L 18,408 L 18,640 L 55,695 L 95,695" />
+          <path d="M 18,640 L 18,860 L 45,895 L 120,895" />
+
+          {/* Right Vertical Architectural Rail */}
+          <path d="M 372,80 L 372,180 L 358,208 L 358,360 L 372,388 L 372,630 L 335,685 L 295,685" />
+          <path d="M 372,630 L 372,850 L 345,885 L 270,885" />
+        </g>
+
+        {/* Minimalist Circuit Via Nodes */}
+        <g fill="#ff9900" fillOpacity="0.5">
+          <circle cx="18" cy="190" r="2.2" />
+          <circle cx="32" cy="218" r="2.2" />
+          <circle cx="32" cy="380" r="2.2" />
+          <circle cx="18" cy="408" r="2.2" />
+          <circle cx="55" cy="695" r="2.2" />
+          <circle cx="95" cy="695" r="2.2" />
+          <circle cx="45" cy="895" r="2.2" />
+          
+          <circle cx="372" cy="180" r="2.2" />
+          <circle cx="358" cy="208" r="2.2" />
+          <circle cx="358" cy="360" r="2.2" />
+          <circle cx="372" cy="388" r="2.2" />
+          <circle cx="335" cy="685" r="2.2" />
+          <circle cx="295" cy="685" r="2.2" />
+          <circle cx="345" cy="885" r="2.2" />
+        </g>
+
+        {/* Minimalist Gliding Orange Power Pulses along Left & Right Margin Rails */}
+        <g stroke="#ff9900" strokeWidth="1.6" strokeLinecap="round" filter="url(#circuitGlowMobile)">
+          <path
+            d="M 18,70 L 18,190 L 32,218 L 32,380 L 18,408 L 18,640 L 55,695 L 95,695"
+            strokeDasharray="40 180"
+            className="animate-[bgCircuitPulse_7s_ease-in-out_infinite]"
+          />
+          <path
+            d="M 372,80 L 372,180 L 358,208 L 358,360 L 372,388 L 372,630 L 335,685 L 295,685"
+            strokeDasharray="40 180"
+            className="animate-[bgCircuitPulse_8s_ease-in-out_infinite_3.5s]"
+          />
+        </g>
+      </svg>
+
+      {/* Desktop Silicon Circuit Substrate & Flowing Power Pulses (>= md) */}
+      <svg
+        className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none z-0 opacity-60 sm:opacity-75"
         viewBox="0 0 1200 700"
         preserveAspectRatio="xMidYMid slice"
         fill="none"
@@ -90,22 +153,22 @@ export default function Hero() {
           <path
             d="M -40,100 L 180,100 L 260,180 L 440,180"
             strokeDasharray="60 180"
-            className="motion-safe:animate-[bgCircuitPulse_5s_ease-in-out_infinite]"
+            className="animate-[bgCircuitPulse_5s_ease-in-out_infinite]"
           />
           <path
             d="M 1240,500 L 1060,500 L 980,420 L 800,420"
             strokeDasharray="70 190"
-            className="motion-safe:animate-[bgCircuitPulse_6s_ease-in-out_infinite_2s]"
+            className="animate-[bgCircuitPulse_6s_ease-in-out_infinite_2s]"
           />
           <path
             d="M 60,660 L 200,520 L 400,520"
             strokeDasharray="50 170"
-            className="motion-safe:animate-[bgCircuitPulse_5.5s_ease-in-out_infinite_1s]"
+            className="animate-[bgCircuitPulse_5.5s_ease-in-out_infinite_1s]"
           />
           <path
             d="M 1240,120 L 1020,120 L 920,220 L 780,220"
             strokeDasharray="65 185"
-            className="motion-safe:animate-[bgCircuitPulse_6.5s_ease-in-out_infinite_3s]"
+            className="animate-[bgCircuitPulse_6.5s_ease-in-out_infinite_3s]"
           />
         </g>
       </svg>

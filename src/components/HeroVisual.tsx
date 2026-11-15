@@ -22,7 +22,7 @@ export default function HeroVisual() {
     >
       {/* Soft Ambient Radial Back-glow */}
       <div
-        className="absolute inset-0 sm:inset-2 rounded-full blur-[75px] sm:blur-[95px] opacity-35 sm:opacity-45 pointer-events-none"
+        className="absolute inset-0 sm:inset-2 rounded-full blur-[65px] sm:blur-[95px] opacity-45 sm:opacity-40 pointer-events-none"
         style={{
           background: 'radial-gradient(circle, #ff9900 0%, #ff8000 40%, transparent 70%)',
         }}
@@ -31,15 +31,15 @@ export default function HeroVisual() {
 
       {/* Subtle Orbital Network Ring */}
       <div
-        className="absolute inset-8 sm:inset-10 rounded-full border border-white/[0.04] pointer-events-none motion-safe:animate-[spin_60s_linear_infinite]"
+        className="absolute inset-6 sm:inset-10 rounded-full border border-white/[0.08] sm:border-white/[0.05] pointer-events-none animate-[spin_60s_linear_infinite]"
         aria-hidden="true"
       >
-        <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#ff9900]/40" />
-        <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#ff9900]/40" />
+        <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#ff9900]/70 shadow-[0_0_6px_#ff9900]" />
+        <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#ff9900]/70 shadow-[0_0_6px_#ff9900]" />
       </div>
 
       <div
-        className="absolute inset-16 sm:inset-20 rounded-full border border-[#ff9900]/[0.06] pointer-events-none"
+        className="absolute inset-14 sm:inset-20 rounded-full border border-[#ff9900]/[0.10] sm:border-[#ff9900]/[0.08] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -51,14 +51,21 @@ export default function HeroVisual() {
         aria-hidden="true"
       >
         <defs>
+          <filter id="traceGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="1.5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
           <linearGradient id="traceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#ff9900" stopOpacity="0.85" />
-            <stop offset="100%" stopColor="#ff9900" stopOpacity="0.2" />
+            <stop offset="0%" stopColor="#ff9900" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#ff9900" stopOpacity="0.15" />
           </linearGradient>
         </defs>
 
-        {/* Base Structural Traces (Dim) */}
-        <g stroke="#ffffff" strokeOpacity="0.05" strokeWidth="1.5">
+        {/* Base Structural Traces */}
+        <g stroke="#ffffff" strokeOpacity="0.08" strokeWidth="1.2">
           <line x1="200" y1="36" x2="200" y2="108" />
           <line x1="332" y1="102" x2="268" y2="148" />
           <line x1="344" y1="268" x2="272" y2="248" />
@@ -73,7 +80,7 @@ export default function HeroVisual() {
           strokeWidth="1.5"
           strokeDasharray="6 8"
           strokeLinecap="round"
-          className="motion-safe:animate-[flowInward_1.6s_linear_infinite]"
+          className="animate-[flowInward_1.8s_linear_infinite]"
         >
           {/* Top: Cloud */}
           <line x1="200" y1="36" x2="200" y2="108" />
@@ -89,13 +96,15 @@ export default function HeroVisual() {
           <line x1="68" y1="102" x2="132" y2="148" />
         </g>
 
-        {/* Small target dots on core boundary */}
-        <circle cx="200" cy="108" r="2.5" fill="#ff9900" className="animate-pulse" />
-        <circle cx="268" cy="148" r="2.5" fill="#ff9900" className="animate-pulse" />
-        <circle cx="272" cy="248" r="2.5" fill="#ff9900" className="animate-pulse" />
-        <circle cx="200" cy="292" r="2.5" fill="#ff9900" className="animate-pulse" />
-        <circle cx="128" cy="248" r="2.5" fill="#ff9900" className="animate-pulse" />
-        <circle cx="132" cy="148" r="2.5" fill="#ff9900" className="animate-pulse" />
+        {/* Target dots on core boundary with subtle glow */}
+        <g fill="#ff9900" filter="url(#traceGlow)">
+          <circle cx="200" cy="108" r="2.5" className="animate-pulse" />
+          <circle cx="268" cy="148" r="2.5" className="animate-pulse" />
+          <circle cx="272" cy="248" r="2.5" className="animate-pulse" />
+          <circle cx="200" cy="292" r="2.5" className="animate-pulse" />
+          <circle cx="128" cy="248" r="2.5" className="animate-pulse" />
+          <circle cx="132" cy="148" r="2.5" className="animate-pulse" />
+        </g>
       </svg>
 
       {/* Central Glass Pedestal with Microchip Identity */}
