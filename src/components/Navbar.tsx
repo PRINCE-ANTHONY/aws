@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
+import { useTheme } from '@/ink/ThemeContext';
 
 const basePath = process.env.NODE_ENV === 'production' ? '/aws' : '';
 
@@ -26,6 +28,7 @@ const NAV_ITEMS: NavItem[] = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { navigate } = useTheme();
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
@@ -84,7 +87,11 @@ export default function Navbar() {
             {/* Logo Brand Identifier */}
             <Link
               href="/"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                setMobileMenuOpen(false);
+                navigate('/', { x: e.clientX, y: e.clientY });
+              }}
               className="flex items-center gap-2.5 group text-left select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] rounded-lg p-1 min-h-[44px] min-w-[44px]"
               aria-label="AWS Student Builders Group MVJCE - Home"
             >
@@ -119,6 +126,10 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(item.href, { x: e.clientX, y: e.clientY });
+                    }}
                     className={`px-2.5 xl:px-3 py-1.5 text-[11px] xl:text-xs font-mono tracking-wide rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] min-h-[32px] flex items-center whitespace-nowrap ${
                       active
                         ? 'bg-[#ff9900] text-black font-bold shadow-sm'
@@ -133,7 +144,10 @@ export default function Navbar() {
             </nav>
 
             {/* Right Action CTA & Mobile Trigger */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              {/* Theme Toggle Button (Triggers Ink Bleed transition from click point) */}
+              <ThemeToggle />
+
               {/* Prominent Discord CTA Button */}
               <a
                 href="https://discord.gg/gVPMHvDaX"
@@ -178,7 +192,11 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMobileMenuOpen(false);
+                    navigate(item.href, { x: e.clientX, y: e.clientY });
+                  }}
                   className={`w-full text-left px-4 py-3 rounded-xl text-base font-medium tracking-wide transition-all min-h-[48px] flex items-center justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] ${
                     active
                       ? 'bg-[#ff9900] text-black font-bold'
@@ -196,7 +214,12 @@ export default function Navbar() {
           </nav>
 
           {/* Mobile Drawer Bottom CTA */}
-          <div className="pt-6 border-t border-white/[0.08] mt-6 w-full max-w-md mx-auto">
+          <div className="pt-6 border-t border-white/[0.08] mt-6 w-full max-w-md mx-auto space-y-4">
+            <div className="flex items-center justify-between px-2 py-1 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+              <span className="text-xs font-mono tracking-wide text-[#9ca3af]">Switch Theme</span>
+              <ThemeToggle />
+            </div>
+
             <a
               href="https://discord.gg/gVPMHvDaX"
               target="_blank"

@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { ArrowUpRight, ShieldCheck, Terminal, Megaphone, Sparkles, ExternalLink } from 'lucide-react';
-import { LinkedinIcon, DiscordIcon, GithubIcon } from '@/components/Icons';
+import { ArrowUpRight, ShieldCheck, Terminal, Megaphone, Sparkles } from 'lucide-react';
+import { LinkedinIcon, DiscordIcon } from '@/components/Icons';
 
 const basePath = process.env.NODE_ENV === 'production' ? '/aws' : '';
 
@@ -10,7 +10,7 @@ interface Member {
   name: string;
   role: string;
   initials: string;
-  description: string;
+  description?: string;
   badge?: string;
   photo?: string;
   linkedinUrl?: string;
@@ -58,33 +58,91 @@ const CORE_LEADERSHIP: Member[] = [
 
 const TECH_TEAM: Member[] = [
   {
+    name: 'Anvitha',
+    role: 'Tech Team Member',
+    initials: 'AN',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Chaithanya',
+    role: 'Tech Team Member',
+    initials: 'CH',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Nimith',
+    role: 'Tech Team Member',
+    initials: 'NI',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Punith M',
+    role: 'Tech Team Member',
+    initials: 'PM',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Pavan G',
+    role: 'Tech Team Member',
+    initials: 'PG',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
     name: 'Prince Anthony',
-    role: 'Platform Development & Technical Builds',
+    role: 'Tech Team Member',
     initials: 'PA',
-    description:
-      'Contributing to core platform development, technical build systems, and hands-on workshops.',
-    tags: ['Platform Dev', 'Next.js', 'Workshops', 'Cloud'],
+    description: 'Contributing to platform development, technical build systems, and community workshops.',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Sunil',
+    role: 'Tech Team Member',
+    initials: 'SU',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Ganavi Prasanna',
+    role: 'Tech Team Member',
+    initials: 'GP',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Mohammed Sufiyan',
+    role: 'Tech Team Member',
+    initials: 'MS',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Rachith Kamath',
+    role: 'Tech Team Member',
+    initials: 'RK',
     linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
   },
 ];
 
 const PR_TEAM: Member[] = [
   {
-    name: 'Mohith Lokesh',
-    role: 'PR & Community Outreach',
-    initials: 'ML',
-    description:
-      'Driving student engagement, inter-departmental outreach, and community communication across MVJCE.',
-    tags: ['Outreach', 'Engagement', 'Campus PR'],
+    name: 'Bhavana',
+    role: 'PR Team Member',
+    initials: 'BH',
     linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
   },
   {
-    name: 'Rohith S H',
-    role: 'PR & Media Communications',
-    initials: 'RS',
-    description:
-      'Managing media communications, creative assets, event documentation, and publicity channels.',
-    tags: ['Media', 'Publicity', 'Documentation'],
+    name: 'Harini',
+    role: 'PR Team Member',
+    initials: 'HA',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Khushi Patil',
+    role: 'PR Team Member',
+    initials: 'KP',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
+  },
+  {
+    name: 'Meghan Teja Y',
+    role: 'PR Team Member',
+    initials: 'MY',
     linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-mvjce',
   },
 ];
@@ -157,7 +215,7 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
           </p>
         </header>
 
-        {/* Section B: Core Team (4 Prominent Profile Cards) */}
+        {/* Section B: Core Team (4 Prominent Leadership Profile Cards) */}
         <section aria-labelledby="core-team-heading" className="space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 border-b border-white/[0.06]">
             <div>
@@ -220,9 +278,11 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
                     {leader.role}
                   </div>
 
-                  <p className="text-xs sm:text-sm text-[#9ca3af] leading-relaxed">
-                    {leader.description}
-                  </p>
+                  {leader.description && (
+                    <p className="text-xs sm:text-sm text-[#9ca3af] leading-relaxed">
+                      {leader.description}
+                    </p>
+                  )}
                 </div>
 
                 {/* Footer with MVJCE Chapter & LinkedIn */}
@@ -245,7 +305,7 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
           </div>
         </section>
 
-        {/* Section C: Tech Team */}
+        {/* Section C: Tech Team (10 Members) */}
         <section aria-labelledby="tech-team-heading" className="space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 border-b border-white/[0.06]">
             <div>
@@ -254,25 +314,28 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
                 <span className="text-xs font-mono tracking-widest text-[#ff9900] uppercase font-semibold">
                   TECHNICAL WING
                 </span>
+                <span className="text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#ff9900]/10 border border-[#ff9900]/25 text-[#ff9900]">
+                  10 Members
+                </span>
               </div>
               <h2 id="tech-team-heading" className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                 Tech Team.
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-[#9ca3af] max-w-md">
-              Building club digital platforms, hands-on cloud labs, and collaborative architecture prototypes.
+              Building club digital platforms, hands-on cloud labs, and collaborative architecture prototypes at MVJCE.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {TECH_TEAM.map((member) => (
               <article
                 key={member.name}
-                className="rounded-2xl bg-[#0e1219] border border-white/[0.08] hover:border-[#ff9900]/40 p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group"
+                className="rounded-2xl bg-[#0e1219] border border-white/[0.08] hover:border-[#ff9900]/40 p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group"
               >
                 <div>
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#181e2b] via-[#11141e] to-[#0b0e14] border border-white/[0.1] flex items-center justify-center font-mono font-bold text-base text-white group-hover:text-[#ff9900] group-hover:border-[#ff9900]/40 transition-all shrink-0 overflow-hidden">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-[#181e2b] via-[#11141e] to-[#0b0e14] border border-white/[0.1] flex items-center justify-center font-mono font-bold text-base text-white group-hover:text-[#ff9900] group-hover:border-[#ff9900]/40 transition-all shrink-0 overflow-hidden">
                       {member.photo ? (
                         <Image
                           src={`${basePath}${member.photo}`}
@@ -286,39 +349,28 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
                       )}
                     </div>
 
-                    <span className="text-[11px] font-mono px-2.5 py-1 rounded bg-white/[0.03] border border-white/[0.06] text-[#ff9900]">
-                      Tech Team
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.03] border border-white/[0.06] text-[#ff9900]">
+                      MVJCE
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-1 group-hover:text-[#ff9900] transition-colors">
+                  <h3 className="text-base sm:text-lg font-bold text-white mb-1 group-hover:text-[#ff9900] transition-colors tracking-tight">
                     {member.name}
                   </h3>
 
-                  <p className="text-xs font-mono text-[#a1a1aa] mb-3">
+                  <p className="text-xs font-mono text-[#a1a1aa] mb-2.5">
                     {member.role}
                   </p>
 
-                  <p className="text-xs sm:text-sm text-[#9ca3af] leading-relaxed mb-4">
-                    {member.description}
-                  </p>
-
-                  {member.tags && (
-                    <div className="flex flex-wrap gap-1.5 mb-2">
-                      {member.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-0.5 rounded text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-[#a1a1aa]"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                  {member.description && (
+                    <p className="text-xs text-[#9ca3af] leading-relaxed mb-3">
+                      {member.description}
+                    </p>
                   )}
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-white/[0.06] flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-[#71717a]">MVJCE · Tech Team</span>
+                <div className="pt-3.5 mt-3 border-t border-white/[0.06] flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-[#71717a] uppercase tracking-wider">Tech Wing</span>
                   {member.linkedinUrl && (
                     <a
                       href={member.linkedinUrl}
@@ -333,54 +385,10 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
                 </div>
               </article>
             ))}
-
-            {/* Technical Track Open Collaboration Card */}
-            <article className="rounded-2xl bg-gradient-to-br from-[#121622]/90 via-[#0e121a]/90 to-[#080b10]/95 border border-white/[0.08] p-6 sm:p-7 flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#ff9900] mb-4">
-                  <GithubIcon size={20} />
-                </div>
-
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5">
-                  Student Builders & Contributors
-                </h3>
-
-                <p className="text-xs sm:text-sm text-[#9ca3af] leading-relaxed mb-4">
-                  AWS SBG MVJCE welcomes student developers across all years and departments. Pair-program on active builds, contribute to open-source tools, or lead a cloud workshop.
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 mb-2">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-[#a1a1aa]">
-                    Web Development
-                  </span>
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-[#a1a1aa]">
-                    Cloud Infrastructure
-                  </span>
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-[#a1a1aa]">
-                    AI & ML
-                  </span>
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-[#a1a1aa]">
-                    VLSI & Hardware
-                  </span>
-                </div>
-              </div>
-
-              <div className="pt-4 mt-4 border-t border-white/[0.06]">
-                <a
-                  href="https://github.com/PRINCE-ANTHONY/aws"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#ff9900] hover:text-[#ffb74d] transition-colors min-h-[36px]"
-                >
-                  <span>Explore Open Source Builds</span>
-                  <ExternalLink size={13} />
-                </a>
-              </div>
-            </article>
           </div>
         </section>
 
-        {/* Section D: PR Team */}
+        {/* Section D: PR Team (4 Members) */}
         <section aria-labelledby="pr-team-heading" className="space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 border-b border-white/[0.06]">
             <div>
@@ -389,24 +397,27 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
                 <span className="text-xs font-mono tracking-widest text-[#ff9900] uppercase font-semibold">
                   COMMUNICATIONS & OUTREACH
                 </span>
+                <span className="text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#ff9900]/10 border border-[#ff9900]/25 text-[#ff9900]">
+                  4 Members
+                </span>
               </div>
               <h2 id="pr-team-heading" className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                 PR Team.
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-[#9ca3af] max-w-md">
-              Connecting our builder community with MVJCE departments, event participants, and technical mentors.
+              Connecting our builder community with MVJCE departments, event participants, and technical publicity.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {PR_TEAM.map((member) => (
               <article
                 key={member.name}
                 className="rounded-2xl bg-[#0e1219] border border-white/[0.08] hover:border-[#ff9900]/40 p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group"
               >
                 <div>
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center justify-between mb-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#181e2b] via-[#11141e] to-[#0b0e14] border border-white/[0.1] flex items-center justify-center font-mono font-bold text-base text-white group-hover:text-[#ff9900] group-hover:border-[#ff9900]/40 transition-all shrink-0 overflow-hidden">
                       {member.photo ? (
                         <Image
@@ -421,39 +432,28 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
                       )}
                     </div>
 
-                    <span className="text-[11px] font-mono px-2.5 py-1 rounded bg-white/[0.03] border border-white/[0.06] text-[#ff9900]">
-                      PR Team
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.03] border border-white/[0.06] text-[#ff9900]">
+                      MVJCE
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-1 group-hover:text-[#ff9900] transition-colors">
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-1 group-hover:text-[#ff9900] transition-colors tracking-tight">
                     {member.name}
                   </h3>
 
-                  <p className="text-xs font-mono text-[#a1a1aa] mb-3">
+                  <p className="text-xs font-mono text-[#a1a1aa] mb-2.5">
                     {member.role}
                   </p>
 
-                  <p className="text-xs sm:text-sm text-[#9ca3af] leading-relaxed mb-4">
-                    {member.description}
-                  </p>
-
-                  {member.tags && (
-                    <div className="flex flex-wrap gap-1.5 mb-2">
-                      {member.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-0.5 rounded text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-[#a1a1aa]"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                  {member.description && (
+                    <p className="text-xs text-[#9ca3af] leading-relaxed mb-3">
+                      {member.description}
+                    </p>
                   )}
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-white/[0.06] flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-[#71717a]">MVJCE · PR Team</span>
+                <div className="pt-3.5 mt-4 border-t border-white/[0.06] flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-[#71717a] uppercase tracking-wider">PR Wing</span>
                   {member.linkedinUrl && (
                     <a
                       href={member.linkedinUrl}
@@ -541,9 +541,11 @@ export default function Teams({ className = '', isStandalone = false }: TeamsPro
                       {handler.role}
                     </p>
 
-                    <p className="text-xs sm:text-sm text-[#9ca3af] leading-relaxed mb-4">
-                      {handler.description}
-                    </p>
+                    {handler.description && (
+                      <p className="text-xs sm:text-sm text-[#9ca3af] leading-relaxed mb-4">
+                        {handler.description}
+                      </p>
+                    )}
 
                     {handler.tags && (
                       <div className="flex flex-wrap gap-1.5 mb-2">

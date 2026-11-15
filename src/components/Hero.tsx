@@ -4,27 +4,29 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import HeroVisual from '@/components/HeroVisual';
 import { DiscordIcon } from '@/components/Icons';
+import { useTheme } from '@/ink/ThemeContext';
 
 export default function Hero() {
+  const { navigate } = useTheme();
   return (
     <section
       id="hero"
-      className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-b from-[#0e121a] via-[#090b10] to-[#07080a] pt-28 sm:pt-36 lg:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-b from-[#111622] via-[#0a0d14] to-[#07080a] pt-28 sm:pt-36 lg:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       {/* Primary Warm Ambient Orange Atmosphere */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] sm:w-[980px] h-[500px] rounded-full pointer-events-none blur-[140px] opacity-35"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] sm:w-[980px] h-[520px] rounded-full pointer-events-none blur-[130px] opacity-55"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(255, 153, 0, 0.32) 0%, rgba(255, 153, 0, 0.1) 45%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(255, 153, 0, 0.42) 0%, rgba(255, 153, 0, 0.15) 45%, transparent 70%)',
         }}
         aria-hidden="true"
       />
 
       {/* Secondary Radiant Energy Glow Behind the Visual Core */}
       <div
-        className="absolute top-1/2 right-4 sm:right-1/4 -translate-y-1/2 w-[480px] h-[480px] rounded-full pointer-events-none blur-[120px] opacity-30"
+        className="absolute top-1/2 right-4 sm:right-1/4 -translate-y-1/2 w-[520px] h-[520px] rounded-full pointer-events-none blur-[110px] opacity-45"
         style={{
-          background: 'radial-gradient(circle, rgba(255, 153, 0, 0.35) 0%, rgba(255, 120, 0, 0.12) 50%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(255, 153, 0, 0.42) 0%, rgba(255, 120, 0, 0.18) 50%, transparent 70%)',
         }}
         aria-hidden="true"
       />
@@ -151,6 +153,10 @@ export default function Hero() {
               {/* Button 1: Explore Our Community -> links to /about */}
               <Link
                 href="/about"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/about', { x: e.clientX, y: e.clientY });
+                }}
                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-[#ff9900] hover:bg-[#e68900] text-black font-bold text-sm tracking-wide shadow-lg shadow-[#ff9900]/20 active:scale-[0.98] transition-all min-h-[48px] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <span>Explore Our Community</span>

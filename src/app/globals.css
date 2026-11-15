@@ -55,6 +55,167 @@ body {
   color: #07080a;
 }
 
+/* ========================================================
+   Ink Bleed Theme Transition Canvas & CSS Fallback
+   ======================================================== */
+.ink-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.ink-canvas.is-active {
+  pointer-events: none;
+}
+
+html.theme-fade,
+html.theme-fade *,
+html.theme-fade *::before,
+html.theme-fade *::after {
+  transition: background-color var(--theme-fade, 0.45s) ease,
+              border-color var(--theme-fade, 0.45s) ease,
+              color var(--theme-fade, 0.45s) ease,
+              fill var(--theme-fade, 0.45s) ease,
+              stroke var(--theme-fade, 0.45s) ease,
+              box-shadow var(--theme-fade, 0.45s) ease !important;
+  transition-delay: 0s !important;
+}
+
+/* ========================================================
+   Light Industrial Theme (Complementary to Dark Industrial)
+   ======================================================== */
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+html[data-theme="light"] body {
+  background-color: #f7f6f2 !important;
+  color: #090d16 !important;
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #f7f6f2;
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #d4d0c5;
+}
+
+/* Base surface overrides */
+html[data-theme="light"] .bg-\[\#07080a\],
+html[data-theme="light"] .bg-\[\#08090b\],
+html[data-theme="light"] .bg-\[\#050608\] {
+  background-color: #f7f6f2 !important;
+}
+
+html[data-theme="light"] .bg-\[\#090b0e\],
+html[data-theme="light"] .bg-\[\#0d1016\],
+html[data-theme="light"] .bg-\[\#0b0d12\],
+html[data-theme="light"] .bg-\[\#07080a\]\/85,
+html[data-theme="light"] .bg-\[\#07080a\]\/95,
+html[data-theme="light"] .bg-\[\#07080a\]\/98 {
+  background-color: rgba(247, 246, 242, 0.95) !important;
+}
+
+html[data-theme="light"] .bg-\[\#0e1219\],
+html[data-theme="light"] .bg-\[\#121620\],
+html[data-theme="light"] .bg-\[\#11151e\],
+html[data-theme="light"] .bg-\[\#161b26\] {
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Hero and standalone page gradients */
+html[data-theme="light"] #hero,
+html[data-theme="light"] .bg-gradient-to-b.from-\[\#0e121a\] {
+  background: linear-gradient(180deg, #edeae2 0%, #f4f2ec 45%, #f7f6f2 100%) !important;
+}
+
+/* Feature cards and callouts */
+html[data-theme="light"] .bg-gradient-to-br.from-\[\#121620\],
+html[data-theme="light"] .bg-gradient-to-b.from-\[\#181d2a\]\/95,
+html[data-theme="light"] .bg-gradient-to-b.from-\[\#141822\]\/90,
+html[data-theme="light"] .bg-gradient-to-b.from-\[\#161c28\]\/95 {
+  background: linear-gradient(135deg, #ffffff 0%, #faf8f2 50%, #f2efe6 100%) !important;
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.06);
+}
+
+/* Avatar badge backgrounds in light mode */
+html[data-theme="light"] .bg-gradient-to-br.from-\[\#1c2434\],
+html[data-theme="light"] .bg-gradient-to-br.from-\[\#181e2b\] {
+  background: linear-gradient(135deg, #f0ece3 0%, #e4dfd4 100%) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #090d16 !important;
+}
+
+/* Discord special section in light mode */
+html[data-theme="light"] .bg-gradient-to-br.from-\[\#111425\] {
+  background: linear-gradient(135deg, #f8f9ff 0%, #eff2ff 50%, #e6ebff 100%) !important;
+  border-color: rgba(88, 101, 242, 0.25) !important;
+}
+
+html[data-theme="light"] .bg-\[\#090b14\]\/80 {
+  background-color: #ffffff !important;
+  border-color: rgba(88, 101, 242, 0.2) !important;
+  box-shadow: 0 4px 18px rgba(88, 101, 242, 0.08);
+}
+
+html[data-theme="light"] .bg-gradient-to-br.from-\[\#181d38\] {
+  background: linear-gradient(135deg, #e4e7ff 0%, #d8dcfe 100%) !important;
+  border-color: rgba(88, 101, 242, 0.3) !important;
+}
+
+/* Text adjustments */
+html[data-theme="light"] .text-white {
+  color: #090d16 !important;
+}
+
+html[data-theme="light"] .text-white\/90 {
+  color: #1e293b !important;
+}
+
+html[data-theme="light"] .text-\[\#9ca3af\],
+html[data-theme="light"] .text-\[\#a1a1aa\],
+html[data-theme="light"] .text-\[\#71717a\],
+html[data-theme="light"] .text-\[\#d1d5db\] {
+  color: #475569 !important;
+}
+
+/* Subtle border adjustments */
+html[data-theme="light"] .border-white\/\[0\.04\],
+html[data-theme="light"] .border-white\/\[0\.06\],
+html[data-theme="light"] .border-white\/\[0\.08\],
+html[data-theme="light"] .border-white\/\[0\.1\],
+html[data-theme="light"] .border-white\/\[0\.12\],
+html[data-theme="light"] .border-white\/\[0\.16\] {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Subtle background pills */
+html[data-theme="light"] .bg-white\/\[0\.02\],
+html[data-theme="light"] .bg-white\/\[0\.03\],
+html[data-theme="light"] .bg-white\/\[0\.04\],
+html[data-theme="light"] .bg-white\/\[0\.05\],
+html[data-theme="light"] .bg-white\/\[0\.08\] {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+html[data-theme="light"] .hover\:bg-white\/\[0\.05\]:hover,
+html[data-theme="light"] .hover\:bg-white\/\[0\.08\]:hover {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Circuit lines and SVGs in light mode */
+html[data-theme="light"] svg g[stroke="#ffffff"] {
+  stroke: #000000 !important;
+  stroke-opacity: 0.12 !important;
+}
+
+/* Animations */
 @keyframes flowInward {
   from {
     stroke-dashoffset: 28;

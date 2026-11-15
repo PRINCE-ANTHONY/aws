@@ -1,16 +1,11 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ArrowRight, Lightbulb, BookOpen, Mic, Globe, Cpu, Cloud, Brain, Users, Calendar, FolderGit2 } from 'lucide-react';
 import Hero from '@/components/Hero';
+import IntroAnimation from '@/components/IntroAnimation';
 import { DiscordIcon } from '@/components/Icons';
-
-// Lazy-load the intro animation so it does not block first paint
-const IntroAnimation = dynamic(() => import('@/components/IntroAnimation'), {
-  ssr: false,
-});
 
 const HIGHLIGHTS = [
   {
@@ -54,37 +49,37 @@ const DOMAIN_PREVIEWS = [
 ];
 
 export default function Home() {
-  const [introFinished, setIntroFinished] = useState(false);
+  const [showIntro, setShowIntro] = useState<boolean>(false);
 
   useEffect(() => {
-    // If intro was already seen in this session or reduced-motion is active, mark finished immediately
-    if (typeof window !== 'undefined') {
-      const alreadySeen = sessionStorage.getItem('aws-sbg-intro-seen');
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (alreadySeen || prefersReduced) {
-        const timer = setTimeout(() => {
-          setIntroFinished(true);
-        }, 0);
-        return () => clearTimeout(timer);
+    // Check if intro has already played in this browser session or user prefers reduced motion
+    try {
+      if (typeof window !== 'undefined') {
+        const alreadySeen = sessionStorage.getItem('aws-sbg-intro-seen');
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!alreadySeen && !prefersReduced) {
+          const timer = setTimeout(() => {
+            setShowIntro(true);
+          }, 0);
+          return () => clearTimeout(timer);
+        }
       }
+    } catch {
+      // In restricted contexts, fail gracefully without showing overlay
     }
   }, []);
 
   const handleIntroComplete = useCallback(() => {
-    setIntroFinished(true);
+    setShowIntro(false);
   }, []);
 
   return (
     <>
-      {/* 3-Second Cinematic Intro */}
-      {!introFinished && <IntroAnimation onComplete={handleIntroComplete} />}
+      {/* 2-Second Cinematic Intro Overlay (Plays only on first session visit, fades out smoothly) */}
+      {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
 
-      {/* Main Website Experience */}
-      <div
-        className={`transition-opacity duration-700 ${
-          introFinished ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
+      {/* Main Website Experience (Always fully rendered and visible, eliminating blank screen delays) */}
+      <div className="min-h-screen">
         {/* Approved Hero Section */}
         <Hero />
 
