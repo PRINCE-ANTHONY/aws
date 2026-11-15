@@ -185,6 +185,14 @@ html[data-theme="light"] .text-\[\#d1d5db\] {
   color: #475569 !important;
 }
 
+/* Discipline badges on the Hero visual core - keep crisp white text in both light and dark */
+html[data-theme="light"] .hero-discipline-badge,
+html[data-theme="light"] .hero-discipline-badge span,
+html[data-theme="light"] [data-discipline-tag],
+html[data-theme="light"] [data-discipline-tag] span {
+  color: #ffffff !important;
+}
+
 /* Subtle border adjustments */
 html[data-theme="light"] .border-white\/\[0\.04\],
 html[data-theme="light"] .border-white\/\[0\.06\],

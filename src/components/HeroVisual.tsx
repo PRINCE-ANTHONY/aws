@@ -136,9 +136,15 @@ export default function HeroVisual() {
           className="absolute z-20 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
           style={{ left: item.x, top: item.y }}
         >
-          <div className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-full bg-[#0a0d14]/90 border border-white/[0.08] backdrop-blur-md shadow-md shadow-black/40">
+          <div
+            data-discipline-tag=""
+            className="hero-discipline-badge flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-full bg-[#0a0d14]/90 border border-white/[0.14] backdrop-blur-md shadow-md shadow-black/40"
+          >
             <span className="w-1 h-1 rounded-full bg-[#ff9900] animate-pulse" />
-            <span className="text-[9px] sm:text-[10px] font-mono tracking-widest text-[#d1d5db] font-semibold">
+            <span
+              className="text-[9px] sm:text-[10px] font-mono tracking-widest text-white font-semibold select-none"
+              style={{ color: '#ffffff' }}
+            >
               {item.label}
             </span>
           </div>
